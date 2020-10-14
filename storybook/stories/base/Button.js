@@ -1,14 +1,14 @@
 import { storiesOf } from '@storybook/react-native';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import {{ pascalCase name}} from '../../../src/components/base/{{ pascalCase name}}';
+import Button from '../../../src/components/base/Button';
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
 });
 
-storiesOf('base/{{ pascalCase name}}', module).add('Summary', () => (
+storiesOf('base/Button', module).add('Summary', () => (
   <View style={styles.container}>
-    <{{ pascalCase name}} />
+    <Button label="Button" onPress={() => console.log('ACTION_EVENT')} />
   </View>
 ));
