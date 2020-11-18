@@ -45,95 +45,41 @@ module.exports = (plop) => {
       },
     ],
   });
-  plop.setGenerator('module', {
-    description: 'Create a module component',
+  plop.setGenerator('svg', {
+    description: 'Create svg component and storybook entry',
     prompts: [
       {
         type: 'input',
         name: 'name',
-        message: 'What is your module component name?',
+        message: 'What is your svg name?',
       },
     ],
     actions: [
       {
         type: 'add',
-        path: 'src/components/modules/{{pascalCase name}}/index.tsx',
-        templateFile: 'templates/module/index.tsx.hbs',
-      },
-      {
-        type: 'add',
-        path:
-          'src/components/modules/{{pascalCase name}}/{{pascalCase name}}.props.ts',
-        templateFile: 'templates/module/module.props.ts.hbs',
-      },
-      {
-        type: 'add',
-        path:
-          'src/components/modules/{{pascalCase name}}/{{pascalCase name}}.style.ts',
-        templateFile: 'templates/module/module.style.ts.hbs',
-      },
-      {
-        type: 'add',
-        path:
-          'src/components/modules/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
-        templateFile: 'templates/module/module.view.tsx.hbs',
-      },
-      {
-        type: 'add',
-        path: 'storybook/stories/modules/{{pascalCase name}}.js',
-        templateFile: 'templates/module/module.story.js.hbs',
+        path: 'src/components/base/SVG/{{pascalCase name}}.tsx',
+        templateFile: 'templates/svg/component.tsx.hbs',
       },
       {
         type: 'append',
-        path: 'storybook/index.js',
+        path: 'src/components/base/SVG/index.ts',
         pattern: '/* PLOP_INJECT_IMPORT */',
-        template: "  require('./stories/modules/{{pascalCase name}}');",
-      },
-    ],
-  });
-  plop.setGenerator('layout', {
-    description: 'Create a layout component',
-    prompts: [
-      {
-        type: 'input',
-        name: 'name',
-        message: 'What is your layout component name?',
-      },
-    ],
-    actions: [
-      {
-        type: 'add',
-        path: 'src/components/layouts/{{pascalCase name}}/index.tsx',
-        templateFile: 'templates/layout/index.tsx.hbs',
-      },
-      {
-        type: 'add',
-        path:
-          'src/components/layouts/{{pascalCase name}}/{{pascalCase name}}.props.ts',
-        templateFile: 'templates/layout/layout.props.ts.hbs',
-      },
-      {
-        type: 'add',
-        path:
-          'src/components/layouts/{{pascalCase name}}/{{pascalCase name}}.style.ts',
-        templateFile: 'templates/layout/layout.style.ts.hbs',
-      },
-      {
-        type: 'add',
-        path:
-          'src/components/layouts/{{pascalCase name}}/{{pascalCase name}}.view.tsx',
-        templateFile: 'templates/layout/layout.view.tsx.hbs',
-      },
-      {
-        type: 'add',
-        path: 'storybook/stories/layouts/{{pascalCase name}}.js',
-        templateFile: 'templates/layout/layout.story.js.hbs',
+        template:
+          "export { default as {{pascalCase name}} } from './{{pascalCase name}}';",
       },
       {
         type: 'append',
-        path: 'storybook/index.js',
+        path: 'storybook/stories/base/SVG.js',
         pattern: '/* PLOP_INJECT_IMPORT */',
-        template: "  require('./stories/layouts/{{pascalCase name}}');",
+        template: '  {{pascalCase name}},',
+      },
+      {
+        type: 'append',
+        path: 'storybook/stories/base/SVG.js',
+        pattern: '{/* PLOP_INJECT_INSTANCE*/}',
+        template: `     <SVGWrapper label="{{pascalCase name}}">
+      <{{pascalCase name}} fill="#000" />
+    </SVGWrapper>`,
       },
     ],
   });
