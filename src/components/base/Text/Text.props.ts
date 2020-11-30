@@ -1,8 +1,8 @@
-import { ViewStyle } from 'react-native';
+import { ViewStyle, TextStyle } from 'react-native';
 
 export interface TextProps {
   containerStyle?: ViewStyle;
-  style?: ViewStyle;
+  style?: TextStyle;
   variant?: 'title' | 'body' | 'caption' | 'label';
   children: string;
 }
