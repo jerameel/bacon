@@ -1,7 +1,21 @@
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from 'types/Route';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ControlListStackParamList, TabParamList } from 'types/Route';
 
 export interface ControlListRouterProps {}
 
-export interface ControlListProps
-  extends StackScreenProps<RootStackParamList, 'ControlList'> {}
+type ControlListRouteProp = RouteProp<
+  ControlListStackParamList,
+  'CONTROL_LIST'
+>;
+
+type ControlListNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<TabParamList, 'CONTROL_LIST'>,
+  StackNavigationProp<ControlListStackParamList, 'CONTROL_LIST'>
+>;
+
+export interface ControlListProps {
+  route: ControlListRouteProp;
+  navigation: ControlListNavigationProp;
+}
