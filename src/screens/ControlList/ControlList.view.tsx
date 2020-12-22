@@ -8,15 +8,16 @@ import { ControlListProps } from './ControlList.props';
 import { Control } from 'store/controls';
 
 const ControlListView = (props: ControlListProps) => {
-  const { controllers, addController } = props;
+  const { controllers, addController, navigation } = props;
 
   const renderControllerItem = ({ item }: { item: Control }) => {
     return (
       <ControlItem
         containerStyle={styles.itemContainer}
         label={item.label}
-        onPress={() => {}}
-        onPressMenu={() => {}}
+        onPress={() => {
+          navigation.navigate('CONTROL_EDIT', { id: item.id });
+        }}
       />
     );
   };
@@ -38,7 +39,12 @@ const ControlListView = (props: ControlListProps) => {
           />
         </View>
         <View style={styles.action}>
-          <Button label="Add New Controller" onPress={() => addController()} />
+          <Button
+            label="Add New Controller"
+            onPress={() => {
+              navigation.navigate('CONTROL_EDIT', {});
+            }}
+          />
         </View>
       </View>
     </>

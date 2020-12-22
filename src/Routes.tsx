@@ -3,60 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from 'screens/Home';
 import ControlListScreen from 'screens/ControlList';
+import ControlEditScreen from 'screens/ControlEdit';
 import SettingsScreen from 'screens/Settings';
-import {
-  HomeStackParamList,
-  ControlListStackParamList,
-  SettingsStackParamList,
-  TabParamList,
-} from 'types/Route';
+import { MainTabParamList, MainStackParamList } from 'types/Route';
 import { Control, Device, Settings } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { COLORS } from 'theme';
 
-const HomeStack = createStackNavigator<HomeStackParamList>();
-
-const HomeStackNavigator = () => {
-  return (
-    <HomeStack.Navigator initialRouteName="HOME">
-      <HomeStack.Screen
-        options={{ headerShown: false }}
-        name="HOME"
-        component={HomeScreen}
-      />
-    </HomeStack.Navigator>
-  );
-};
-
-const ControlStack = createStackNavigator<ControlListStackParamList>();
-
-const ControlStackNavigator = () => {
-  return (
-    <ControlStack.Navigator initialRouteName="CONTROL_LIST">
-      <ControlStack.Screen
-        options={{ headerShown: false }}
-        name="CONTROL_LIST"
-        component={ControlListScreen}
-      />
-    </ControlStack.Navigator>
-  );
-};
-
-const SettingsStack = createStackNavigator<SettingsStackParamList>();
-
-const SettingsStackNavigator = () => {
-  return (
-    <SettingsStack.Navigator initialRouteName="SETTINGS">
-      <SettingsStack.Screen
-        options={{ headerShown: false }}
-        name="SETTINGS"
-        component={SettingsScreen}
-      />
-    </SettingsStack.Navigator>
-  );
-};
-
-const Tab = createBottomTabNavigator<TabParamList>();
+const MainTab = createBottomTabNavigator<MainTabParamList>();
 
 const createTabIcon = (
   Component: (props: SVGProps) => JSX.Element,
@@ -71,9 +25,9 @@ const createTabIcon = (
   );
 };
 
-const Routes = () => {
+const MainTabNavigator = () => {
   return (
-    <Tab.Navigator
+    <MainTab.Navigator
       tabBarOptions={{
         showLabel: false,
         activeTintColor: COLORS.BLUE,
@@ -83,25 +37,44 @@ const Routes = () => {
           borderTopWidth: 0,
         },
       }}>
-      <Tab.Screen
+      <MainTab.Screen
         name="HOME"
         options={{
           title: 'Home',
           tabBarIcon: createTabIcon(Device, 40),
         }}
-        component={HomeStackNavigator}
+        component={HomeScreen}
       />
-      <Tab.Screen
+      <MainTab.Screen
         name="CONTROL_LIST"
         options={{ title: 'Controls', tabBarIcon: createTabIcon(Control) }}
-        component={ControlStackNavigator}
+        component={ControlListScreen}
       />
-      <Tab.Screen
+      <MainTab.Screen
         name="SETTINGS"
         options={{ title: 'Settings', tabBarIcon: createTabIcon(Settings) }}
-        component={SettingsStackNavigator}
+        component={SettingsScreen}
       />
-    </Tab.Navigator>
+    </MainTab.Navigator>
+  );
+};
+
+const MainStack = createStackNavigator<MainStackParamList>();
+
+const Routes = () => {
+  return (
+    <MainStack.Navigator initialRouteName="MAIN">
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="MAIN"
+        component={MainTabNavigator}
+      />
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="CONTROL_EDIT"
+        component={ControlEditScreen}
+      />
+    </MainStack.Navigator>
   );
 };
 

@@ -26,21 +26,51 @@ const controlsSlice = createSlice({
   initialState,
   reducers: {
     addController(state, action: PayloadAction<Partial<Control>>) {
-      // state.push(action.payload);
       return [
         ...state,
         {
           id: uuidv1(),
           created_at: new Date().toISOString(),
-          label: 'New Controller',
+          label: '',
           elements: [],
           ...action.payload,
         },
       ];
     },
+    updateController(state, action: PayloadAction<Partial<Control>>) {
+      const index = state.findIndex(
+        (controller) => controller.id === action.payload.id,
+      );
+
+      // Note: Immer Mutation
+      if (index !== -1) {
+        state[index] = {
+          ...state[index],
+          ...action.payload,
+        };
+      }
+
+      return state;
+    },
+    deleteController(state, action: PayloadAction<{ id: string }>) {
+      const index = state.findIndex(
+        (controller) => controller.id === action.payload.id,
+      );
+
+      // Note: Immer Mutation
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
+
+      return state;
+    },
   },
 });
 
-export const { addController: addControllerAction } = controlsSlice.actions;
+export const {
+  addController: addControllerAction,
+  updateController: updateControllerAction,
+  deleteController: deleteControllerAction,
+} = controlsSlice.actions;
 
 export default controlsSlice.reducer;

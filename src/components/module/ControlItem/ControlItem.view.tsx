@@ -3,10 +3,10 @@ import { TouchableOpacity } from 'react-native';
 import Text from 'components/base/Text';
 import styles from './ControlItem.style';
 import { ControlItemProps } from './ControlItem.props';
-import { Bluetooth, More } from 'components/base/SVG';
+import { Bluetooth } from 'components/base/SVG';
 
 const ControlItem = (props: ControlItemProps) => {
-  const { containerStyle = {}, label, onPress, onPressMenu } = props;
+  const { containerStyle = {}, label, onPress } = props;
 
   return (
     <TouchableOpacity
@@ -20,9 +20,6 @@ const ControlItem = (props: ControlItemProps) => {
         containerStyle={styles.labelContainer}>
         {label}
       </Text>
-      <TouchableOpacity style={styles.actionContainer} onPress={onPressMenu}>
-        <More width={24} height={24} />
-      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
