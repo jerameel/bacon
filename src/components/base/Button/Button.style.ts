@@ -7,11 +7,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
+    elevation: 5,
   },
   text: {
     fontFamily: 'Heebo-Bold',
     fontSize: 14,
     color: '#fff',
+    textTransform: 'uppercase',
+    letterSpacing: 1.5,
   },
 });
 

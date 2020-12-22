@@ -16,6 +16,19 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: '#fff',
   },
+  content: {
+    flex: 1,
+  },
+  itemContainer: {
+    marginTop: 8,
+    marginHorizontal: 16,
+  },
+  action: {
+    padding: 16,
+  },
+  spacer: {
+    height: 8,
+  },
 });
 
 export default styles;

@@ -1,1 +1,1 @@
-export { default } from './ControlList.view';
+export { default } from './ControlList.container';
