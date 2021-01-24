@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MainStackParamList } from 'types/Route';
-import { Control } from 'store/controls';
+import { Control, ControlElement } from 'store/controls';
 
 export interface ControlEditRouterProps {
   id?: string;
@@ -20,7 +20,11 @@ export interface ControlEditPublicProps {
 }
 
 export interface ControlEditGeneratedProps {
-  saveController: (data: { id?: string; label?: string }) => void;
+  saveController: (data: {
+    id?: string;
+    label?: string;
+    elements?: ControlElement[];
+  }) => void;
   deleteController: (id: string) => void;
   controllers: Control[];
 }

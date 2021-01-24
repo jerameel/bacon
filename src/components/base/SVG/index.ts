@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Add } from './Add';
+export { default as Close } from './Close';
 export { default as Delete } from './Delete';
 export { default as Back } from './Back';
 export { default as Bluetooth } from './Bluetooth';

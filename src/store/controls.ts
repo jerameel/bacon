@@ -1,14 +1,14 @@
 import { v1 as uuidv1 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type ControlElement = {
+export type ControlElement = {
   id: string;
-  x: string;
-  y: string;
+  x: number;
+  y: number;
   label: string;
-  event: {
-    press: string;
-    release: string;
+  command: {
+    onPress: string;
+    onRelease: string;
   };
 };
 

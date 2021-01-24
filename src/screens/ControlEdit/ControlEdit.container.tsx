@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import {
   addControllerAction,
+  ControlElement,
   deleteControllerAction,
   updateControllerAction,
 } from 'store/controls';
@@ -15,13 +16,18 @@ import ControlEditView from './ControlEdit.view';
 const ControlEditScreen = (props: ControlEditPublicProps) => {
   const dispatch = useDispatch();
 
-  const saveController = (data: { id?: string; label?: string }) => {
+  const saveController = (data: {
+    id?: string;
+    label?: string;
+    elements?: ControlElement[];
+  }) => {
     if (data.id) {
       dispatch(updateControllerAction(data));
     } else {
       dispatch(
         addControllerAction({
           label: data.label || 'New Controller',
+          elements: data.elements || [],
         }),
       );
     }

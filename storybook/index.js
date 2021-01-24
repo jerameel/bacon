@@ -11,6 +11,8 @@ configure(() => {
   // Imported components
 }, module);
 
-const StorybookUIRoot = getStorybookUI({});
+const StorybookUIRoot = getStorybookUI({
+  asyncStorage: null,
+});
 
 export default StorybookUIRoot;

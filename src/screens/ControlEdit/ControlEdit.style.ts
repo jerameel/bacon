@@ -30,12 +30,24 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  elements: {
+    flex: 1,
+  },
   inputContainer: { marginTop: 8, marginHorizontal: 16 },
   action: {
     padding: 16,
   },
+  secondaryActionButton: {
+    marginBottom: 8,
+  },
   spacer: {
     height: 8,
+  },
+  layoutActions: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 });
 

@@ -4,13 +4,16 @@ import styles from './Button.style';
 import { ButtonProps } from './Button.props';
 
 const Button = (props: ButtonProps) => {
-  const { containerStyle = {}, onPress, label } = props;
+  const { containerStyle = {}, onPress, label, outline } = props;
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      style={[styles.container, containerStyle]}
+      style={[
+        outline ? styles.outlineContainer : styles.container,
+        containerStyle,
+      ]}
       onPress={onPress}>
-      <Text style={styles.text}>{label}</Text>
+      <Text style={outline ? styles.outlineText : styles.text}>{label}</Text>
     </TouchableOpacity>
   );
 };
