@@ -1,15 +1,15 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { SettingsStackParamList, TabParamList } from 'types/Route';
+import { MainStackParamList, MainTabParamList } from 'types/Route';
 
 export interface SettingsRouterProps {}
 
-type SettingsRouteProp = RouteProp<SettingsStackParamList, 'SETTINGS'>;
+type SettingsRouteProp = RouteProp<MainStackParamList, 'MAIN'>;
 
 type SettingsNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<TabParamList, 'SETTINGS'>,
-  StackNavigationProp<SettingsStackParamList, 'SETTINGS'>
+  BottomTabNavigationProp<MainTabParamList, 'SETTINGS'>,
+  StackNavigationProp<MainStackParamList, 'MAIN'>
 >;
 
 export interface SettingsProps {

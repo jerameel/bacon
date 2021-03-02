@@ -3,6 +3,7 @@ import { getStorybookUI, configure } from '@storybook/react-native';
 // import stories
 configure(() => {
   /* PLOP_INJECT_IMPORT */
+  require('./stories/module/ControlItem');
   require('./stories/base/SVG');
   require('./stories/base/TextInput');
   require('./stories/base/Button');
@@ -10,6 +11,8 @@ configure(() => {
   // Imported components
 }, module);
 
-const StorybookUIRoot = getStorybookUI({});
+const StorybookUIRoot = getStorybookUI({
+  asyncStorage: null,
+});
 
 export default StorybookUIRoot;

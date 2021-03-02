@@ -4,10 +4,18 @@ import styles, { fontStyles } from './Text.style';
 import { TextProps } from './Text.props';
 
 const Text = (props: TextProps) => {
-  const { containerStyle = {}, style = {}, children, variant = 'body' } = props;
+  const {
+    containerStyle = {},
+    style = {},
+    children,
+    variant = 'body',
+    ...textProps
+  } = props;
   return (
     <View style={[styles.container, containerStyle]}>
-      <RNText style={[fontStyles[variant], style]}>{children}</RNText>
+      <RNText {...textProps} style={[fontStyles[variant], style]}>
+        {children}
+      </RNText>
     </View>
   );
 };

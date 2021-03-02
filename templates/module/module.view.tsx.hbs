@@ -1,0 +1,18 @@
+import React from 'react';
+import { View } from 'react-native';
+import Text from 'components/base/Text';
+import styles from './{{ pascalCase name}}.style';
+import { {{ pascalCase name}}Props } from './{{ pascalCase name}}.props';
+
+const {{ pascalCase name}} = (props: {{ pascalCase name}}Props) => {
+  const { containerStyle = {} } = props;
+  return (
+    <View style={[styles.container, containerStyle]}>
+      {
+        // Component
+      }
+    </View>
+  );
+};
+
+export default {{ pascalCase name}};

@@ -1,8 +1,7 @@
 import { ViewStyle } from 'react-native';
 
-export interface ButtonProps {
+export interface ControlItemProps {
   containerStyle?: ViewStyle;
   label: string;
   onPress: () => void;
-  outline?: boolean;
 }

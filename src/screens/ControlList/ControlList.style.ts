@@ -7,14 +7,28 @@ const styles = StyleSheet.create({
   header: {
     display: 'flex',
     padding: 16,
-    backgroundColor: '#000',
-    height: 100,
+    backgroundColor: '#fff',
+    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    elevation: 3,
   },
   headerTitle: {
-    color: '#fff',
+    color: '#000',
+  },
+  content: {
+    flex: 1,
+  },
+  itemContainer: {
+    marginTop: 8,
+    marginHorizontal: 16,
+  },
+  action: {
+    padding: 16,
+  },
+  spacer: {
+    height: 8,
   },
 });
 
