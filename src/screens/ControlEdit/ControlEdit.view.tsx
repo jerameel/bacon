@@ -11,7 +11,9 @@ import {
   TouchableOpacity,
   BackHandler,
   Dimensions,
+  Modal,
 } from 'react-native';
+import Slider from 'react-native-slider';
 import Draggable from 'react-native-draggable';
 import { v1 as uuidv1 } from 'uuid';
 import Text from 'components/base/Text';
@@ -19,8 +21,9 @@ import TextInput from 'components/base/TextInput';
 import Button from 'components/base/Button';
 import styles from './ControlEdit.style';
 import { ControlEditProps } from './ControlEdit.props';
-import { Add, Back, Close, Delete } from 'components/base/SVG';
+import { Add, Back, Close, Delete, Down } from 'components/base/SVG';
 import { ControlElement } from 'store/controls';
+import { propertiesToSaveElementData } from './ControlEdit.transform';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -30,15 +33,21 @@ const DraggableControl = memo(
   (
     props: ControlElement & {
       onUpdate: (id: string, x: number, y: number) => void;
+      onClick: (id: string) => void;
+      label: string;
+      size: number;
     },
   ) => {
     return (
       <Draggable
         x={props.x}
         y={props.y}
-        renderText="X"
+        renderText={props.label || 'X'}
         renderColor={'black'}
-        renderSize={32}
+        renderSize={props.size || 80}
+        onShortPressRelease={() => {
+          props.onClick(props.id);
+        }}
         minY={0}
         minX={0}
         maxX={windowWidth}
@@ -73,6 +82,9 @@ const ControlEditView = (props: ControlEditProps) => {
     currentController?.elements || [],
   );
 
+  const [currentElementId, setCurrentElementId] = useState('');
+  const currentElement = elements.find((a) => a.id === currentElementId);
+
   type ElementPositions = Record<
     string,
     {
@@ -91,12 +103,57 @@ const ControlEditView = (props: ControlEditProps) => {
     {},
   );
 
+  type ElementLabel = Record<string, string>;
+
+  const [elementLabels, updateElementLabel] = useReducer(
+    (state: ElementLabel, newState: ElementLabel) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
+  type ElementSize = Record<string, number>;
+
+  const [elementSizes, updateElementSize] = useReducer(
+    (state: ElementSize, newState: ElementSize) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
+  const [elementsOnPress, updateElementsOnPress] = useReducer(
+    (state: ElementLabel, newState: ElementLabel) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
+  const [elementsOnRelease, updateElementsOnRelease] = useReducer(
+    (state: ElementLabel, newState: ElementLabel) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
   const addElement = () => {
     const newElement: ControlElement = {
       id: uuidv1(),
-      label: 'New Element',
+      label: 'X',
       x: windowWidth / 2,
       y: viewHeight / 2,
+      size: 80,
       command: {
         onPress: '',
         onRelease: '',
@@ -166,6 +223,89 @@ const ControlEditView = (props: ControlEditProps) => {
       <View style={styles.container}>
         {showEditLayout ? (
           <>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={currentElementId.length > 0}
+              onRequestClose={() => {
+                setCurrentElementId('');
+              }}>
+              <View
+                onTouchStart={() => setCurrentElementId('')}
+                style={styles.modalClickableLayer}>
+                <Down width={32} height={32} fill={'#000'} />
+              </View>
+              <View style={styles.modalContentLayer}>
+                <TextInput
+                  label="Label"
+                  value={
+                    elementLabels[currentElementId] ||
+                    currentElement?.label ||
+                    ''
+                  }
+                  onChangeText={(t) => {
+                    updateElementLabel({
+                      [currentElementId]: t,
+                    });
+                  }}
+                />
+                <Text containerStyle={styles.modalLabel} variant="caption">
+                  {`Size (${(
+                    (elementSizes[currentElementId] ||
+                      currentElement?.size ||
+                      80) / 80
+                  ).toFixed(2)})`}
+                </Text>
+                <View style={styles.modalSliderContainer}>
+                  <Slider
+                    minimumValue={32}
+                    maximumValue={128}
+                    value={
+                      elementSizes[currentElementId] ||
+                      currentElement?.size ||
+                      80
+                    }
+                    onValueChange={(s) => {
+                      updateElementSize({
+                        [currentElementId]: s,
+                      });
+                    }}
+                    step={8}
+                  />
+                </View>
+                <Text containerStyle={styles.modalLabel} variant="caption">
+                  Command
+                </Text>
+                <TextInput
+                  label="On Press"
+                  value={
+                    elementsOnPress[currentElementId] ||
+                    currentElement?.command.onPress ||
+                    ''
+                  }
+                  onChangeText={(t) => {
+                    updateElementsOnPress({
+                      [currentElementId]: t,
+                    });
+                  }}
+                  containerStyle={styles.modalTextInput}
+                />
+                <TextInput
+                  label="On Release"
+                  value={
+                    elementsOnRelease[currentElementId] ||
+                    currentElement?.command.onRelease ||
+                    ''
+                  }
+                  onChangeText={(t) => {
+                    updateElementsOnRelease({
+                      [currentElementId]: t,
+                    });
+                  }}
+                  containerStyle={styles.modalTextInput}
+                />
+              </View>
+            </Modal>
             <View style={styles.header}>
               <TouchableOpacity
                 style={styles.headerAction}
@@ -185,9 +325,12 @@ const ControlEditView = (props: ControlEditProps) => {
             <View style={styles.elements}>
               {elements.map((element) => (
                 <DraggableControl
-                  key={element.id}
                   {...element}
+                  key={element.id}
                   onUpdate={saveElementPosition}
+                  onClick={setCurrentElementId}
+                  label={elementLabels[element.id] || element.label || ''}
+                  size={elementSizes[element.id] || element.size || 80}
                 />
               ))}
             </View>
@@ -237,7 +380,17 @@ const ControlEditView = (props: ControlEditProps) => {
               <Button
                 label={'Save Controller'}
                 onPress={() => {
-                  saveController({ id, label, elements });
+                  saveController({
+                    id,
+                    label,
+                    elements: propertiesToSaveElementData(
+                      elements,
+                      elementLabels,
+                      elementSizes,
+                      elementsOnPress,
+                      elementsOnRelease,
+                    ),
+                  });
                   navigation.goBack();
                 }}
               />

@@ -6,6 +6,7 @@ export type ControlElement = {
   x: number;
   y: number;
   label: string;
+  size: number;
   command: {
     onPress: string;
     onRelease: string;

@@ -49,6 +49,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
+  modalClickableLayer: {
+    backgroundColor: '#fff',
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
+  modalContentLayer: {
+    backgroundColor: '#fff',
+    flex: 1,
+    padding: 16,
+  },
+  modalTextInput: {
+    marginTop: 8,
+  },
+  modalLabel: {
+    marginTop: 16,
+  },
+  modalSliderContainer: {
+    alignItems: 'stretch',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;
