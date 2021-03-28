@@ -5,7 +5,7 @@ import Text from 'components/base/Text';
 import styles from './Home.style';
 import { HomeProps } from './Home.props';
 
-const HomeScreen = (props: HomeProps) => {
+const HomeView = (props: HomeProps) => {
   return (
     <>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
@@ -24,4 +24,4 @@ const HomeScreen = (props: HomeProps) => {
   );
 };
 
-export default HomeScreen;
+export default HomeView;

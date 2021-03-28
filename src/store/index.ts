@@ -17,9 +17,11 @@ import {
 import createSagaMiddleware from 'redux-saga';
 
 import controlsReducer from './controls';
+import bleReducer from './ble';
 
 const rootReducer = combineReducers({
   controls: controlsReducer,
+  ble: bleReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -12,7 +12,11 @@ type HomeNavigationProp = CompositeNavigationProp<
   StackNavigationProp<MainStackParamList, 'MAIN'>
 >;
 
-export interface HomeProps {
+export interface HomePublicProps {
   route: HomeRouteProp;
   navigation: HomeNavigationProp;
 }
+
+export interface HomeGeneratedProps {}
+
+export interface HomeProps extends HomePublicProps, HomeGeneratedProps {}
