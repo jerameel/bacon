@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: '#fff',
   },
+  content: {
+    flex: 1,
+  },
+  action: {
+    padding: 16,
+  },
 });
 
 export default styles;

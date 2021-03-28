@@ -14,6 +14,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga';
 
 import controlsReducer from './controls';
 
@@ -33,14 +34,20 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default () => {
+  const sagaMiddleware = createSagaMiddleware();
+  const { run: runSaga } = sagaMiddleware;
+  const middlewares = [sagaMiddleware];
   const store = configureStore({
     reducer: persistedReducer,
-    middleware: getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+    middleware: [
+      ...getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+      ...middlewares,
+    ],
   });
   const persistor = persistStore(store);
-  return { store, persistor };
+  return { store, persistor, runSaga };
 };

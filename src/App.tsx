@@ -5,7 +5,10 @@ import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import Routes from './Routes';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from 'infrastracture';
+import { persistor, store, runSaga } from 'infrastracture';
+import sagas from './store/sagas';
+
+runSaga(sagas);
 
 const App = () => {
   return (
