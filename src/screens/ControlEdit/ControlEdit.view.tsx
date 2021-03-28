@@ -42,7 +42,7 @@ const DraggableControl = memo(
       <Draggable
         x={props.x}
         y={props.y}
-        renderText={props.label || 'X'}
+        renderText={props.label || ''}
         renderColor={'black'}
         renderSize={props.size || 80}
         onShortPressRelease={() => {
@@ -239,9 +239,9 @@ const ControlEditView = (props: ControlEditProps) => {
                 <TextInput
                   label="Label"
                   value={
-                    elementLabels[currentElementId] ||
-                    currentElement?.label ||
-                    ''
+                    elementLabels[currentElementId] === undefined
+                      ? currentElement?.label || ''
+                      : elementLabels[currentElementId]
                   }
                   onChangeText={(t) => {
                     updateElementLabel({
@@ -279,9 +279,9 @@ const ControlEditView = (props: ControlEditProps) => {
                 <TextInput
                   label="On Press"
                   value={
-                    elementsOnPress[currentElementId] ||
-                    currentElement?.command.onPress ||
-                    ''
+                    elementsOnPress[currentElementId] === undefined
+                      ? currentElement?.command.onPress || ''
+                      : elementsOnPress[currentElementId]
                   }
                   onChangeText={(t) => {
                     updateElementsOnPress({
@@ -293,9 +293,9 @@ const ControlEditView = (props: ControlEditProps) => {
                 <TextInput
                   label="On Release"
                   value={
-                    elementsOnRelease[currentElementId] ||
-                    currentElement?.command.onRelease ||
-                    ''
+                    elementsOnRelease[currentElementId] === undefined
+                      ? currentElement?.command.onRelease || ''
+                      : elementsOnRelease[currentElementId]
                   }
                   onChangeText={(t) => {
                     updateElementsOnRelease({
@@ -329,7 +329,11 @@ const ControlEditView = (props: ControlEditProps) => {
                   key={element.id}
                   onUpdate={saveElementPosition}
                   onClick={setCurrentElementId}
-                  label={elementLabels[element.id] || element.label || ''}
+                  label={
+                    elementLabels[element.id] === undefined
+                      ? element?.label || ''
+                      : elementLabels[element.id]
+                  }
                   size={elementSizes[element.id] || element.size || 80}
                 />
               ))}
