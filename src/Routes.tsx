@@ -50,11 +50,11 @@ const MainTabNavigator = () => {
         options={{ title: 'Controls', tabBarIcon: createTabIcon(Control) }}
         component={ControlListScreen}
       />
-      <MainTab.Screen
+      {/* <MainTab.Screen
         name="SETTINGS"
         options={{ title: 'Settings', tabBarIcon: createTabIcon(Settings) }}
         component={SettingsScreen}
-      />
+      /> */}
     </MainTab.Navigator>
   );
 };
