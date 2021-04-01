@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     elevation: 5,
+    flexDirection: 'row',
   },
   text: {
     fontFamily: 'Heebo-Bold',
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderColor: '#000',
     borderWidth: 2,
+    flexDirection: 'row',
   },
   outlineText: {
     fontFamily: 'Heebo-Bold',

@@ -1,7 +1,9 @@
-import { take, put, call } from 'redux-saga/effects';
+import { take, put, call, select } from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import { bleActions } from 'store/ble';
+import { RootState } from 'store';
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -28,7 +30,7 @@ function* discoveryWatcher(): any {
     while (true) {
       // take(END) will cause the saga to terminate by jumping to the finally block
       const peripheral: any = yield take(discoveryChannel);
-      console.log(`peripheral: ${peripheral}`);
+      console.log(`peripheral: ${JSON.stringify(peripheral)}`);
     }
   } finally {
     console.log('discovery terminated');
@@ -41,7 +43,7 @@ function stopEventChannel(): any {
     const subscription = bleManagerEmitter.addListener(
       'BleManagerStopScan',
       () => {
-        emitter('stop');
+        emitter(true);
       },
     );
     // The subscriber must return an unsubscribe function
@@ -56,14 +58,18 @@ function* stopWatcher(): any {
   try {
     while (true) {
       // take(END) will cause the saga to terminate by jumping to the finally block
-      const stop: any = yield take(stopChannel);
-      console.log(`stop: ${stop}`);
+      const stop: boolean = yield take(stopChannel);
+      const isScanning: boolean =
+        (yield select((state: RootState) => state.ble.status)) === 'SCANNING';
+      if (stop && isScanning) {
+        yield put(bleActions.updateScanStatus('IDLE'));
+      }
     }
   } finally {
     console.log('stop terminated');
   }
 }
 
-const bleEventWatcher = [discoveryWatcher, stopWatcher];
+const bleEventsWatcher = [discoveryWatcher, stopWatcher];
 
-export default bleEventWatcher;
+export default bleEventsWatcher;

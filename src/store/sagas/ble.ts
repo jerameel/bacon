@@ -1,27 +1,41 @@
 import { put, call, takeLatest, select } from 'redux-saga/effects';
-import { updateInitStatusAction } from 'store/ble';
+import { bleActions } from 'store/ble';
 import bleService from 'services/ble';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'store';
 
-function* startBleRunner(action: PayloadAction<{}>) {
+function* startRunner() {
   try {
     const isSuccess: boolean = yield call(bleService.start);
-    yield put(
-      updateInitStatusAction({
-        status: isSuccess ? 'SUCCESS' : 'FAILED',
-      }),
-    );
+    yield put(bleActions.updateInitStatus(isSuccess ? 'SUCCESS' : 'FAILED'));
   } catch (e) {
-    yield put(
-      updateInitStatusAction({
-        status: 'FAILED',
-      }),
-    );
+    yield put(bleActions.updateInitStatus('FAILED'));
+  }
+}
+
+function* scanRunner() {
+  try {
+    const isSuccess: boolean = yield call(bleService.scan);
+    yield put(bleActions.updateScanStatus(isSuccess ? 'SCANNING' : 'IDLE'));
+  } catch (e) {
+    yield put(bleActions.updateScanStatus('IDLE'));
+  }
+}
+
+function* stopScanRunner() {
+  try {
+    const isSuccess: boolean = yield call(bleService.stopScan);
+    if (isSuccess) {
+      yield put(bleActions.updateScanStatus('IDLE'));
+    }
+  } catch (e) {
+    // Do nothing
   }
 }
 
 function* bleWatcher() {
-  yield takeLatest('ble/startBLE', startBleRunner);
+  yield takeLatest('ble/start', startRunner);
+  yield takeLatest('ble/scan', scanRunner);
+  yield takeLatest('ble/stopScan', stopScanRunner);
 }
 
 export default bleWatcher;

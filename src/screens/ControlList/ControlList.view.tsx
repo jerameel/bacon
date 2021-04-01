@@ -27,7 +27,7 @@ const ControlListView = (props: ControlListProps) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle} variant="title">
-            Controls
+            Manage Controllers
           </Text>
         </View>
         <View style={styles.content}>

@@ -2,15 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   init: {
-    status: 'IDLE',
+    status: 'PENDING',
   },
+  status: 'IDLE',
+  devices: [],
 };
 
 const bleSlice = createSlice({
   name: 'ble',
   initialState,
   reducers: {
-    startBLE(state, action: PayloadAction<{}>) {
+    start(state) {
       return {
         ...state,
         init: {
@@ -18,25 +20,29 @@ const bleSlice = createSlice({
         },
       };
     },
-    updateInitStatus(
-      state,
-      action: PayloadAction<{
-        status: 'SUCCESS' | 'FAILED';
-      }>,
-    ) {
+    scan(state) {
+      return state;
+    },
+    stopScan(state) {
+      return state;
+    },
+    updateScanStatus(state, action: PayloadAction<'SCANNING' | 'IDLE'>) {
+      return {
+        ...state,
+        status: action.payload,
+      };
+    },
+    updateInitStatus(state, action: PayloadAction<'SUCCESS' | 'FAILED'>) {
       return {
         ...state,
         init: {
-          status: action.payload.status,
+          status: action.payload,
         },
       };
     },
   },
 });
 
-export const {
-  startBLE: startBLEAction,
-  updateInitStatus: updateInitStatusAction,
-} = bleSlice.actions;
+export const bleActions = bleSlice.actions;
 
 export default bleSlice.reducer;

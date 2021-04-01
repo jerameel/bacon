@@ -28,6 +28,28 @@ const start = async () => {
   }
 };
 
+const scan = async () => {
+  try {
+    await BleManager.scan([], 5, true);
+    return true;
+  } catch (e) {
+    console.log('services/ble(scan): ', e);
+    return false;
+  }
+};
+
+const stopScan = async () => {
+  try {
+    await BleManager.stopScan();
+    return true;
+  } catch (e) {
+    console.log('services/ble(stop): ', e);
+    return false;
+  }
+};
+
 export default {
   start,
+  scan,
+  stopScan,
 };

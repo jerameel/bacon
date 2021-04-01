@@ -17,6 +17,9 @@ export interface HomePublicProps {
   navigation: HomeNavigationProp;
 }
 
-export interface HomeGeneratedProps {}
+export interface HomeGeneratedProps {
+  toggleScan: () => void;
+  scanning: boolean;
+}
 
 export interface HomeProps extends HomePublicProps, HomeGeneratedProps {}
