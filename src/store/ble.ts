@@ -5,12 +5,18 @@ export type Device = {
   name: string;
 };
 
+type Status = 'IDLE' | 'SCANNING' | 'CONNECTING' | 'CONNECTED';
+
 type BLEState = {
   init: {
     status: 'PENDING' | 'SUCCESS' | 'FAILED';
   };
-  status: 'IDLE' | 'SCANNING';
+  status: Status;
   devices: Device[];
+  connection: {
+    serviceUUID?: string;
+    characteristicUUID?: string;
+  };
 };
 
 const initialState: BLEState = {
@@ -55,7 +61,7 @@ const bleSlice = createSlice({
         devices: alreadyExists ? state.devices : [...state.devices, newDevice],
       };
     },
-    updateScanStatus(state, action: PayloadAction<'SCANNING' | 'IDLE'>) {
+    updateStatus(state, action: PayloadAction<Status>) {
       return {
         ...state,
         status: action.payload,
@@ -67,6 +73,22 @@ const bleSlice = createSlice({
         init: {
           status: action.payload,
         },
+      };
+    },
+    connect(state, action: PayloadAction<string>) {
+      return { ...state, status: 'CONNECTING' };
+    },
+    connected(
+      state,
+      action: PayloadAction<{
+        serviceUUID: string;
+        characteristicUUID: string;
+      }>,
+    ) {
+      return {
+        ...state,
+        status: 'CONNECTED',
+        connection: action.payload,
       };
     },
   },

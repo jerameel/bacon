@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemContainer: {
-    marginTop: 8,
+    marginTop: 16,
     marginHorizontal: 16,
   },
   action: {

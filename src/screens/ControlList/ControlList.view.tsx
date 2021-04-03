@@ -23,7 +23,7 @@ const ControlListView = (props: ControlListProps) => {
   };
   return (
     <>
-      <StatusBar backgroundColor="#000" barStyle="light-content" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle} variant="title">

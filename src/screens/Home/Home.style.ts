@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   itemContainer: {
-    marginTop: 8,
+    marginTop: 16,
     marginHorizontal: 16,
   },
   spacer: {
@@ -43,8 +43,7 @@ const styles = StyleSheet.create({
   textDeviceCount: {
     marginHorizontal: 16,
     color: '#595959',
-    marginTop: 8,
-    marginBottom: 8,
+    marginTop: 16,
   },
 });
 

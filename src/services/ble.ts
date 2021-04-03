@@ -1,5 +1,6 @@
 import { Platform, PermissionsAndroid } from 'react-native';
 import BleManager from 'react-native-ble-manager';
+import pathOr from 'ramda/src/pathOr';
 
 const start = async () => {
   try {
@@ -48,8 +49,43 @@ const stopScan = async () => {
   }
 };
 
+const connect = async (
+  id: string,
+): Promise<
+  | {
+      serviceUUID: string;
+      characteristicUUID: string;
+    }
+  | boolean
+> => {
+  try {
+    await BleManager.connect(id);
+    const peripheralInfo = await BleManager.retrieveServices(id);
+    const characteristicData = pathOr<any>(
+      [],
+      ['characteristics'],
+      peripheralInfo,
+    ).find((characteristic: any) => {
+      const { Notify, Read, Write } = characteristic.properties;
+      return Notify && Read && Write;
+    });
+    const serviceUUID = characteristicData.service;
+    const characteristicUUID = characteristicData.characteristic;
+    await BleManager.startNotification(id, serviceUUID, characteristicUUID);
+    await BleManager.requestConnectionPriority(id, 1);
+    return {
+      serviceUUID,
+      characteristicUUID,
+    };
+  } catch (e) {
+    console.log('services/ble(connect): ', e);
+    return false;
+  }
+};
+
 export default {
   start,
   scan,
   stopScan,
+  connect,
 };

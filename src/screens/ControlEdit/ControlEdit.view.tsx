@@ -219,7 +219,7 @@ const ControlEditView = (props: ControlEditProps) => {
 
   return (
     <>
-      <StatusBar backgroundColor="#000" barStyle="light-content" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <View style={styles.container}>
         {showEditLayout ? (
           <>

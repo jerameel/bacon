@@ -9,6 +9,7 @@ import { MainTabParamList, MainStackParamList } from 'types/Route';
 import { Control, Device, Settings } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { COLORS } from 'theme';
+import ConnectScreen from 'screens/Connect';
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
 
@@ -73,6 +74,11 @@ const Routes = () => {
         options={{ headerShown: false }}
         name="CONTROL_EDIT"
         component={ControlEditScreen}
+      />
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="CONNECT"
+        component={ConnectScreen}
       />
     </MainStack.Navigator>
   );

@@ -10,7 +10,7 @@ import { Device } from 'store/ble';
 import { FlatList } from 'react-native-gesture-handler';
 
 const HomeView = (props: HomeProps) => {
-  const { toggleScan, scanning, devices } = props;
+  const { toggleScan, scanning, devices, navigation } = props;
 
   const renderDeviceItem = ({ item }: { item: Device }) => {
     return (
@@ -19,7 +19,7 @@ const HomeView = (props: HomeProps) => {
         name={item.name}
         id={item.id}
         onPress={() => {
-          // navigation.navigate('CONTROL_EDIT', { id: item.id });
+          navigation.navigate('CONNECT', { id: item.id, name: item.name });
         }}
       />
     );
@@ -27,7 +27,7 @@ const HomeView = (props: HomeProps) => {
 
   return (
     <>
-      <StatusBar backgroundColor="#000" barStyle="light-content" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle} variant="title">

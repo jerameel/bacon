@@ -76,7 +76,7 @@ function* stopWatcher(): any {
       const isScanning: boolean =
         (yield select((state: RootState) => state.ble.status)) === 'SCANNING';
       if (stop && isScanning) {
-        yield put(bleActions.updateScanStatus('IDLE'));
+        yield put(bleActions.updateStatus('IDLE'));
       }
     }
   } finally {
