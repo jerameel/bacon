@@ -30,7 +30,21 @@ function* discoveryWatcher(): any {
     while (true) {
       // take(END) will cause the saga to terminate by jumping to the finally block
       const peripheral: any = yield take(discoveryChannel);
-      console.log(`peripheral: ${JSON.stringify(peripheral)}`);
+      if (peripheral.id) {
+        const existingDevices = yield select(
+          (state: RootState) => state.ble.devices,
+        );
+        const alreadyExists =
+          existingDevices.findIndex((v) => v.id === peripheral.id) >= 0;
+        if (!alreadyExists) {
+          yield put(
+            bleActions.addDevice({
+              id: peripheral.id,
+              name: peripheral.name || 'Unknown Device',
+            }),
+          );
+        }
+      }
     }
   } finally {
     console.log('discovery terminated');

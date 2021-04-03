@@ -1,6 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+type BLEState = {
+  init: {
+    status: 'PENDING' | 'SUCCESS' | 'FAILED';
+  };
+  status: 'IDLE' | 'SCANNING';
+  devices: {
+    id: string;
+    name: string;
+  }[];
+};
+
+const initialState: BLEState = {
   init: {
     status: 'PENDING',
   },
@@ -21,10 +32,26 @@ const bleSlice = createSlice({
       };
     },
     scan(state) {
-      return state;
+      return { ...state, devices: [] };
     },
     stopScan(state) {
       return state;
+    },
+    addDevice(
+      state,
+      action: PayloadAction<{
+        id: string;
+        name: string;
+      }>,
+    ) {
+      const newDevice = action.payload;
+      const existingDevices = state.devices;
+      const alreadyExists =
+        existingDevices.findIndex((v) => v.id === newDevice.id) >= 0;
+      return {
+        ...state,
+        devices: alreadyExists ? state.devices : [...state.devices, newDevice],
+      };
     },
     updateScanStatus(state, action: PayloadAction<'SCANNING' | 'IDLE'>) {
       return {
