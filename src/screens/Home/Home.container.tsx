@@ -29,6 +29,7 @@ const HomeScreen = (props: HomePublicProps) => {
   const generatedProps: HomeGeneratedProps = {
     toggleScan,
     scanning: bleState.status === 'SCANNING',
+    devices: bleState.devices,
   };
   return <HomeView {...props} {...generatedProps} />;
 };

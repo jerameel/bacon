@@ -33,6 +33,19 @@ const styles = StyleSheet.create({
   action: {
     padding: 16,
   },
+  itemContainer: {
+    marginTop: 8,
+    marginHorizontal: 16,
+  },
+  spacer: {
+    height: 8,
+  },
+  textDeviceCount: {
+    marginHorizontal: 16,
+    color: '#595959',
+    marginTop: 8,
+    marginBottom: 8,
+  },
 });
 
 export default styles;

@@ -13,12 +13,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  labelContainer: {
+  content: {
     flex: 1,
+    flexDirection: 'column',
     marginHorizontal: 8,
   },
-  label: {
+  textName: {
     color: '#000',
+  },
+  textId: {
+    color: '#0050B3',
   },
 });
 

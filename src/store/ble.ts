@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export type Device = {
+  id: string;
+  name: string;
+};
+
 type BLEState = {
   init: {
     status: 'PENDING' | 'SUCCESS' | 'FAILED';
   };
   status: 'IDLE' | 'SCANNING';
-  devices: {
-    id: string;
-    name: string;
-  }[];
+  devices: Device[];
 };
 
 const initialState: BLEState = {

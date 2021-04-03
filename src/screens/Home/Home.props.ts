@@ -20,6 +20,10 @@ export interface HomePublicProps {
 export interface HomeGeneratedProps {
   toggleScan: () => void;
   scanning: boolean;
+  devices: {
+    id: string;
+    name: string;
+  }[];
 }
 
 export interface HomeProps extends HomePublicProps, HomeGeneratedProps {}
