@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.transmitr"
+        applicationId "com.jerameeldelosreyes.bacon"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
