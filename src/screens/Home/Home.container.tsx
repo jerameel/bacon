@@ -10,6 +10,15 @@ const HomeScreen = (props: HomePublicProps) => {
   const dispatch = useDispatch();
   const bleState = useSelector((state: RootState) => state.ble);
 
+  const onSelectItem = (item: { id: string; name: string }) => {
+    if (
+      bleState.status === 'IDLE' ||
+      (bleState.status === 'CONNECTED' && bleState.connection.UUID === item.id)
+    ) {
+      props.navigation.navigate('CONNECT', { id: item.id, name: item.name });
+    }
+  };
+
   const toggleScan = () => {
     if (bleState.status === 'IDLE') {
       dispatch(bleActions.scan());
@@ -30,6 +39,7 @@ const HomeScreen = (props: HomePublicProps) => {
     toggleScan,
     scanning: bleState.status === 'SCANNING',
     devices: bleState.devices,
+    onSelectItem,
   };
   return <HomeView {...props} {...generatedProps} />;
 };

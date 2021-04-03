@@ -14,6 +14,7 @@ type BLEState = {
   status: Status;
   devices: Device[];
   connection: {
+    UUID?: string;
     serviceUUID?: string;
     characteristicUUID?: string;
   };
@@ -81,6 +82,7 @@ const bleSlice = createSlice({
     connected(
       state,
       action: PayloadAction<{
+        UUID: string;
         serviceUUID: string;
         characteristicUUID: string;
       }>,
@@ -90,6 +92,9 @@ const bleSlice = createSlice({
         status: 'CONNECTED',
         connection: action.payload,
       };
+    },
+    disconnect(state, action: PayloadAction<string>) {
+      return { ...state };
     },
   },
 });

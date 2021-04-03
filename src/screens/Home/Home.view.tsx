@@ -10,7 +10,7 @@ import { Device } from 'store/ble';
 import { FlatList } from 'react-native-gesture-handler';
 
 const HomeView = (props: HomeProps) => {
-  const { toggleScan, scanning, devices, navigation } = props;
+  const { toggleScan, scanning, devices, navigation, onSelectItem } = props;
 
   const renderDeviceItem = ({ item }: { item: Device }) => {
     return (
@@ -18,9 +18,7 @@ const HomeView = (props: HomeProps) => {
         containerStyle={styles.itemContainer}
         name={item.name}
         id={item.id}
-        onPress={() => {
-          navigation.navigate('CONNECT', { id: item.id, name: item.name });
-        }}
+        onPress={() => onSelectItem(item)}
       />
     );
   };

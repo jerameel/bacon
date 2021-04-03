@@ -41,7 +41,7 @@ function* connectRunner(action: PayloadAction<string>) {
           characteristicUUID: string;
         } = yield call(bleService.connect, action.payload);
     if (typeof result === 'object') {
-      yield put(bleActions.connected(result));
+      yield put(bleActions.connected({ ...result, UUID: action.payload }));
     } else {
       yield put(bleActions.updateStatus('IDLE'));
     }
@@ -50,11 +50,26 @@ function* connectRunner(action: PayloadAction<string>) {
   }
 }
 
+function* disconnectRunner(action: PayloadAction<string>) {
+  try {
+    const isSuccess: boolean = yield call(
+      bleService.disconnect,
+      action.payload,
+    );
+    if (isSuccess) {
+      yield put(bleActions.updateStatus('IDLE'));
+    }
+  } catch (e) {
+    // Do nothing
+  }
+}
+
 function* bleWatcher() {
   yield takeLatest('ble/start', startRunner);
   yield takeLatest('ble/scan', scanRunner);
   yield takeLatest('ble/stopScan', stopScanRunner);
   yield takeLatest('ble/connect', connectRunner);
+  yield takeLatest('ble/disconnect', disconnectRunner);
 }
 
 export default bleWatcher;

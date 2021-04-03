@@ -19,6 +19,8 @@ export interface ConnectPublicProps {
 export interface ConnectGeneratedProps {
   connecting: boolean;
   connected: boolean;
+  disconnect: () => void;
+  initialized: boolean;
 }
 
 export interface ConnectProps

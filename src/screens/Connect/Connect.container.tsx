@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { bleActions } from 'store/ble';
@@ -10,14 +10,23 @@ const ConnectScreen = (props: ConnectPublicProps) => {
   const dispatch = useDispatch();
   const id = props.route.params.id || '';
   const bleState = useSelector((state: RootState) => state.ble);
-  const connecting =
-    bleState.status === 'CONNECTING' || bleState.status === 'IDLE';
+  const connecting = bleState.status === 'CONNECTING';
   const connected = bleState.status === 'CONNECTED';
+  const [initialized, setInitialized] = useState(false);
+
+  const disconnect = () => {
+    if (id) {
+      dispatch(bleActions.disconnect(id));
+    }
+    setInitialized(false);
+    props.navigation.goBack();
+  };
 
   useEffect(() => {
     if (bleState.status === 'IDLE' && id) {
       dispatch(bleActions.connect(id));
-    } else {
+      setInitialized(true);
+    } else if (id !== bleState.connection.UUID) {
       props.navigation.goBack();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,6 +35,8 @@ const ConnectScreen = (props: ConnectPublicProps) => {
   const generatedProps: ConnectGeneratedProps = {
     connecting,
     connected,
+    disconnect,
+    initialized,
   };
 
   return <ConnectView {...props} {...generatedProps} />;

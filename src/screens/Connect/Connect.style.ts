@@ -29,22 +29,22 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-  },
-  loadingContent: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loadingText: {
+  label: {
     color: '#000',
   },
-  loadingTextContainer: {
+  labelContainer: {
     marginTop: 16,
   },
-  nameText: {
+  deviceName: {
     color: '#0050B3',
   },
-  nameTextContainer: {
+  deviceNameError: {
+    color: '#cf1322',
+  },
+  deviceNameContainer: {
     marginTop: 8,
   },
   action: {

@@ -83,9 +83,20 @@ const connect = async (
   }
 };
 
+const disconnect = async (id: string) => {
+  try {
+    await BleManager.disconnect(id);
+    return true;
+  } catch (e) {
+    console.log('services/ble(disconnect): ', e);
+    return false;
+  }
+};
+
 export default {
   start,
   scan,
   stopScan,
   connect,
+  disconnect,
 };

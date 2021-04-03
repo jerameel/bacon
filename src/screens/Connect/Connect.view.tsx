@@ -9,14 +9,39 @@ import {
 import Text from 'components/base/Text';
 import styles from './Connect.style';
 import { ConnectProps } from './Connect.props';
-import { Back, Bluetooth } from 'components/base/SVG';
+import { Back, Bluetooth, BluetoothOff } from 'components/base/SVG';
 import Button from 'components/base/Button';
 
 const ConnectView = (props: ConnectProps) => {
-  const { navigation, route, connecting, connected } = props;
+  const {
+    navigation,
+    route,
+    connecting,
+    connected,
+    disconnect,
+    initialized,
+  } = props;
 
   const id = route.params.id || '';
   const name = route.params.name || '';
+
+  const connectionFailed = initialized && !connecting && !connected;
+
+  const statusLabel = (() => {
+    if (connecting) {
+      return 'Establishing connection to';
+    }
+
+    if (connected) {
+      return 'Connected to';
+    }
+
+    if (connectionFailed) {
+      return 'Failed to connect to';
+    }
+
+    return '';
+  })();
 
   return (
     <>
@@ -36,41 +61,28 @@ const ConnectView = (props: ConnectProps) => {
             Connect
           </Text>
         </View>
-        {connecting && (
-          <View style={styles.loadingContent}>
-            <ActivityIndicator color="#0050B3" size="large" />
-            <Text
-              style={styles.loadingText}
-              containerStyle={styles.loadingTextContainer}
-              variant="caption">
-              Establishing connection to
-            </Text>
-            <Text
-              style={styles.nameText}
-              containerStyle={styles.nameTextContainer}
-              variant="body">
-              {name && name !== 'Unknown Device' ? name : id}
-            </Text>
-          </View>
-        )}
 
-        {connected && (
-          <View style={styles.loadingContent}>
-            <Bluetooth fill="#0050B3" width={48} height={48} />
-            <Text
-              style={styles.loadingText}
-              containerStyle={styles.loadingTextContainer}
-              variant="caption">
-              Connected To
-            </Text>
-            <Text
-              style={styles.nameText}
-              containerStyle={styles.nameTextContainer}
-              variant="body">
-              {name && name !== 'Unknown Device' ? name : id}
-            </Text>
-          </View>
-        )}
+        <View style={styles.content}>
+          {connecting && <ActivityIndicator color="#0050B3" size="large" />}
+          {connected && <Bluetooth fill="#0050B3" width={48} height={48} />}
+          {connectionFailed && (
+            <BluetoothOff fill="#cf1322" width={48} height={48} />
+          )}
+          <Text
+            style={styles.label}
+            containerStyle={styles.labelContainer}
+            variant="caption">
+            {statusLabel}
+          </Text>
+          <Text
+            style={
+              connectionFailed ? styles.deviceNameError : styles.deviceName
+            }
+            containerStyle={styles.deviceNameContainer}
+            variant="body">
+            {name && name !== 'Unknown Device' ? name : id}
+          </Text>
+        </View>
 
         <View style={styles.action}>
           {connected && (
@@ -83,7 +95,7 @@ const ConnectView = (props: ConnectProps) => {
           <Button
             outline
             label={connected ? 'Disconnect' : 'Cancel'}
-            onPress={() => {}}
+            onPress={() => disconnect()}
           />
         </View>
       </View>
