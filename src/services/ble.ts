@@ -109,7 +109,7 @@ const sendMessage = async (payload: {
     );
     return true;
   } catch (e) {
-    console.log('services/ble(disconnect): ', e);
+    console.log('services/ble(sendMessage): ', e);
     return false;
   }
 };

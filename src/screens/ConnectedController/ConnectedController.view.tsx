@@ -71,6 +71,7 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
           onTouchEnd={endTouchHandler}>
           {elements.map((a) => (
             <View
+              key={a.id}
               style={{
                 width: a.size,
                 height: a.size,

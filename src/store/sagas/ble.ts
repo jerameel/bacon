@@ -96,7 +96,7 @@ function* bleWatcher() {
   yield takeLatest('ble/stopScan', stopScanRunner);
   yield takeLatest('ble/connect', connectRunner);
   yield takeLatest('ble/disconnect', disconnectRunner);
-  yield takeLatest('ble/sendMessageRunner', sendMessageRunner);
+  yield takeLatest('ble/sendMessage', sendMessageRunner);
 }
 
 export default bleWatcher;
