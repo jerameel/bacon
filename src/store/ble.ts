@@ -26,6 +26,7 @@ const initialState: BLEState = {
   },
   status: 'IDLE',
   devices: [],
+  connection: {},
 };
 
 const bleSlice = createSlice({
@@ -94,7 +95,10 @@ const bleSlice = createSlice({
       };
     },
     disconnect(state, action: PayloadAction<string>) {
-      return { ...state };
+      return state;
+    },
+    sendMessage(state, action: PayloadAction<string>) {
+      return state;
     },
   },
 });

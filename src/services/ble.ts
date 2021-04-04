@@ -1,6 +1,7 @@
 import { Platform, PermissionsAndroid } from 'react-native';
 import BleManager from 'react-native-ble-manager';
 import pathOr from 'ramda/src/pathOr';
+import { Buffer } from 'buffer';
 
 const start = async () => {
   try {
@@ -93,10 +94,31 @@ const disconnect = async (id: string) => {
   }
 };
 
+const sendMessage = async (payload: {
+  UUID: string;
+  serviceUUID: string;
+  characteristicUUID: string;
+  message: string;
+}) => {
+  try {
+    await BleManager.writeWithoutResponse(
+      payload.UUID,
+      payload.serviceUUID,
+      payload.characteristicUUID,
+      [...Buffer.from(payload.message)],
+    );
+    return true;
+  } catch (e) {
+    console.log('services/ble(disconnect): ', e);
+    return false;
+  }
+};
+
 export default {
   start,
   scan,
   stopScan,
   connect,
   disconnect,
+  sendMessage,
 };

@@ -19,7 +19,6 @@ export interface ControlListPublicProps {
 }
 
 export interface ControlListGeneratedProps {
-  addController: () => void;
   controllers: Control[];
 }
 

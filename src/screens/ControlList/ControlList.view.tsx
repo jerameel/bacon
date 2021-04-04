@@ -6,9 +6,10 @@ import ControlItem from 'components/module/ControlItem';
 import styles from './ControlList.style';
 import { ControlListProps } from './ControlList.props';
 import { Control } from 'store/controls';
+import { Control as ControlIcon } from 'components/base/SVG';
 
 const ControlListView = (props: ControlListProps) => {
-  const { controllers, addController, navigation } = props;
+  const { controllers, navigation } = props;
 
   const renderControllerItem = ({ item }: { item: Control }) => {
     return (
@@ -30,14 +31,23 @@ const ControlListView = (props: ControlListProps) => {
             Manage Controllers
           </Text>
         </View>
-        <View style={styles.content}>
-          <FlatList
-            data={controllers}
-            renderItem={renderControllerItem}
-            keyExtractor={(item) => item.id}
-            ListFooterComponent={<View style={styles.spacer} />}
-          />
-        </View>
+        {controllers.length > 0 ? (
+          <View style={styles.content}>
+            <FlatList
+              data={controllers}
+              renderItem={renderControllerItem}
+              keyExtractor={(item) => item.id}
+              ListFooterComponent={<View style={styles.spacer} />}
+            />
+          </View>
+        ) : (
+          <View style={styles.emptyContent}>
+            <ControlIcon width={56} height={56} fill="#bfbfbf" />
+            <Text style={styles.emptyTitle} variant="caption">
+              No Available Controllers
+            </Text>
+          </View>
+        )}
         <View style={styles.action}>
           <Button
             label="Add New Controller"

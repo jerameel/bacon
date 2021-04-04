@@ -3,6 +3,7 @@ import { ControlListRouterProps } from 'screens/ControlList/ControlList.props';
 import { HomeRouterProps } from 'screens/Home/Home.props';
 // import { SettingsRouterProps } from 'screens/Settings/Settings.props';
 import { ConnectRouterProps } from 'screens/Connect/Connect.props';
+import { ConnectedControllerRouterProps } from 'screens/ConnectedController/ConnectedController.props';
 
 export type MainTabParamList = {
   HOME: HomeRouterProps;
@@ -14,4 +15,5 @@ export type MainStackParamList = {
   MAIN: MainTabParamList;
   CONTROL_EDIT: ControlEditRouterProps;
   CONNECT: ConnectRouterProps;
+  CONNECTED_CONTROLLER: ConnectedControllerRouterProps;
 };

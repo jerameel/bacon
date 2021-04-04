@@ -24,7 +24,8 @@ export interface HomeGeneratedProps {
     id: string;
     name: string;
   }[];
-  onSelectItem: ({ id: string, name: string }) => void;
+  onSelectItem: (item: { id: string, name: string }) => void;
+  currentConnectionId: string;
 }
 
 export interface HomeProps extends HomePublicProps, HomeGeneratedProps {}

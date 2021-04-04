@@ -1,5 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Control } from 'store/controls';
 import { MainStackParamList } from 'types/Route';
 
 export interface ConnectRouterProps {
@@ -21,6 +22,7 @@ export interface ConnectGeneratedProps {
   connected: boolean;
   disconnect: () => void;
   initialized: boolean;
+  controllers: Control[];
 }
 
 export interface ConnectProps

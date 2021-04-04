@@ -10,6 +10,7 @@ import { Control, Device, Settings } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { COLORS } from 'theme';
 import ConnectScreen from 'screens/Connect';
+import ConnectedControllerScreen from 'screens/ConnectedController';
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
 
@@ -79,6 +80,11 @@ const Routes = () => {
         options={{ headerShown: false }}
         name="CONNECT"
         component={ConnectScreen}
+      />
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="CONNECTED_CONTROLLER"
+        component={ConnectedControllerScreen}
       />
     </MainStack.Navigator>
   );

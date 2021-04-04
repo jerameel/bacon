@@ -9,6 +9,7 @@ import HomeView from './Home.view';
 const HomeScreen = (props: HomePublicProps) => {
   const dispatch = useDispatch();
   const bleState = useSelector((state: RootState) => state.ble);
+  const currentConnectionId = bleState.connection?.UUID || '';
 
   const onSelectItem = (item: { id: string; name: string }) => {
     if (
@@ -40,6 +41,7 @@ const HomeScreen = (props: HomePublicProps) => {
     scanning: bleState.status === 'SCANNING',
     devices: bleState.devices,
     onSelectItem,
+    currentConnectionId,
   };
   return <HomeView {...props} {...generatedProps} />;
 };

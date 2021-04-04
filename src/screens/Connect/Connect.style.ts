@@ -27,10 +27,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  content: {
+  statusContent: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  content: {
+    flex: 1,
   },
   label: {
     color: '#000',
@@ -52,6 +55,22 @@ const styles = StyleSheet.create({
   },
   secondaryActionButton: {
     marginBottom: 8,
+  },
+  itemContainer: {
+    marginTop: 16,
+    marginHorizontal: 16,
+  },
+  spacer: {
+    height: 8,
+  },
+  emptyContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyTitle: {
+    color: '#595959',
+    marginTop: 8,
   },
 });
 

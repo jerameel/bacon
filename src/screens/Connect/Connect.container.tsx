@@ -14,6 +14,8 @@ const ConnectScreen = (props: ConnectPublicProps) => {
   const connected = bleState.status === 'CONNECTED';
   const [initialized, setInitialized] = useState(false);
 
+  const controllers = useSelector((state: RootState) => state.controls);
+
   const disconnect = () => {
     if (id) {
       dispatch(bleActions.disconnect(id));
@@ -37,6 +39,7 @@ const ConnectScreen = (props: ConnectPublicProps) => {
     connected,
     disconnect,
     initialized,
+    controllers,
   };
 
   return <ConnectView {...props} {...generatedProps} />;

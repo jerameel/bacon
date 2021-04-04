@@ -11,14 +11,9 @@ import ControlListView from './ControlList.view';
 const ControlListScreen = (props: ControlListPublicProps) => {
   const dispatch = useDispatch();
 
-  const addController = () => {
-    dispatch(addControllerAction({}));
-  };
-
   const controllers = useSelector((state: RootState) => state.controls);
 
   const generatedProps: ControlListGeneratedProps = {
-    addController,
     controllers,
   };
 

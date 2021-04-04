@@ -2,6 +2,7 @@ import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { bleActions } from 'store/ble';
 import bleService from 'services/ble';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'store';
 
 function* startRunner() {
   try {
@@ -64,12 +65,38 @@ function* disconnectRunner(action: PayloadAction<string>) {
   }
 }
 
+function* sendMessageRunner(action: PayloadAction<string>) {
+  try {
+    const connection: {
+      UUID?: string;
+      serviceUUID?: string;
+      characteristicUUID?: string;
+    } = yield select((state: RootState) => state.ble.connection);
+    if (
+      connection.UUID &&
+      connection.serviceUUID &&
+      connection.characteristicUUID &&
+      action.payload
+    ) {
+      yield call(bleService.sendMessage, {
+        UUID: connection.UUID || '',
+        serviceUUID: connection.serviceUUID || '',
+        characteristicUUID: connection.characteristicUUID || '',
+        message: action.payload || '',
+      });
+    }
+  } catch (e) {
+    // Do nothing
+  }
+}
+
 function* bleWatcher() {
   yield takeLatest('ble/start', startRunner);
   yield takeLatest('ble/scan', scanRunner);
   yield takeLatest('ble/stopScan', stopScanRunner);
   yield takeLatest('ble/connect', connectRunner);
   yield takeLatest('ble/disconnect', disconnectRunner);
+  yield takeLatest('ble/sendMessageRunner', sendMessageRunner);
 }
 
 export default bleWatcher;

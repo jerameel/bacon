@@ -3,42 +3,32 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#fff',
   },
   header: {
-    display: 'flex',
     padding: 16,
+    paddingLeft: 8,
     backgroundColor: '#fff',
     height: 80,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     elevation: 3,
+  },
+  headerTitleContainer: {
+    marginHorizontal: 8,
+    flex: 1,
   },
   headerTitle: {
     color: '#000',
   },
-  content: {
-    flex: 1,
-  },
-  itemContainer: {
-    marginTop: 16,
-    marginHorizontal: 16,
-  },
-  action: {
-    padding: 16,
-  },
-  spacer: {
-    height: 8,
-  },
-  emptyContent: {
-    flex: 1,
+  headerAction: {
+    width: 48,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  emptyTitle: {
-    color: '#595959',
-    marginTop: 8,
+  content: {
+    flex: 1,
   },
 });
 
