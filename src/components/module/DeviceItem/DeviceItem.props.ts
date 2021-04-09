@@ -5,4 +5,5 @@ export interface DeviceItemProps {
   name: string;
   id: string;
   onPress: () => void;
+  active?: boolean;
 }

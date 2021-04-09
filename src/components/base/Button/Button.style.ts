@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'row',
   },
+  containerDisabled: {
+    backgroundColor: '#434343',
+  },
   text: {
     fontFamily: 'Heebo-Bold',
     fontSize: 14,
@@ -27,6 +30,9 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 2,
     flexDirection: 'row',
+  },
+  outlineContainerDisabled: {
+    backgroundColor: '#434343',
   },
   outlineText: {
     fontFamily: 'Heebo-Bold',

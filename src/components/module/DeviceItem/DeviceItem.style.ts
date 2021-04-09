@@ -1,28 +1,44 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from 'theme';
 
 const styles = StyleSheet.create({
   container: {
     // Container style
     borderRadius: 10,
     borderWidth: 0.5,
-    borderColor: '#E6F7FF',
+    borderColor: '#fff1f0',
     backgroundColor: '#fff',
-    paddingVertical: 24,
-    paddingHorizontal: 8,
     elevation: 2,
     flexDirection: 'row',
     alignItems: 'center',
   },
   content: {
     flex: 1,
+    flexDirection: 'row',
+  },
+  contentIndicator: {
+    backgroundColor: '#f5f5f5',
+    width: 24,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  contentIndicatorActive: {
+    backgroundColor: COLORS.PRIMARY,
+    width: 24,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  contentDetails: {
+    flex: 1,
     flexDirection: 'column',
-    marginHorizontal: 8,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
   },
   textName: {
     color: '#000',
   },
   textId: {
-    color: '#0050B3',
+    color: COLORS.PRIMARY,
   },
 });
 

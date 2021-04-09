@@ -6,19 +6,26 @@ import { DeviceItemProps } from './DeviceItem.props';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const DeviceItem = (props: DeviceItemProps) => {
-  const { containerStyle = {}, name, id, onPress } = props;
+  const { containerStyle = {}, name, id, onPress, active } = props;
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
       activeOpacity={0.8}
       onPress={onPress}>
       <View style={styles.content}>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textName}>
-          {name}
-        </Text>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textId}>
-          {id}
-        </Text>
+        <View style={styles.contentDetails}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textName}>
+            {name}
+          </Text>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.textId}>
+            {id}
+          </Text>
+        </View>
+        <View
+          style={
+            active ? styles.contentIndicatorActive : styles.contentIndicator
+          }
+        />
       </View>
     </TouchableOpacity>
   );

@@ -32,8 +32,8 @@ const MainTabNavigator = () => {
     <MainTab.Navigator
       tabBarOptions={{
         showLabel: false,
-        activeTintColor: COLORS.BLUE,
-        inactiveTintColor: COLORS.BLACK,
+        activeTintColor: COLORS.PRIMARY,
+        inactiveTintColor: '#000',
         style: {
           height: 70,
           borderTopWidth: 0,

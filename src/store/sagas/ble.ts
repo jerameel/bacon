@@ -44,10 +44,10 @@ function* connectRunner(action: PayloadAction<string>) {
     if (typeof result === 'object') {
       yield put(bleActions.connected({ ...result, UUID: action.payload }));
     } else {
-      yield put(bleActions.updateStatus('IDLE'));
+      yield put(bleActions.disconnected());
     }
   } catch (e) {
-    yield put(bleActions.updateStatus('IDLE'));
+    yield put(bleActions.disconnected());
   }
 }
 
@@ -58,7 +58,7 @@ function* disconnectRunner(action: PayloadAction<string>) {
       action.payload,
     );
     if (isSuccess) {
-      yield put(bleActions.updateStatus('IDLE'));
+      yield put(bleActions.disconnected());
     }
   } catch (e) {
     // Do nothing

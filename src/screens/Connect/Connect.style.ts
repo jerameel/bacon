@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from 'theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   deviceName: {
-    color: '#0050B3',
+    color: COLORS.PRIMARY,
   },
   deviceNameError: {
     color: '#cf1322',

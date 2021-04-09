@@ -14,7 +14,8 @@ const HomeScreen = (props: HomePublicProps) => {
   const onSelectItem = (item: { id: string; name: string }) => {
     if (
       bleState.status === 'IDLE' ||
-      (bleState.status === 'CONNECTED' && bleState.connection.UUID === item.id)
+      ((bleState.status === 'CONNECTED' || bleState.status === 'CONNECTING') &&
+        bleState.connection.UUID === item.id)
     ) {
       props.navigation.navigate('CONNECT', { id: item.id, name: item.name });
     }

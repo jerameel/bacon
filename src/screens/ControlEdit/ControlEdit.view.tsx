@@ -12,6 +12,7 @@ import {
   BackHandler,
   Dimensions,
   Modal,
+  Alert,
 } from 'react-native';
 import Slider from 'react-native-slider';
 import Draggable from 'react-native-draggable';
@@ -24,10 +25,11 @@ import { ControlEditProps } from './ControlEdit.props';
 import { Add, Back, Close, Delete, Down } from 'components/base/SVG';
 import { ControlElement } from 'store/controls';
 import { propertiesToSaveElementData } from './ControlEdit.transform';
+import { COLORS } from 'theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const viewHeight = windowHeight - 100;
+const viewHeight = windowHeight - 80; // header size
 
 const DraggableControl = memo(
   (
@@ -359,10 +361,30 @@ const ControlEditView = (props: ControlEditProps) => {
                   style={styles.headerAction}
                   activeOpacity={0.6}
                   onPress={() => {
-                    deleteController(id);
-                    navigation.goBack();
+                    Alert.alert(
+                      'Delete Controller',
+                      `Are you sure you want to delete ${label}?`,
+                      [
+                        {
+                          text: 'Cancel',
+                          onPress: () => {},
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Delete',
+                          style: 'destructive',
+                          onPress: () => {
+                            deleteController(id);
+                            navigation.goBack();
+                          },
+                        },
+                      ],
+                      {
+                        cancelable: true,
+                      },
+                    );
                   }}>
-                  <Delete width={32} height={32} fill="#cf1322" />
+                  <Delete width={32} height={32} fill={'#000'} />
                 </TouchableOpacity>
               )}
             </View>

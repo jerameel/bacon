@@ -26,6 +26,7 @@ const HomeView = (props: HomeProps) => {
         name={item.name}
         id={item.id}
         onPress={() => onSelectItem(item)}
+        active={item.id === currentConnectionId}
       />
     );
   };
@@ -61,6 +62,7 @@ const HomeView = (props: HomeProps) => {
         )}
         <View style={styles.action}>
           <Button
+            disabled={(currentConnectionId || '').length > 0}
             loading={scanning}
             label={scanning ? 'Stop Scan' : 'Scan for Devices'}
             onPress={() => toggleScan()}

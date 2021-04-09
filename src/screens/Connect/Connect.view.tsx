@@ -16,6 +16,7 @@ import Button from 'components/base/Button';
 import { Control as ControlIcon } from 'components/base/SVG';
 import ControlItem from 'components/module/ControlItem';
 import { Control } from 'store/controls';
+import { COLORS } from 'theme';
 
 const ConnectView = (props: ConnectProps) => {
   const {
@@ -108,10 +109,14 @@ const ConnectView = (props: ConnectProps) => {
 
         {(connecting || connected || connectionFailed) && !showControllers && (
           <View style={styles.statusContent}>
-            {connecting && <ActivityIndicator color="#0050B3" size="large" />}
-            {connected && <Bluetooth fill="#0050B3" width={48} height={48} />}
+            {connecting && (
+              <ActivityIndicator color={COLORS.PRIMARY} size="large" />
+            )}
+            {connected && (
+              <Bluetooth fill={COLORS.PRIMARY} width={48} height={48} />
+            )}
             {connectionFailed && (
-              <BluetoothOff fill="#cf1322" width={48} height={48} />
+              <BluetoothOff fill={COLORS.PRIMARY} width={48} height={48} />
             )}
             <Text
               style={styles.label}

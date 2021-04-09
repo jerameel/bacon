@@ -70,10 +70,15 @@ const connect = async (
       const { Notify, Read, Write } = characteristic.properties;
       return Notify && Read && Write;
     });
-    const serviceUUID = characteristicData.service;
-    const characteristicUUID = characteristicData.characteristic;
+    const serviceUUID = characteristicData?.service || '';
+    const characteristicUUID = characteristicData?.characteristic || '';
+    if (!serviceUUID || !characteristicUUID) {
+      return false;
+    }
+
     await BleManager.startNotification(id, serviceUUID, characteristicUUID);
     await BleManager.requestConnectionPriority(id, 1);
+
     return {
       serviceUUID,
       characteristicUUID,

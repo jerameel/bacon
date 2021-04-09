@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     // Container style
     borderRadius: 10,
     borderWidth: 0.5,
-    borderColor: '#E6F7FF',
+    borderColor: '#fff1f0',
     backgroundColor: '#fff',
     paddingVertical: 24,
     paddingHorizontal: 8,

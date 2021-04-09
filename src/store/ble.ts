@@ -78,7 +78,13 @@ const bleSlice = createSlice({
       };
     },
     connect(state, action: PayloadAction<string>) {
-      return { ...state, status: 'CONNECTING' };
+      return {
+        ...state,
+        status: 'CONNECTING',
+        connection: {
+          UUID: action.payload,
+        },
+      };
     },
     connected(
       state,
@@ -96,6 +102,13 @@ const bleSlice = createSlice({
     },
     disconnect(state, action: PayloadAction<string>) {
       return state;
+    },
+    disconnected(state) {
+      return {
+        ...state,
+        status: 'IDLE',
+        connection: {},
+      };
     },
     sendMessage(state, action: PayloadAction<string>) {
       return state;
