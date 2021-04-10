@@ -1,4 +1,5 @@
-import React from 'react';
+import SplashScreen from 'react-native-splash-screen';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from 'screens/Home';
@@ -64,6 +65,9 @@ const MainTabNavigator = () => {
 const MainStack = createStackNavigator<MainStackParamList>();
 
 const Routes = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <MainStack.Navigator initialRouteName="MAIN">
       <MainStack.Screen
