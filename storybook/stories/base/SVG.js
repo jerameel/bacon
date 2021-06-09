@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react-native';
 import Text from '../../../src/components/base/Text';
 import {
   /* PLOP_INJECT_IMPORT */
+  Power,
   BluetoothOff,
   Down,
   Add,
@@ -46,6 +47,9 @@ const SVGWrapper = ({ children, label }) => {
 storiesOf('base/SVGs', module).add('Summary', () => (
   <View style={styles.container}>
     {/* PLOP_INJECT_INSTANCE*/}
+    <SVGWrapper label="Power">
+      <Power fill="#000" />
+    </SVGWrapper>
     <SVGWrapper label="BluetoothOff">
       <BluetoothOff fill="#000" />
     </SVGWrapper>

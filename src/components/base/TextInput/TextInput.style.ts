@@ -1,21 +1,22 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from 'theme';
 
 const styles = StyleSheet.create({
   container: {
     borderWidth: 2,
-    borderColor: '#f0f0f0',
-    backgroundColor: '#f0f0f0',
+    borderColor: '#fafafa',
+    backgroundColor: '#fafafa',
     height: 80,
     borderRadius: 5,
     padding: 5,
   },
   containerActive: {
-    borderColor: '#000',
+    borderColor: '#f5f5f5',
     backgroundColor: '#fff',
   },
   label: {
     height: 20,
-    color: '#595959',
+    color: COLORS.PRIMARY,
   },
   input: {
     height: 50,

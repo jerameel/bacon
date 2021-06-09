@@ -1,23 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { STYLES } from 'theme';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  header: {
-    display: 'flex',
-    padding: 16,
-    backgroundColor: '#fff',
-    height: 80,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    elevation: 3,
-  },
-  headerTitle: {
-    color: '#000',
-  },
+  container: STYLES.CONTAINER,
+  header: STYLES.HEADER,
+  headerTitle: STYLES.HEADER_TITLE,
   content: {
     flex: 1,
   },

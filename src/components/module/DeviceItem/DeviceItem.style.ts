@@ -5,10 +5,7 @@ const styles = StyleSheet.create({
   container: {
     // Container style
     borderRadius: 10,
-    borderWidth: 0.5,
-    borderColor: '#fff1f0',
-    backgroundColor: '#fff',
-    elevation: 2,
+    backgroundColor: '#fafafa',
     flexDirection: 'row',
     alignItems: 'center',
   },

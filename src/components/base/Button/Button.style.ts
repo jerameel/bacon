@@ -7,11 +7,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    elevation: 5,
     flexDirection: 'row',
   },
   containerDisabled: {
-    backgroundColor: '#434343',
+    backgroundColor: '#bfbfbf',
   },
   text: {
     fontFamily: 'Heebo-Bold',
@@ -26,13 +25,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    elevation: 5,
     borderColor: '#000',
     borderWidth: 2,
     flexDirection: 'row',
   },
   outlineContainerDisabled: {
-    backgroundColor: '#434343',
+    backgroundColor: '#bfbfbf',
   },
   outlineText: {
     fontFamily: 'Heebo-Bold',

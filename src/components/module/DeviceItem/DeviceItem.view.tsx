@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Text from 'components/base/Text';
 import styles from './DeviceItem.style';
@@ -7,6 +7,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const DeviceItem = (props: DeviceItemProps) => {
   const { containerStyle = {}, name, id, onPress, active } = props;
+
+  const [activeIndicator, setShowActive] = useState(false);
+
+  useEffect(() => {
+    if (active !== undefined) {
+      setTimeout(() => {
+        setShowActive(active);
+      }, 300);
+    }
+  }, [active]);
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
@@ -23,7 +33,9 @@ const DeviceItem = (props: DeviceItemProps) => {
         </View>
         <View
           style={
-            active ? styles.contentIndicatorActive : styles.contentIndicator
+            activeIndicator
+              ? styles.contentIndicatorActive
+              : styles.contentIndicator
           }
         />
       </View>

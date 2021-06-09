@@ -260,6 +260,9 @@ const ControlEditView = (props: ControlEditProps) => {
                 </Text>
                 <View style={styles.modalSliderContainer}>
                   <Slider
+                    minimumTrackTintColor={COLORS.PRIMARY}
+                    maximumTrackTintColor="#fafafa"
+                    thumbTintColor={COLORS.PRIMARY}
                     minimumValue={32}
                     maximumValue={128}
                     value={
@@ -347,7 +350,29 @@ const ControlEditView = (props: ControlEditProps) => {
               <TouchableOpacity
                 style={styles.headerAction}
                 activeOpacity={0.6}
-                onPress={() => navigation.goBack()}>
+                onPress={() => {
+                  Alert.alert(
+                    'Discard Changes',
+                    'Are you sure you want to go back discard current changes?',
+                    [
+                      {
+                        text: 'Cancel',
+                        onPress: () => {},
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Discard',
+                        style: 'destructive',
+                        onPress: () => {
+                          navigation.goBack();
+                        },
+                      },
+                    ],
+                    {
+                      cancelable: true,
+                    },
+                  );
+                }}>
                 <Back width={32} height={32} />
               </TouchableOpacity>
               <Text
@@ -358,7 +383,7 @@ const ControlEditView = (props: ControlEditProps) => {
               </Text>
               {showDeleteAction && (
                 <TouchableOpacity
-                  style={styles.headerAction}
+                  style={[styles.headerAction, styles.deleteAction]}
                   activeOpacity={0.6}
                   onPress={() => {
                     Alert.alert(
@@ -384,7 +409,7 @@ const ControlEditView = (props: ControlEditProps) => {
                       },
                     );
                   }}>
-                  <Delete width={32} height={32} fill={'#000'} />
+                  <Delete width={21} height={21} fill={'#f5222d'} />
                 </TouchableOpacity>
               )}
             </View>
@@ -395,14 +420,14 @@ const ControlEditView = (props: ControlEditProps) => {
                 value={label}
                 onChangeText={setLabel}
               />
-            </View>
-            <View style={styles.action}>
               <Button
-                containerStyle={styles.secondaryActionButton}
+                containerStyle={styles.editLayoutButton}
                 label={'Edit Layout'}
                 onPress={() => setShowEditLayout(true)}
                 outline
               />
+            </View>
+            <View style={styles.action}>
               <Button
                 label={'Save Controller'}
                 onPress={() => {

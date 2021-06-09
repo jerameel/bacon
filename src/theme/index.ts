@@ -3,3 +3,5 @@ export const COLORS = {
   WHITE: '#ffffff',
   PRIMARY: '#CB6862',
 };
+
+export { default as STYLES } from './styles';

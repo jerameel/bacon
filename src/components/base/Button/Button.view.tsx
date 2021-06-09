@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './Button.style';
 import { ButtonProps } from './Button.props';
+import { Pulse } from 'react-native-loader';
 
 const Button = (props: ButtonProps) => {
   const {
@@ -37,7 +38,8 @@ const Button = (props: ButtonProps) => {
         {label}
       </Text>
       {loading && (
-        <ActivityIndicator color={outline ? '#000' : '#fff'} size={'small'} />
+        <Pulse size={12} color={outline ? '#000' : '#fff'} />
+        // <ActivityIndicator color={outline ? '#000' : '#fff'} size={'small'} />
       )}
     </TouchableOpacity>
   );
