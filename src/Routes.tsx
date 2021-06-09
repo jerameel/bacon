@@ -12,6 +12,7 @@ import { SVGProps } from 'components/base/SVG/SVG.props';
 import { COLORS } from 'theme';
 import ConnectScreen from 'screens/Connect';
 import ConnectedControllerScreen from 'screens/ConnectedController';
+import { View } from 'react-native';
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
 
@@ -38,6 +39,9 @@ const MainTabNavigator = () => {
         style: {
           height: 70,
           borderTopWidth: 0,
+          borderTopColor: '#fff',
+          backgroundColor: '#fff',
+          elevation: 0,
         },
       }}>
       <MainTab.Screen
@@ -68,6 +72,7 @@ const Routes = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
   return (
     <MainStack.Navigator initialRouteName="MAIN">
       <MainStack.Screen

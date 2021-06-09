@@ -4,12 +4,9 @@ const styles = StyleSheet.create({
   container: {
     // Container style
     borderRadius: 10,
-    borderWidth: 0.5,
-    borderColor: '#fff1f0',
-    backgroundColor: '#fff',
-    paddingVertical: 24,
+    backgroundColor: '#fafafa',
+    paddingVertical: 28,
     paddingHorizontal: 8,
-    elevation: 2,
     flexDirection: 'row',
     alignItems: 'center',
   },

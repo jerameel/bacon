@@ -1,19 +1,12 @@
 import { StyleSheet } from 'react-native';
+import { STYLES } from 'theme';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    padding: 16,
-    paddingLeft: 8,
-    backgroundColor: '#fff',
-    height: 80,
-    flexDirection: 'row',
-    alignItems: 'center',
-    elevation: 3,
-  },
+  header: STYLES.HEADER,
   headerTitleContainer: {
     marginHorizontal: 8,
     flex: 1,

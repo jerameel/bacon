@@ -1,20 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from 'theme';
+import { COLORS, STYLES } from 'theme';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    padding: 16,
-    paddingLeft: 8,
-    backgroundColor: '#fff',
-    height: 80,
-    flexDirection: 'row',
-    alignItems: 'center',
-    elevation: 3,
-  },
+  header: STYLES.HEADER,
   headerTitleContainer: {
     marginHorizontal: 8,
     flex: 1,
@@ -32,6 +24,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  disconnectButton: {
+    width: '100%',
+    marginTop: 16,
   },
   content: {
     flex: 1,

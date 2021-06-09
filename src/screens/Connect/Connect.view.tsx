@@ -7,11 +7,12 @@ import {
   BackHandler,
   FlatList,
 } from 'react-native';
+import { Pulse } from 'react-native-loader';
 
 import Text from 'components/base/Text';
 import styles from './Connect.style';
 import { ConnectProps } from './Connect.props';
-import { Back, Bluetooth, BluetoothOff } from 'components/base/SVG';
+import { Back, Bluetooth, BluetoothOff, Power } from 'components/base/SVG';
 import Button from 'components/base/Button';
 import { Control as ControlIcon } from 'components/base/SVG';
 import ControlItem from 'components/module/ControlItem';
@@ -105,13 +106,19 @@ const ConnectView = (props: ConnectProps) => {
             variant="title">
             {showControllers ? 'Select Controller' : 'Connect'}
           </Text>
+          <TouchableOpacity
+            style={styles.headerAction}
+            activeOpacity={0.6}
+            onPress={() => {
+              disconnect();
+            }}>
+            {connected && <Power width={32} height={32} fill="#f5222d" />}
+          </TouchableOpacity>
         </View>
 
-        {(connecting || connected || connectionFailed) && !showControllers && (
+        {!showControllers && (
           <View style={styles.statusContent}>
-            {connecting && (
-              <ActivityIndicator color={COLORS.PRIMARY} size="large" />
-            )}
+            {connecting && <Pulse size={24} color={COLORS.PRIMARY} />}
             {connected && (
               <Bluetooth fill={COLORS.PRIMARY} width={48} height={48} />
             )}
@@ -132,6 +139,14 @@ const ConnectView = (props: ConnectProps) => {
               variant="body">
               {name && name !== 'Unknown Device' ? name : id}
             </Text>
+            {/* {connected && (
+              <Button
+                containerStyle={styles.disconnectButton}
+                outline
+                label={'Disconnect'}
+                onPress={() => disconnect()}
+              />
+            )} */}
           </View>
         )}
 
@@ -167,11 +182,13 @@ const ConnectView = (props: ConnectProps) => {
               onPress={() => setShowControllers(true)}
             />
           )}
-          <Button
-            outline
-            label={connected ? 'Disconnect' : 'Cancel'}
-            onPress={() => disconnect()}
-          />
+          {!connected && !showControllers && (
+            <Button
+              outline
+              label={connected ? 'Disconnect' : 'Cancel'}
+              onPress={() => disconnect()}
+            />
+          )}
         </View>
       </View>
     </>
