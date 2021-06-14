@@ -8,7 +8,7 @@ import { ConnectedControllerRouterProps } from 'screens/ConnectedController/Conn
 export type MainTabParamList = {
   HOME: HomeRouterProps;
   CONTROL_LIST: ControlListRouterProps;
-  // SETTINGS: SettingsRouterProps;
+  SETTINGS: SettingsRouterProps;
 };
 
 export type MainStackParamList = {

@@ -227,7 +227,7 @@ const ControlEditView = (props: ControlEditProps) => {
           <>
             <Modal
               animationType="slide"
-              transparent={true}
+              transparent
               visible={currentElementId.length > 0}
               onRequestClose={() => {
                 setCurrentElementId('');

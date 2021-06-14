@@ -10,7 +10,7 @@ const ControlItem = (props: ControlItemProps) => {
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      activeOpacity={0.8}
+      activeOpacity={0.6}
       onPress={onPress}>
       <Text
         numberOfLines={1}

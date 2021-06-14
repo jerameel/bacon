@@ -1,20 +1,18 @@
 import { StyleSheet } from 'react-native';
+import { STYLES } from 'theme';
 
 const styles = StyleSheet.create({
-  container: {
+  container: STYLES.CONTAINER,
+  header: STYLES.HEADER,
+  headerTitle: STYLES.HEADER_TITLE,
+  content: {
     flex: 1,
   },
-  header: {
-    display: 'flex',
-    padding: 16,
-    backgroundColor: '#000',
-    height: 100,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  contentScroll: {
+    paddingHorizontal: 16,
   },
-  headerTitle: {
-    color: '#fff',
+  settingItem: {
+    marginTop: 16,
   },
 });
 

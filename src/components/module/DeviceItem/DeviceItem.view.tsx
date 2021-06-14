@@ -20,7 +20,7 @@ const DeviceItem = (props: DeviceItemProps) => {
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      activeOpacity={0.8}
+      activeOpacity={0.6}
       onPress={onPress}>
       <View style={styles.content}>
         <View style={styles.contentDetails}>
