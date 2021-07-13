@@ -19,9 +19,12 @@ import createSagaMiddleware from 'redux-saga';
 import controlsReducer from './controls';
 import bleReducer from './ble';
 
+import settingsReducer from './settings';
+
 const rootReducer = combineReducers({
   controls: controlsReducer,
   ble: bleReducer,
+  settings: settingsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -30,7 +33,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage: AsyncStorage,
-  whitelist: ['controls'],
+  whitelist: ['controls', 'settings'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

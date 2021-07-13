@@ -1,1 +1,1 @@
-export { default } from './Settings.view';
+export { default } from './Settings.container';
