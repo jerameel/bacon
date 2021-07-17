@@ -1,4 +1,5 @@
 import { ViewStyle } from 'react-native';
+import { THEME_OPTION } from 'store/settings';
 
 export interface TextInputProps {
   containerStyle?: ViewStyle;
@@ -6,4 +7,5 @@ export interface TextInputProps {
   label: string;
   value: string;
   onChangeText: (value: string) => void;
+  theme?: THEME_OPTION;
 }

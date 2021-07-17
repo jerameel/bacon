@@ -6,26 +6,27 @@ const getStyles = (theme: THEME_OPTION = 'Light') => {
   const STYLES = getGlobalStyles(theme);
   const styles = StyleSheet.create({
     container: {
-      borderWidth: 2,
-      borderColor: COLORS[theme].BORDER,
-      backgroundColor: COLORS[theme].BACKGROUND,
-      height: 80,
-      borderRadius: 5,
-      padding: 5,
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 24,
+      backgroundColor: '#00000022',
     },
-    containerActive: {
-      borderColor: COLORS[theme].PRIMARY,
+    title: {
+      color: COLORS[theme].TITLE,
+    },
+    titleContainer: {
       backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
+      padding: 16,
     },
-    label: {
-      height: 20,
-      color: COLORS[theme].PRIMARY,
+    itemContainer: {
+      backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
+      padding: 16,
     },
-    input: {
-      height: 50,
-      fontFamily: 'Heebo-Bold',
-      fontSize: 18,
+    itemLabel: {
       color: COLORS[theme].PRIMARY_TEXT,
+    },
+    itemLabelActive: {
+      color: COLORS[theme].PRIMARY,
     },
   });
 

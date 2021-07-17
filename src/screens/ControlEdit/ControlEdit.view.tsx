@@ -5,6 +5,7 @@ import React, {
   useReducer,
   useState,
 } from 'react';
+import SafeAreaView from 'react-native-safe-area-view';
 import {
   View,
   StatusBar,
@@ -12,7 +13,6 @@ import {
   BackHandler,
   Dimensions,
   Modal,
-  Alert,
 } from 'react-native';
 import Slider from 'react-native-slider';
 import Draggable from 'react-native-draggable';
@@ -20,12 +20,14 @@ import { v1 as uuidv1 } from 'uuid';
 import Text from 'components/base/Text';
 import TextInput from 'components/base/TextInput';
 import Button from 'components/base/Button';
-import styles from './ControlEdit.style';
+import useStyles from './ControlEdit.style';
 import { ControlEditProps } from './ControlEdit.props';
 import { Add, Back, Close, Delete, Down } from 'components/base/SVG';
 import { ControlElement } from 'store/controls';
 import { propertiesToSaveElementData } from './ControlEdit.transform';
 import { COLORS } from 'theme';
+import AlertModal from 'components/module/AlertModal';
+import { AlertModalProps } from 'components/module/AlertModal/AlertModal.props';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -72,11 +74,14 @@ const ControlEditView = (props: ControlEditProps) => {
     route,
   } = props;
 
+  const { styles, selectedTheme } = useStyles();
+
   const id = route.params.id || '';
   const currentController = controllers.find(
     (controller) => controller.id === id,
   );
 
+  const [alert, setAlert] = useState<null | AlertModalProps>(null);
   const [showEditLayout, setShowEditLayout] = useState(false);
   const [label, setLabel] = useState(currentController?.label || '');
   const [syncedElementPosition, setSyncedElementPosition] = useState(false);
@@ -220,14 +225,17 @@ const ControlEditView = (props: ControlEditProps) => {
   }, [showEditLayout, elementPositions, syncedElementPosition]);
 
   return (
-    <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={COLORS[selectedTheme].BACKGROUND}
+        barStyle={selectedTheme === 'Dark' ? 'light-content' : 'dark-content'}
+      />
       <View style={styles.container}>
         {showEditLayout ? (
           <>
             <Modal
               animationType="slide"
-              transparent={true}
+              transparent
               visible={currentElementId.length > 0}
               onRequestClose={() => {
                 setCurrentElementId('');
@@ -235,7 +243,11 @@ const ControlEditView = (props: ControlEditProps) => {
               <View
                 onTouchStart={() => setCurrentElementId('')}
                 style={styles.modalClickableLayer}>
-                <Down width={32} height={32} fill={'#000'} />
+                <Down
+                  width={32}
+                  height={32}
+                  fill={COLORS[selectedTheme].TITLE}
+                />
               </View>
               <View style={styles.modalContentLayer}>
                 <TextInput
@@ -250,8 +262,12 @@ const ControlEditView = (props: ControlEditProps) => {
                       [currentElementId]: t,
                     });
                   }}
+                  theme={selectedTheme}
                 />
-                <Text containerStyle={styles.modalLabel} variant="caption">
+                <Text
+                  containerStyle={styles.modalLabelContainer}
+                  style={styles.modalLabel}
+                  variant="caption">
                   {`Size (${(
                     (elementSizes[currentElementId] ||
                       currentElement?.size ||
@@ -260,9 +276,9 @@ const ControlEditView = (props: ControlEditProps) => {
                 </Text>
                 <View style={styles.modalSliderContainer}>
                   <Slider
-                    minimumTrackTintColor={COLORS.PRIMARY}
-                    maximumTrackTintColor="#fafafa"
-                    thumbTintColor={COLORS.PRIMARY}
+                    minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
+                    maximumTrackTintColor={COLORS[selectedTheme].AREA_HIGHLIGHT}
+                    thumbTintColor={COLORS.LIGHT.PRIMARY}
                     minimumValue={32}
                     maximumValue={128}
                     value={
@@ -278,7 +294,10 @@ const ControlEditView = (props: ControlEditProps) => {
                     step={8}
                   />
                 </View>
-                <Text containerStyle={styles.modalLabel} variant="caption">
+                <Text
+                  containerStyle={styles.modalLabelContainer}
+                  style={styles.modalLabel}
+                  variant="caption">
                   Command
                 </Text>
                 <TextInput
@@ -294,6 +313,7 @@ const ControlEditView = (props: ControlEditProps) => {
                     });
                   }}
                   containerStyle={styles.modalTextInput}
+                  theme={selectedTheme}
                 />
                 <TextInput
                   label="On Release"
@@ -308,6 +328,7 @@ const ControlEditView = (props: ControlEditProps) => {
                     });
                   }}
                   containerStyle={styles.modalTextInput}
+                  theme={selectedTheme}
                 />
               </View>
             </Modal>
@@ -316,14 +337,22 @@ const ControlEditView = (props: ControlEditProps) => {
                 style={styles.headerAction}
                 activeOpacity={0.6}
                 onPress={() => setShowEditLayout(false)}>
-                <Close width={32} height={32} />
+                <Close
+                  width={32}
+                  height={32}
+                  fill={COLORS[selectedTheme].TITLE}
+                />
               </TouchableOpacity>
               <View style={styles.layoutActions}>
                 <TouchableOpacity
                   style={styles.headerAction}
                   activeOpacity={0.6}
                   onPress={() => addElement()}>
-                  <Add width={32} height={32} />
+                  <Add
+                    width={32}
+                    height={32}
+                    fill={COLORS[selectedTheme].TITLE}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
@@ -351,29 +380,32 @@ const ControlEditView = (props: ControlEditProps) => {
                 style={styles.headerAction}
                 activeOpacity={0.6}
                 onPress={() => {
-                  Alert.alert(
-                    'Discard Changes',
-                    'Are you sure you want to go back discard current changes?',
-                    [
+                  setAlert({
+                    title: 'Discard Changes',
+                    description:
+                      'Are you sure you want to go back discard current changes?',
+                    actions: [
                       {
-                        text: 'Cancel',
-                        onPress: () => {},
-                        style: 'cancel',
+                        label: 'Cancel',
+                        onPress: () => {
+                          setAlert(null);
+                        },
                       },
                       {
-                        text: 'Discard',
-                        style: 'destructive',
+                        label: 'Discard',
                         onPress: () => {
+                          setAlert(null);
                           navigation.goBack();
                         },
                       },
                     ],
-                    {
-                      cancelable: true,
-                    },
-                  );
+                  });
                 }}>
-                <Back width={32} height={32} />
+                <Back
+                  width={32}
+                  height={32}
+                  fill={COLORS[selectedTheme].TITLE}
+                />
               </TouchableOpacity>
               <Text
                 containerStyle={styles.headerTitleContainer}
@@ -386,30 +418,32 @@ const ControlEditView = (props: ControlEditProps) => {
                   style={[styles.headerAction, styles.deleteAction]}
                   activeOpacity={0.6}
                   onPress={() => {
-                    Alert.alert(
-                      'Delete Controller',
-                      `Are you sure you want to delete ${label}?`,
-                      [
+                    setAlert({
+                      title: 'Delete Controller',
+                      description: `Are you sure you want to delete ${label}?`,
+                      actions: [
                         {
-                          text: 'Cancel',
-                          onPress: () => {},
-                          style: 'cancel',
+                          label: 'Cancel',
+                          onPress: () => {
+                            setAlert(null);
+                          },
                         },
                         {
-                          text: 'Delete',
-                          style: 'destructive',
+                          label: 'Delete',
                           onPress: () => {
+                            setAlert(null);
                             deleteController(id);
                             navigation.goBack();
                           },
                         },
                       ],
-                      {
-                        cancelable: true,
-                      },
-                    );
+                    });
                   }}>
-                  <Delete width={21} height={21} fill={'#f5222d'} />
+                  <Delete
+                    width={21}
+                    height={21}
+                    fill={COLORS[selectedTheme].ERROR}
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -419,12 +453,14 @@ const ControlEditView = (props: ControlEditProps) => {
                 label="Name"
                 value={label}
                 onChangeText={setLabel}
+                theme={selectedTheme}
               />
               <Button
                 containerStyle={styles.editLayoutButton}
                 label={'Edit Layout'}
                 onPress={() => setShowEditLayout(true)}
                 outline
+                theme={selectedTheme}
               />
             </View>
             <View style={styles.action}>
@@ -449,7 +485,12 @@ const ControlEditView = (props: ControlEditProps) => {
           </>
         )}
       </View>
-    </>
+      <AlertModal
+        theme={selectedTheme}
+        {...(alert !== null ? alert : {})}
+        visible={alert !== null}
+      />
+    </SafeAreaView>
   );
 };
 

@@ -7,10 +7,11 @@ import {
   BackHandler,
   FlatList,
 } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import { Pulse } from 'react-native-loader';
 
 import Text from 'components/base/Text';
-import styles from './Connect.style';
+import useStyles from './Connect.style';
 import { ConnectProps } from './Connect.props';
 import { Back, Bluetooth, BluetoothOff, Power } from 'components/base/SVG';
 import Button from 'components/base/Button';
@@ -29,6 +30,8 @@ const ConnectView = (props: ConnectProps) => {
     initialized,
     controllers,
   } = props;
+
+  const { styles, selectedTheme } = useStyles();
 
   const id = route.params.id || '';
   const name = route.params.name || '';
@@ -61,6 +64,7 @@ const ConnectView = (props: ConnectProps) => {
         onPress={() => {
           navigation.navigate('CONNECTED_CONTROLLER', { id: item.id });
         }}
+        theme={selectedTheme}
       />
     );
   };
@@ -84,8 +88,11 @@ const ConnectView = (props: ConnectProps) => {
   }, [showControllers]);
 
   return (
-    <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={COLORS[selectedTheme].BACKGROUND}
+        barStyle={selectedTheme === 'Dark' ? 'light-content' : 'dark-content'}
+      />
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
@@ -98,7 +105,7 @@ const ConnectView = (props: ConnectProps) => {
                 navigation.goBack();
               }
             }}>
-            <Back width={32} height={32} />
+            <Back width={32} height={32} fill={COLORS[selectedTheme].TITLE} />
           </TouchableOpacity>
           <Text
             containerStyle={styles.headerTitleContainer}
@@ -112,18 +119,34 @@ const ConnectView = (props: ConnectProps) => {
             onPress={() => {
               disconnect();
             }}>
-            {connected && <Power width={32} height={32} fill="#f5222d" />}
+            {connected && (
+              <Power
+                width={32}
+                height={32}
+                fill={COLORS[selectedTheme].ERROR}
+              />
+            )}
           </TouchableOpacity>
         </View>
 
         {!showControllers && (
           <View style={styles.statusContent}>
-            {connecting && <Pulse size={24} color={COLORS.PRIMARY} />}
+            {connecting && (
+              <Pulse size={24} color={COLORS[selectedTheme].PRIMARY} />
+            )}
             {connected && (
-              <Bluetooth fill={COLORS.PRIMARY} width={48} height={48} />
+              <Bluetooth
+                fill={COLORS[selectedTheme].PRIMARY}
+                width={48}
+                height={48}
+              />
             )}
             {connectionFailed && (
-              <BluetoothOff fill={COLORS.PRIMARY} width={48} height={48} />
+              <BluetoothOff
+                fill={COLORS[selectedTheme].PRIMARY}
+                width={48}
+                height={48}
+              />
             )}
             <Text
               style={styles.label}
@@ -167,7 +190,11 @@ const ConnectView = (props: ConnectProps) => {
 
         {showControllers && controllers.length === 0 && (
           <View style={styles.emptyContent}>
-            <ControlIcon width={56} height={56} fill="#bfbfbf" />
+            <ControlIcon
+              width={56}
+              height={56}
+              fill={COLORS[selectedTheme].PLACE_HOLDER}
+            />
             <Text style={styles.emptyTitle} variant="caption">
               No Available Controllers
             </Text>
@@ -180,6 +207,7 @@ const ConnectView = (props: ConnectProps) => {
               containerStyle={styles.secondaryActionButton}
               label={'Next'}
               onPress={() => setShowControllers(true)}
+              theme={selectedTheme}
             />
           )}
           {!connected && !showControllers && (
@@ -187,11 +215,12 @@ const ConnectView = (props: ConnectProps) => {
               outline
               label={connected ? 'Disconnect' : 'Cancel'}
               onPress={() => disconnect()}
+              theme={selectedTheme}
             />
           )}
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

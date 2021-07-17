@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Text from 'components/base/Text';
-import styles from './DeviceItem.style';
+import getStyles from './DeviceItem.style';
 import { DeviceItemProps } from './DeviceItem.props';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const DeviceItem = (props: DeviceItemProps) => {
-  const { containerStyle = {}, name, id, onPress, active } = props;
+  const { containerStyle = {}, name, id, onPress, active, theme } = props;
+  const styles = getStyles(theme);
 
   const [activeIndicator, setShowActive] = useState(false);
 
@@ -20,7 +21,7 @@ const DeviceItem = (props: DeviceItemProps) => {
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      activeOpacity={0.8}
+      activeOpacity={0.6}
       onPress={onPress}>
       <View style={styles.content}>
         <View style={styles.contentDetails}>

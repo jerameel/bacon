@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Text from 'components/base/Text';
-import styles from './ControlItem.style';
+import getStyles from './ControlItem.style';
 import { ControlItemProps } from './ControlItem.props';
 
 const ControlItem = (props: ControlItemProps) => {
-  const { containerStyle = {}, label, onPress } = props;
-
+  const { containerStyle = {}, label, onPress, theme } = props;
+  const styles = getStyles(theme);
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      activeOpacity={0.8}
+      activeOpacity={0.6}
       onPress={onPress}>
       <Text
         numberOfLines={1}

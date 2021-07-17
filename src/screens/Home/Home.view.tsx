@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import Button from 'components/base/Button';
 import Text from 'components/base/Text';
-import styles from './Home.style';
+import useStyles from './Home.style';
 import { HomeProps } from './Home.props';
 import { Device as DeviceIcon } from 'components/base/SVG';
 import DeviceItem from 'components/module/DeviceItem';
 import { Device } from 'store/ble';
 import { FlatList } from 'react-native-gesture-handler';
+import { COLORS } from 'theme';
 
 const HomeView = (props: HomeProps) => {
   const {
@@ -19,6 +21,8 @@ const HomeView = (props: HomeProps) => {
     currentConnectionId,
   } = props;
 
+  const { styles, selectedTheme } = useStyles();
+
   const renderDeviceItem = ({ item }: { item: Device }) => {
     return (
       <DeviceItem
@@ -27,13 +31,17 @@ const HomeView = (props: HomeProps) => {
         id={item.id}
         onPress={() => onSelectItem(item)}
         active={item.id === currentConnectionId}
+        theme={selectedTheme}
       />
     );
   };
 
   return (
-    <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={COLORS[selectedTheme].BACKGROUND}
+        barStyle={selectedTheme === 'Dark' ? 'light-content' : 'dark-content'}
+      />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle} variant="title">
@@ -54,7 +62,11 @@ const HomeView = (props: HomeProps) => {
           </View>
         ) : (
           <View style={styles.emptyContent}>
-            <DeviceIcon width={64} height={64} fill="#bfbfbf" />
+            <DeviceIcon
+              width={64}
+              height={64}
+              fill={COLORS[selectedTheme].PLACE_HOLDER}
+            />
             <Text style={styles.emptyTitle} variant="caption">
               No Available Devices
             </Text>
@@ -69,7 +81,7 @@ const HomeView = (props: HomeProps) => {
           />
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,12 +1,10 @@
 import { ViewStyle } from 'react-native';
 import { THEME_OPTION } from 'store/settings';
 
-export interface ButtonProps {
+export interface SettingItemProps {
   containerStyle?: ViewStyle;
   label: string;
+  description: string;
   onPress: () => void;
-  outline?: boolean;
-  loading?: boolean;
-  disabled?: boolean;
   theme?: THEME_OPTION;
 }

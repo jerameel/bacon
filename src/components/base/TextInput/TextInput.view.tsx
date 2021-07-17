@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { View, TextInput as RNTextInput } from 'react-native';
 import Text from 'components/base/Text';
-import styles from './TextInput.style';
+import getStyles from './TextInput.style';
 import { TextInputProps } from './TextInput.props';
+import { COLORS } from 'theme';
 
 const TextInput = (props: TextInputProps) => {
-  const { containerStyle = {}, style = {}, label, value, onChangeText } = props;
+  const {
+    containerStyle = {},
+    style = {},
+    label,
+    value,
+    onChangeText,
+    theme,
+  } = props;
+  const styles = getStyles(theme);
   const [isSelected, setIsSelected] = useState(false);
   return (
     <View
@@ -29,7 +38,7 @@ const TextInput = (props: TextInputProps) => {
           setIsSelected(false);
         }}
         placeholder={isSelected ? '' : label.toUpperCase()}
-        placeholderTextColor="#595959"
+        placeholderTextColor={COLORS[theme || 'Light'].PLACE_HOLDER}
       />
     </View>
   );
