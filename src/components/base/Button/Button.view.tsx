@@ -1,8 +1,9 @@
 import React from 'react';
 import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import styles from './Button.style';
+import getStyles from './Button.style';
 import { ButtonProps } from './Button.props';
 import { Pulse } from 'react-native-loader';
+import { COLORS } from 'theme';
 
 const Button = (props: ButtonProps) => {
   const {
@@ -12,7 +13,9 @@ const Button = (props: ButtonProps) => {
     outline,
     loading,
     disabled,
+    theme,
   } = props;
+  const styles = getStyles(theme);
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -38,8 +41,12 @@ const Button = (props: ButtonProps) => {
         {label}
       </Text>
       {loading && (
-        <Pulse size={12} color={outline ? '#000' : '#fff'} />
-        // <ActivityIndicator color={outline ? '#000' : '#fff'} size={'small'} />
+        <Pulse
+          size={12}
+          color={
+            outline ? COLORS[theme || 'Light'].TITLE : COLORS.DARK.PRIMARY_TEXT
+          }
+        />
       )}
     </TouchableOpacity>
   );

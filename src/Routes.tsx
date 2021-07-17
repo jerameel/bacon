@@ -13,6 +13,8 @@ import { COLORS } from 'theme';
 import ConnectScreen from 'screens/Connect';
 import ConnectedControllerScreen from 'screens/ConnectedController';
 import { View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
 
@@ -30,17 +32,19 @@ const createTabIcon = (
 };
 
 const MainTabNavigator = () => {
+  const settings = useSelector((state: RootState) => state.settings);
+  const { selectedTheme } = settings;
   return (
     <MainTab.Navigator
       tabBarOptions={{
         showLabel: false,
-        activeTintColor: COLORS.PRIMARY,
-        inactiveTintColor: '#000',
+        activeTintColor: COLORS[selectedTheme].PRIMARY,
+        inactiveTintColor: COLORS[selectedTheme].SECONDARY_TEXT,
         style: {
           height: 70,
           borderTopWidth: 0,
-          borderTopColor: '#fff',
-          backgroundColor: '#fff',
+          borderTopColor: COLORS[selectedTheme].BACKGROUND,
+          backgroundColor: COLORS[selectedTheme].BACKGROUND,
           elevation: 0,
         },
       }}>

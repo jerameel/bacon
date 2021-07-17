@@ -1,22 +1,24 @@
 import { StyleSheet } from 'react-native';
+import { THEME_OPTION } from 'store/settings';
+import COLORS from './colors';
 
-const STYLES = StyleSheet.create({
-  CONTAINER: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  HEADER: {
-    display: 'flex',
-    padding: 16,
-    backgroundColor: '#fff',
-    height: 80,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  HEADER_TITLE: {
-    color: '#000',
-  },
-});
-
-export default STYLES;
+export const getGlobalStyles = (theme: THEME_OPTION) => {
+  return StyleSheet.create({
+    CONTAINER: {
+      flex: 1,
+      backgroundColor: COLORS[theme].BACKGROUND,
+    },
+    HEADER: {
+      display: 'flex',
+      padding: 16,
+      backgroundColor: COLORS[theme].BACKGROUND,
+      height: 80,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    HEADER_TITLE: {
+      color: COLORS[theme].TITLE,
+    },
+  });
+};

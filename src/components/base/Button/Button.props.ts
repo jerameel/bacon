@@ -1,4 +1,5 @@
 import { ViewStyle } from 'react-native';
+import { THEME_OPTION } from 'store/settings';
 
 export interface ButtonProps {
   containerStyle?: ViewStyle;
@@ -7,4 +8,5 @@ export interface ButtonProps {
   outline?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  theme?: THEME_OPTION;
 }

@@ -11,22 +11,38 @@ const getStyles = (theme: THEME_OPTION = 'Light') => {
       paddingHorizontal: 24,
       backgroundColor: '#00000022',
     },
+    contentArea: {
+      backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
+      padding: 16,
+    },
     title: {
       color: COLORS[theme].TITLE,
     },
-    titleContainer: {
-      backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
-      padding: 16,
+
+    descriptionContainer: {
+      marginTop: 8,
     },
-    itemContainer: {
-      backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
-      padding: 16,
-    },
-    itemLabel: {
+
+    description: {
       color: COLORS[theme].PRIMARY_TEXT,
     },
-    itemLabelActive: {
-      color: COLORS[theme].PRIMARY,
+
+    actionContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      marginTop: 16,
+    },
+
+    actionButton: {
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      marginLeft: 8,
+    },
+
+    actionLabel: {
+      color: COLORS[theme].TITLE,
+      textTransform: 'uppercase',
     },
   });
 

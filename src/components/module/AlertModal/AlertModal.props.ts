@@ -1,15 +1,14 @@
 import { ViewStyle } from 'react-native';
 import { THEME_OPTION } from 'store/settings';
 
-export interface SelectModalProps {
+export interface AlertModalProps {
   containerStyle?: ViewStyle;
   visible?: boolean;
-  onSelect?: (value: string) => void;
-  selectedValue?: string;
-  options: {
+  title?: string;
+  description?: string;
+  actions?: {
+    onPress: () => void;
     label: string;
-    value: string;
   }[];
-  title: string;
   theme?: THEME_OPTION;
 }

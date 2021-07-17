@@ -1,3 +1,4 @@
+import { Appearance } from 'react-native';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type THEME_OPTION = 'Light' | 'Dark';
@@ -7,7 +8,7 @@ export type Settings = {
 };
 
 const initialState: Settings = {
-  selectedTheme: 'Light',
+  selectedTheme: Appearance.getColorScheme() === 'dark' ? 'Dark' : 'Light',
 };
 
 const settingsSlice = createSlice({

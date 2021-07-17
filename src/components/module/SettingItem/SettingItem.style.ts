@@ -1,24 +1,30 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from 'theme';
+import { THEME_OPTION } from 'store/settings';
+import { COLORS, getGlobalStyles } from 'theme';
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 10,
-    backgroundColor: '#fafafa',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
-  content: {
-    flexDirection: 'column',
-  },
-  label: {
-    color: COLORS.PRIMARY,
-  },
-  description: {
-    color: COLORS.BLACK,
-    marginTop: 8,
-  },
-});
+const getStyles = (theme: THEME_OPTION = 'Light') => {
+  const STYLES = getGlobalStyles(theme);
+  const styles = StyleSheet.create({
+    container: {
+      borderRadius: 10,
+      backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 16,
+    },
+    content: {
+      flexDirection: 'column',
+    },
+    label: {
+      color: COLORS[theme].PRIMARY,
+    },
+    description: {
+      color: COLORS[theme].SECONDARY_TEXT,
+      marginTop: 8,
+    },
+  });
 
-export default styles;
+  return styles;
+};
+
+export default getStyles;

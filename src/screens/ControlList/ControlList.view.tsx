@@ -1,15 +1,19 @@
 import React from 'react';
 import { View, StatusBar, ScrollView, FlatList } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import Text from 'components/base/Text';
 import Button from 'components/base/Button';
 import ControlItem from 'components/module/ControlItem';
-import styles from './ControlList.style';
+import useStyles from './ControlList.style';
 import { ControlListProps } from './ControlList.props';
 import { Control } from 'store/controls';
 import { Control as ControlIcon } from 'components/base/SVG';
+import { COLORS } from 'theme';
 
 const ControlListView = (props: ControlListProps) => {
   const { controllers, navigation } = props;
+
+  const { styles, selectedTheme } = useStyles();
 
   const renderControllerItem = ({ item }: { item: Control }) => {
     return (
@@ -19,12 +23,16 @@ const ControlListView = (props: ControlListProps) => {
         onPress={() => {
           navigation.navigate('CONTROL_EDIT', { id: item.id });
         }}
+        theme={selectedTheme}
       />
     );
   };
   return (
-    <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={COLORS[selectedTheme].BACKGROUND}
+        barStyle={selectedTheme === 'Dark' ? 'light-content' : 'dark-content'}
+      />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle} variant="title">
@@ -57,7 +65,7 @@ const ControlListView = (props: ControlListProps) => {
           />
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

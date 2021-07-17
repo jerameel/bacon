@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, TouchableOpacity } from 'react-native';
 import Text from 'components/base/Text';
-import styles from './SelectModal.style';
+import getStyles from './SelectModal.style';
 import { SelectModalProps } from './SelectModal.props';
 
 const SelectModal = (props: SelectModalProps) => {
@@ -12,7 +12,9 @@ const SelectModal = (props: SelectModalProps) => {
     selectedValue,
     options,
     title,
+    theme,
   } = props;
+  const styles = getStyles(theme);
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={[styles.container, containerStyle]}>
