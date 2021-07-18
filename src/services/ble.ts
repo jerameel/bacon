@@ -119,6 +119,16 @@ const sendMessage = async (payload: {
   }
 };
 
+const readRSSI = async (id: string) => {
+  try {
+    const rssi = await BleManager.readRSSI(id);
+    return rssi;
+  } catch (e) {
+    console.log('services/ble(readRSSI): ', e);
+    return -120; // Unreachable
+  }
+};
+
 export default {
   start,
   scan,
@@ -126,4 +136,5 @@ export default {
   connect,
   disconnect,
   sendMessage,
+  readRSSI,
 };

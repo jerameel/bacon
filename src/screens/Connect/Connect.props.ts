@@ -23,6 +23,7 @@ export interface ConnectGeneratedProps {
   disconnect: () => void;
   initialized: boolean;
   controllers: Control[];
+  rssi: number;
 }
 
 export interface ConnectProps

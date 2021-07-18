@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { getGlobalStyles } from 'theme';
+import { COLORS, getGlobalStyles } from 'theme';
 
 const useStyles = () => {
   const settings = useSelector((state: RootState) => state.settings);
@@ -30,7 +30,7 @@ const useStyles = () => {
       alignItems: 'center',
     },
     emptyTitle: {
-      color: '#595959',
+      color: COLORS[selectedTheme].SECONDARY_TEXT,
       marginTop: 8,
     },
   });
