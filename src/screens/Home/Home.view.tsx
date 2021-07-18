@@ -29,6 +29,7 @@ const HomeView = (props: HomeProps) => {
         containerStyle={styles.itemContainer}
         name={item.name}
         id={item.id}
+        rssi={item.rssi}
         onPress={() => onSelectItem(item)}
         active={item.id === currentConnectionId}
         theme={selectedTheme}

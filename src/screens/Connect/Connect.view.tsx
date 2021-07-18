@@ -13,7 +13,16 @@ import { Pulse } from 'react-native-loader';
 import Text from 'components/base/Text';
 import useStyles from './Connect.style';
 import { ConnectProps } from './Connect.props';
-import { Back, Bluetooth, BluetoothOff, Power } from 'components/base/SVG';
+import {
+  Back,
+  Bluetooth,
+  BluetoothOff,
+  Power,
+  Signal1,
+  Signal2,
+  Signal3,
+  Signal4,
+} from 'components/base/SVG';
 import Button from 'components/base/Button';
 import { Control as ControlIcon } from 'components/base/SVG';
 import ControlItem from 'components/module/ControlItem';
@@ -29,6 +38,7 @@ const ConnectView = (props: ConnectProps) => {
     disconnect,
     initialized,
     controllers,
+    rssi,
   } = props;
 
   const { styles, selectedTheme } = useStyles();
@@ -38,23 +48,26 @@ const ConnectView = (props: ConnectProps) => {
 
   const connectionFailed = initialized && !connecting && !connected;
 
-  const statusLabel = (() => {
-    if (connecting) {
-      return 'Establishing connection to';
+  const SignalIcon = (() => {
+    const signalIconProps = {
+      width: 24,
+      height: 24,
+      fill: COLORS[selectedTheme].SECONDARY_TEXT,
+    };
+    if (rssi > -27.5) {
+      return <Signal4 {...signalIconProps} />;
     }
 
-    if (connected) {
-      return 'Connected to';
+    if (rssi > -55.5) {
+      return <Signal3 {...signalIconProps} />;
     }
 
-    if (connectionFailed) {
-      return 'Failed to connect to';
+    if (rssi > -83) {
+      return <Signal2 {...signalIconProps} />;
     }
 
-    return '';
+    return <Signal1 {...signalIconProps} />;
   })();
-
-  const [showControllers, setShowControllers] = useState(false);
 
   const renderControllerItem = ({ item }: { item: Control }) => {
     return (
@@ -69,24 +82,6 @@ const ConnectView = (props: ConnectProps) => {
     );
   };
 
-  useEffect(() => {
-    const backAction = () => {
-      if (showControllers) {
-        setShowControllers(false);
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, [showControllers]);
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -99,11 +94,7 @@ const ConnectView = (props: ConnectProps) => {
             style={styles.headerAction}
             activeOpacity={0.6}
             onPress={() => {
-              if (showControllers) {
-                setShowControllers(false);
-              } else {
-                navigation.goBack();
-              }
+              navigation.goBack();
             }}>
             <Back width={32} height={32} fill={COLORS[selectedTheme].TITLE} />
           </TouchableOpacity>
@@ -111,7 +102,7 @@ const ConnectView = (props: ConnectProps) => {
             containerStyle={styles.headerTitleContainer}
             style={styles.headerTitle}
             variant="title">
-            {showControllers ? 'Select Controller' : 'Connect'}
+            {connected ? 'Select Controller' : 'Connect'}
           </Text>
           <TouchableOpacity
             style={styles.headerAction}
@@ -129,96 +120,110 @@ const ConnectView = (props: ConnectProps) => {
           </TouchableOpacity>
         </View>
 
-        {!showControllers && (
+        {connecting && (
           <View style={styles.statusContent}>
-            {connecting && (
-              <Pulse size={24} color={COLORS[selectedTheme].PRIMARY} />
-            )}
-            {connected && (
-              <Bluetooth
-                fill={COLORS[selectedTheme].PRIMARY}
-                width={48}
-                height={48}
-              />
-            )}
-            {connectionFailed && (
-              <BluetoothOff
-                fill={COLORS[selectedTheme].PRIMARY}
-                width={48}
-                height={48}
-              />
-            )}
+            <Pulse size={24} color={COLORS[selectedTheme].PRIMARY} />
+
             <Text
               style={styles.label}
               containerStyle={styles.labelContainer}
               variant="caption">
-              {statusLabel}
+              Connecting...
             </Text>
             <Text
-              style={
-                connectionFailed ? styles.deviceNameError : styles.deviceName
-              }
+              style={styles.deviceName}
               containerStyle={styles.deviceNameContainer}
               variant="body">
               {name && name !== 'Unknown Device' ? name : id}
             </Text>
-            {/* {connected && (
-              <Button
-                containerStyle={styles.disconnectButton}
-                outline
-                label={'Disconnect'}
-                onPress={() => disconnect()}
-              />
-            )} */}
           </View>
         )}
 
-        {!(connecting || connected || connectionFailed || showControllers) && (
-          <View style={styles.content} />
+        {connectionFailed && (
+          <View style={styles.statusContent}>
+            <BluetoothOff
+              width={48}
+              height={48}
+              fill={COLORS[selectedTheme].ERROR}
+            />
+
+            <Text
+              style={styles.label}
+              containerStyle={styles.labelContainer}
+              variant="caption">
+              Failed to connect
+            </Text>
+            <Text
+              style={styles.deviceName}
+              containerStyle={styles.deviceNameContainer}
+              variant="body">
+              {name && name !== 'Unknown Device' ? name : id}
+            </Text>
+          </View>
         )}
 
-        {showControllers && controllers.length > 0 && (
+        {connected && (
           <View style={styles.content}>
+            <View style={styles.detailsContent}>
+              <View style={styles.detailsColumn}>
+                <Text style={styles.detailsName} variant="body">
+                  {name}
+                </Text>
+                <Text style={styles.detailsId} variant="body">
+                  {id}
+                </Text>
+              </View>
+              <View style={styles.detailsSignalContainer}>
+                {SignalIcon}
+                <Text style={styles.detailsSignal} variant="caption">
+                  {`${rssi.toString()} dBm`}
+                </Text>
+              </View>
+            </View>
             <FlatList
               data={controllers}
               renderItem={renderControllerItem}
               keyExtractor={(item) => item.id}
               ListFooterComponent={<View style={styles.spacer} />}
+              ListEmptyComponent={() => {
+                return (
+                  <View style={styles.emptyContent}>
+                    <ControlIcon
+                      width={56}
+                      height={56}
+                      fill={COLORS[selectedTheme].PLACE_HOLDER}
+                    />
+                    <Text style={styles.emptyTitle} variant="caption">
+                      No Available Controllers
+                    </Text>
+                  </View>
+                );
+              }}
             />
           </View>
         )}
 
-        {showControllers && controllers.length === 0 && (
-          <View style={styles.emptyContent}>
-            <ControlIcon
-              width={56}
-              height={56}
-              fill={COLORS[selectedTheme].PLACE_HOLDER}
-            />
-            <Text style={styles.emptyTitle} variant="caption">
-              No Available Controllers
-            </Text>
-          </View>
-        )}
-
-        <View style={styles.action}>
-          {connected && !showControllers && (
-            <Button
-              containerStyle={styles.secondaryActionButton}
-              label={'Next'}
-              onPress={() => setShowControllers(true)}
-              theme={selectedTheme}
-            />
-          )}
-          {!connected && !showControllers && (
+        {connecting && (
+          <View style={styles.action}>
             <Button
               outline
-              label={connected ? 'Disconnect' : 'Cancel'}
+              label={'Cancel'}
               onPress={() => disconnect()}
               theme={selectedTheme}
             />
-          )}
-        </View>
+          </View>
+        )}
+
+        {connectionFailed && (
+          <View style={styles.action}>
+            <Button
+              outline
+              label={'Go Back'}
+              onPress={() => navigation.goBack()}
+              theme={selectedTheme}
+            />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

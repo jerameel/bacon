@@ -40,11 +40,31 @@ const useStyles = () => {
     labelContainer: {
       marginTop: 16,
     },
+    detailsContent: {
+      padding: 32,
+      backgroundColor: COLORS[selectedTheme].AREA_HIGHLIGHT,
+      flexDirection: 'row',
+    },
+    detailsSignalContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 64,
+    },
+    detailsSignal: {
+      color: COLORS[selectedTheme].PLACE_HOLDER,
+    },
+    detailsColumn: {
+      flex: 1,
+      flexDirection: 'column',
+    },
+    detailsId: {
+      color: COLORS[selectedTheme].PRIMARY,
+    },
+    detailsName: {
+      color: COLORS[selectedTheme].PRIMARY_TEXT,
+    },
     deviceName: {
       color: COLORS.LIGHT.PRIMARY,
-    },
-    deviceNameError: {
-      color: COLORS[selectedTheme].ERROR,
     },
     deviceNameContainer: {
       marginTop: 8,
