@@ -40,6 +40,11 @@ const getStyles = (theme: THEME_OPTION = 'Light') => {
     textId: {
       color: COLORS[theme].PRIMARY,
     },
+    signalContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 64,
+    },
   });
 
   return styles;

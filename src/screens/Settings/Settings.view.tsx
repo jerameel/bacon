@@ -33,6 +33,7 @@ const SettingsScreen = (props: SettingsProps) => {
         <View style={styles.content}>
           <ScrollView style={styles.contentScroll}>
             <SettingItem
+              key={'Theme'}
               label="Theme"
               description={selectedTheme}
               onPress={() => setShowThemePicker(true)}
@@ -40,6 +41,7 @@ const SettingsScreen = (props: SettingsProps) => {
               theme={selectedTheme}
             />
             <SettingItem
+              key={'Source Code'}
               label="Source Code"
               description={PROJECT_URL}
               onPress={async () => {

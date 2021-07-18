@@ -1,9 +1,18 @@
-import { take, put, call, select } from 'redux-saga/effects';
+import {
+  take,
+  put,
+  call,
+  select,
+  takeEvery,
+  takeLatest,
+  race,
+} from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import { bleActions } from 'store/ble';
 import { RootState } from 'store';
+import bleService from 'services/ble';
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -41,13 +50,14 @@ function* discoveryWatcher(): any {
             bleActions.addDevice({
               id: peripheral.id,
               name: peripheral.name || 'Unknown Device',
+              rssi: peripheral.rssi,
             }),
           );
         }
       }
     }
   } finally {
-    console.log('discovery terminated');
+    console.log('discoveryWatcher terminated');
   }
 }
 
@@ -80,10 +90,54 @@ function* stopWatcher(): any {
       }
     }
   } finally {
-    console.log('stop terminated');
+    console.log('stopWatcher terminated');
   }
 }
 
-const bleEventsWatcher = [discoveryWatcher, stopWatcher];
+const signalWatcherEventChannel = (id: string) => {
+  return eventChannel((emitter) => {
+    const interval = setInterval(async () => {
+      const rssi = await bleService.readRSSI(id);
+      emitter(rssi);
+    }, 3000);
+
+    // The subscriber must return an unsubscribe function
+    return () => {
+      clearInterval(interval);
+    };
+  });
+};
+
+function* signalWatcher(): any {
+  const id: string =
+    (yield select((state: RootState) => state.ble.connection.UUID)) || '';
+
+  if (id) {
+    const signalWatcherChannel: any = yield call(signalWatcherEventChannel, id);
+
+    try {
+      while (true) {
+        const { disconnect, rssi } = yield race({
+          disconnect: take('ble/disconnect'),
+          rssi: take(signalWatcherChannel),
+        });
+
+        if (disconnect) {
+          signalWatcherChannel.close();
+        } else if (typeof rssi === 'number') {
+          yield put(bleActions.updateRSSI(rssi));
+        }
+      }
+    } finally {
+      console.log('signalWatcher terminated');
+    }
+  }
+}
+
+function* initSignalWatcher(): any {
+  yield takeLatest(['ble/connected'], signalWatcher);
+}
+
+const bleEventsWatcher = [discoveryWatcher, stopWatcher, initSignalWatcher];
 
 export default bleEventsWatcher;

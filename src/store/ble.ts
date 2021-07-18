@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type Device = {
   id: string;
   name: string;
+  rssi: number;
 };
 
 type Status = 'IDLE' | 'SCANNING' | 'CONNECTING' | 'CONNECTED';
@@ -17,6 +18,7 @@ type BLEState = {
     UUID?: string;
     serviceUUID?: string;
     characteristicUUID?: string;
+    RSSI?: number;
   };
 };
 
@@ -52,6 +54,7 @@ const bleSlice = createSlice({
       action: PayloadAction<{
         id: string;
         name: string;
+        rssi: number;
       }>,
     ) {
       const newDevice = action.payload;
@@ -98,6 +101,15 @@ const bleSlice = createSlice({
         ...state,
         status: 'CONNECTED',
         connection: action.payload,
+      };
+    },
+    updateRSSI(state, action: PayloadAction<number>) {
+      return {
+        ...state,
+        connection: {
+          ...state.connection,
+          RSSI: action.payload,
+        },
       };
     },
     disconnect(state, action: PayloadAction<string>) {
