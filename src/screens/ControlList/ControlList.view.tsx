@@ -50,7 +50,11 @@ const ControlListView = (props: ControlListProps) => {
           </View>
         ) : (
           <View style={styles.emptyContent}>
-            <ControlIcon width={56} height={56} fill="#bfbfbf" />
+            <ControlIcon
+              width={56}
+              height={56}
+              fill={COLORS[selectedTheme].PLACE_HOLDER}
+            />
             <Text style={styles.emptyTitle} variant="caption">
               No Available Controllers
             </Text>
