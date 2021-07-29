@@ -86,6 +86,7 @@ const useStyles = () => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      marginBottom: 210,
     },
     emptyTitle: {
       color: COLORS[selectedTheme].SECONDARY_TEXT,

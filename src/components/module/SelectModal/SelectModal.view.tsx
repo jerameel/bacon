@@ -18,28 +18,30 @@ const SelectModal = (props: SelectModalProps) => {
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={[styles.container, containerStyle]}>
-        <View style={styles.titleContainer}>
-          <Text variant="title" style={styles.title}>
-            {title}
-          </Text>
+        <View style={styles.contentArea}>
+          <View style={styles.titleContainer}>
+            <Text variant="title" style={styles.title}>
+              {title}
+            </Text>
+          </View>
+          {options.map(({ label, value }) => (
+            <TouchableOpacity
+              key={label}
+              activeOpacity={0.6}
+              onPress={() => (onSelect ? onSelect(value) : null)}>
+              <View style={styles.itemContainer}>
+                <Text
+                  style={
+                    value === selectedValue
+                      ? styles.itemLabelActive
+                      : styles.itemLabel
+                  }>
+                  {label}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
-        {options.map(({ label, value }) => (
-          <TouchableOpacity
-            key={label}
-            activeOpacity={0.85}
-            onPress={() => (onSelect ? onSelect(value) : null)}>
-            <View style={styles.itemContainer}>
-              <Text
-                style={
-                  value === selectedValue
-                    ? styles.itemLabelActive
-                    : styles.itemLabel
-                }>
-                {label}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
       </View>
     </Modal>
   );

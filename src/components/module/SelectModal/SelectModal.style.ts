@@ -14,12 +14,15 @@ const getStyles = (theme: THEME_OPTION = 'Light') => {
     title: {
       color: COLORS[theme].TITLE,
     },
-    titleContainer: {
+    contentArea: {
       backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
+      padding: 16,
+      borderRadius: 10,
+    },
+    titleContainer: {
       padding: 16,
     },
     itemContainer: {
-      backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
       padding: 16,
     },
     itemLabel: {

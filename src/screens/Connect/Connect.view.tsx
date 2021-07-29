@@ -180,26 +180,25 @@ const ConnectView = (props: ConnectProps) => {
                 </Text>
               </View>
             </View>
-            <FlatList
-              data={controllers}
-              renderItem={renderControllerItem}
-              keyExtractor={(item) => item.id}
-              ListFooterComponent={<View style={styles.spacer} />}
-              ListEmptyComponent={() => {
-                return (
-                  <View style={styles.emptyContent}>
-                    <ControlIcon
-                      width={56}
-                      height={56}
-                      fill={COLORS[selectedTheme].PLACE_HOLDER}
-                    />
-                    <Text style={styles.emptyTitle} variant="caption">
-                      No Available Controllers
-                    </Text>
-                  </View>
-                );
-              }}
-            />
+            {controllers.length > 0 ? (
+              <FlatList
+                data={controllers}
+                renderItem={renderControllerItem}
+                keyExtractor={(item) => item.id}
+                ListFooterComponent={<View style={styles.spacer} />}
+              />
+            ) : (
+              <View style={styles.emptyContent}>
+                <ControlIcon
+                  width={56}
+                  height={56}
+                  fill={COLORS[selectedTheme].PLACE_HOLDER}
+                />
+                <Text style={styles.emptyTitle} variant="caption">
+                  No Available Controllers
+                </Text>
+              </View>
+            )}
           </View>
         )}
 

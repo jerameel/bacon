@@ -14,6 +14,7 @@ const getStyles = (theme: THEME_OPTION = 'Light') => {
     contentArea: {
       backgroundColor: COLORS[theme].AREA_HIGHLIGHT,
       padding: 16,
+      borderRadius: 10,
     },
     title: {
       color: COLORS[theme].TITLE,
