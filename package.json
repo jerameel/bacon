@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "storybook:server": "(adb reverse tcp:7007 tcp:7007 || true) && start-storybook -p 7007",
     "generate": "plop",
-    "android:release": "cd android && ./gradlew bundleRelease && cd .."
+    "android:release": "cd android && ./gradlew bundleRelease && cd ..",
+    "android:debug-apk": "cd android && ./gradlew assembleDebug && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
