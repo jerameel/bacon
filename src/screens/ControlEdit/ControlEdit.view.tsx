@@ -171,6 +171,12 @@ const ControlEditView = (props: ControlEditProps) => {
     });
   };
 
+  const removeElement = (elementId: string) => {
+    setElements((a) => {
+      return a.filter((b) => b.id !== elementId);
+    });
+  };
+
   const saveElementPosition = useCallback(
     (elementId: string, x: number, y: number) => {
       updateElementPosition({
@@ -236,7 +242,10 @@ const ControlEditView = (props: ControlEditProps) => {
             <Modal
               animationType="slide"
               transparent
-              visible={currentElementId.length > 0}
+              visible={
+                currentElementId.length > 0 &&
+                elements.findIndex((a) => a.id === currentElementId) !== -1
+              }
               onRequestClose={() => {
                 setCurrentElementId('');
               }}>
@@ -328,6 +337,15 @@ const ControlEditView = (props: ControlEditProps) => {
                     });
                   }}
                   containerStyle={styles.modalTextInput}
+                  theme={selectedTheme}
+                />
+                <Button
+                  containerStyle={styles.modalDeleteContainer}
+                  label={'Delete'}
+                  onPress={() => {
+                    removeElement(currentElementId);
+                  }}
+                  outline
                   theme={selectedTheme}
                 />
               </View>
