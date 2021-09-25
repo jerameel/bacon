@@ -158,8 +158,8 @@ const ControlEditView = (props: ControlEditProps) => {
     const newElement: ControlElement = {
       id: uuidv1(),
       label: 'X',
-      x: windowWidth / 2,
-      y: viewHeight / 2,
+      x: windowWidth / 2 - 40,
+      y: viewHeight / 2 - 40,
       size: 80,
       command: {
         onPress: '',
