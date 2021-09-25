@@ -40,6 +40,7 @@ const AlertModal = (props: AlertModalProps) => {
           <View style={styles.actionContainer}>
             {(actions || []).map((action) => (
               <TouchableOpacity
+                key={action.label}
                 activeOpacity={0.85}
                 onPress={() => action.onPress()}>
                 <View style={styles.actionButton}>

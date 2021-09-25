@@ -158,8 +158,8 @@ const ControlEditView = (props: ControlEditProps) => {
     const newElement: ControlElement = {
       id: uuidv1(),
       label: 'X',
-      x: windowWidth / 2,
-      y: viewHeight / 2,
+      x: windowWidth / 2 - 40,
+      y: viewHeight / 2 - 40,
       size: 80,
       command: {
         onPress: '',
@@ -168,6 +168,12 @@ const ControlEditView = (props: ControlEditProps) => {
     };
     setElements((a) => {
       return [...a, newElement];
+    });
+  };
+
+  const removeElement = (elementId: string) => {
+    setElements((a) => {
+      return a.filter((b) => b.id !== elementId);
     });
   };
 
@@ -236,7 +242,10 @@ const ControlEditView = (props: ControlEditProps) => {
             <Modal
               animationType="slide"
               transparent
-              visible={currentElementId.length > 0}
+              visible={
+                currentElementId.length > 0 &&
+                elements.findIndex((a) => a.id === currentElementId) !== -1
+              }
               onRequestClose={() => {
                 setCurrentElementId('');
               }}>
@@ -328,6 +337,15 @@ const ControlEditView = (props: ControlEditProps) => {
                     });
                   }}
                   containerStyle={styles.modalTextInput}
+                  theme={selectedTheme}
+                />
+                <Button
+                  containerStyle={styles.modalDeleteContainer}
+                  label={'Delete'}
+                  onPress={() => {
+                    removeElement(currentElementId);
+                  }}
+                  outline
                   theme={selectedTheme}
                 />
               </View>

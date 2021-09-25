@@ -76,6 +76,9 @@ const useStyles = () => {
       alignItems: 'stretch',
       justifyContent: 'center',
     },
+    modalDeleteContainer: {
+      marginTop: 32,
+    },
   });
 
   return { styles, selectedTheme };
