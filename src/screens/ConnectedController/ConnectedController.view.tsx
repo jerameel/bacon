@@ -8,6 +8,7 @@ import useStyles from './ConnectedController.style';
 import { ConnectedControllerProps } from './ConnectedController.props';
 import { Back } from 'components/base/SVG';
 import { COLORS } from 'theme';
+import ControlElementIcon from 'components/module/ControlElementIcon';
 
 const ConnectedControllerView = (props: ConnectedControllerProps) => {
   const { navigation, route, currentController, sendMessage } = props;
@@ -82,16 +83,17 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
               style={{
                 width: a.size,
                 height: a.size,
-                backgroundColor: activeElements.includes(a.id)
-                  ? COLORS.DARK.PRIMARY
-                  : COLORS.DARK.AREA_HIGHLIGHT,
                 position: 'absolute',
                 top: a.y,
                 left: a.x,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{ color: COLORS.DARK.PRIMARY_TEXT }}>{a.label}</Text>
+              <ControlElementIcon
+                id={a.label}
+                size={a.size}
+                isHighlighted={activeElements.includes(a.id)}
+              />
             </View>
           ))}
         </View>

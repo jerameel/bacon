@@ -63,6 +63,14 @@ const useStyles = () => {
       flex: 1,
       padding: 16,
     },
+    modalIconsContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 4,
+    },
+    modalIconButton: {
+      margin: 4,
+    },
     modalTextInput: {
       marginTop: 8,
     },

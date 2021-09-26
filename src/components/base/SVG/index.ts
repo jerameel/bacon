@@ -1,4 +1,13 @@
 /* PLOP_INJECT_IMPORT */
+export { default as LetterY } from './LetterY';
+export { default as LetterX } from './LetterX';
+export { default as LetterB } from './LetterB';
+export { default as LetterA } from './LetterA';
+export { default as RotateLeft } from './RotateLeft';
+export { default as RotateRight } from './RotateRight';
+export { default as DoubleRightOutline } from './DoubleRightOutline';
+export { default as BoxPlaceholder } from './BoxPlaceholder';
+export { default as RightOutline } from './RightOutline';
 export { default as Signal4 } from './Signal4';
 export { default as Signal2 } from './Signal2';
 export { default as Signal1 } from './Signal1';
