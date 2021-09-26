@@ -38,7 +38,11 @@ const useStyles = () => {
     editLayoutButton: {
       margin: 16,
     },
-    action: {
+    secondaryAction: {
+      paddingHorizontal: 16,
+      paddingTop: 16,
+    },
+    primaryAction: {
       padding: 16,
     },
 

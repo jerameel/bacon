@@ -33,6 +33,18 @@ const ControlEditScreen = (props: ControlEditPublicProps) => {
     }
   };
 
+  const duplicateController = (data: {
+    label: string;
+    elements: ControlElement[];
+  }) => {
+    dispatch(
+      addControllerAction({
+        label: `${data.label} (Copy)`,
+        elements: data.elements || [],
+      }),
+    );
+  };
+
   const deleteController = (id: string) => {
     dispatch(deleteControllerAction({ id }));
   };
@@ -41,6 +53,7 @@ const ControlEditScreen = (props: ControlEditPublicProps) => {
 
   const generatedProps: ControlEditGeneratedProps = {
     saveController,
+    duplicateController,
     deleteController,
     controllers,
   };

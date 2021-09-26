@@ -80,6 +80,7 @@ const ControlEditView = (props: ControlEditProps) => {
   const {
     controllers,
     saveController,
+    duplicateController,
     deleteController,
     navigation,
     route,
@@ -512,7 +513,28 @@ const ControlEditView = (props: ControlEditProps) => {
                 theme={selectedTheme}
               />
             </View>
-            <View style={styles.action}>
+            {(id || '').length > 0 && (
+              <View style={styles.secondaryAction}>
+                <Button
+                  outline
+                  label={'Create a Copy'}
+                  onPress={() => {
+                    duplicateController({
+                      label,
+                      elements: propertiesToSaveElementData(
+                        elements,
+                        elementLabels,
+                        elementSizes,
+                        elementsOnPress,
+                        elementsOnRelease,
+                      ),
+                    });
+                    navigation.goBack();
+                  }}
+                />
+              </View>
+            )}
+            <View style={styles.primaryAction}>
               <Button
                 label={'Save Controller'}
                 onPress={() => {

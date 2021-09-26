@@ -25,6 +25,10 @@ export interface ControlEditGeneratedProps {
     label?: string;
     elements?: ControlElement[];
   }) => void;
+  duplicateController: (data: {
+    label: string;
+    elements: ControlElement[];
+  }) => void;
   deleteController: (id: string) => void;
   controllers: Control[];
 }
