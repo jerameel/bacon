@@ -3,6 +3,7 @@ import { getStorybookUI, configure } from '@storybook/react-native';
 // import stories
 configure(() => {
   /* PLOP_INJECT_IMPORT */
+  require('./stories/module/ControlElementIcon');
   require('./stories/module/SelectModal');
   require('./stories/module/SettingItem');
   require('./stories/module/DeviceItem');

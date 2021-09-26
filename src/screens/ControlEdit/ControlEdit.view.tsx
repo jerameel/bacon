@@ -13,6 +13,7 @@ import {
   BackHandler,
   Dimensions,
   Modal,
+  ScrollView,
 } from 'react-native';
 import Slider from 'react-native-slider';
 import Draggable from 'react-native-draggable';
@@ -22,12 +23,21 @@ import TextInput from 'components/base/TextInput';
 import Button from 'components/base/Button';
 import useStyles from './ControlEdit.style';
 import { ControlEditProps } from './ControlEdit.props';
-import { Add, Back, Close, Delete, Down } from 'components/base/SVG';
+import {
+  Add,
+  Back,
+  Close,
+  Delete,
+  Down,
+  RightOutline,
+} from 'components/base/SVG';
 import { ControlElement } from 'store/controls';
 import { propertiesToSaveElementData } from './ControlEdit.transform';
 import { COLORS } from 'theme';
 import AlertModal from 'components/module/AlertModal';
 import { AlertModalProps } from 'components/module/AlertModal/AlertModal.props';
+import ControlElementIcon from 'components/module/ControlElementIcon';
+import { IconMapping } from 'components/module/ControlElementIcon/ControlElementIcon.constants';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -46,8 +56,6 @@ const DraggableControl = memo(
       <Draggable
         x={props.x}
         y={props.y}
-        renderText={props.label || ''}
-        renderColor={'black'}
         renderSize={props.size || 80}
         onShortPressRelease={() => {
           props.onClick(props.id);
@@ -60,6 +68,9 @@ const DraggableControl = memo(
           // update x and y value
           props.onUpdate(props.id, bounds.left, bounds.top);
         }}
+        children={
+          <ControlElementIcon id={props.label || ''} size={props.size || 80} />
+        }
       />
     );
   },
@@ -157,7 +168,7 @@ const ControlEditView = (props: ControlEditProps) => {
   const addElement = () => {
     const newElement: ControlElement = {
       id: uuidv1(),
-      label: 'X',
+      label: 'default',
       x: windowWidth / 2 - 40,
       y: viewHeight / 2 - 40,
       size: 80,
@@ -259,95 +270,115 @@ const ControlEditView = (props: ControlEditProps) => {
                 />
               </View>
               <View style={styles.modalContentLayer}>
-                <TextInput
-                  label="Label"
-                  value={
-                    elementLabels[currentElementId] === undefined
-                      ? currentElement?.label || ''
-                      : elementLabels[currentElementId]
-                  }
-                  onChangeText={(t) => {
-                    updateElementLabel({
-                      [currentElementId]: t,
-                    });
-                  }}
-                  theme={selectedTheme}
-                />
-                <Text
-                  containerStyle={styles.modalLabelContainer}
-                  style={styles.modalLabel}
-                  variant="caption">
-                  {`Size (${(
-                    (elementSizes[currentElementId] ||
-                      currentElement?.size ||
-                      80) / 80
-                  ).toFixed(2)})`}
-                </Text>
-                <View style={styles.modalSliderContainer}>
-                  <Slider
-                    minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
-                    maximumTrackTintColor={COLORS[selectedTheme].AREA_HIGHLIGHT}
-                    thumbTintColor={COLORS.LIGHT.PRIMARY}
-                    minimumValue={32}
-                    maximumValue={128}
+                <ScrollView>
+                  <Text
+                    containerStyle={styles.modalLabelContainer}
+                    style={styles.modalLabel}
+                    variant="caption">
+                    Icon
+                  </Text>
+                  <View style={styles.modalIconsContainer}>
+                    {Object.keys(IconMapping).map((key) => (
+                      <TouchableOpacity
+                        key={key}
+                        activeOpacity={0.6}
+                        style={styles.modalIconButton}
+                        onPress={() => {
+                          updateElementLabel({
+                            [currentElementId]: key,
+                          });
+                        }}>
+                        <ControlElementIcon
+                          id={key}
+                          size={32}
+                          isHighlighted={
+                            key ===
+                            (elementLabels[currentElementId] === undefined
+                              ? currentElement?.label || ''
+                              : elementLabels[currentElementId])
+                          }
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                  <Text
+                    containerStyle={styles.modalLabelContainer}
+                    style={styles.modalLabel}
+                    variant="caption">
+                    {`Size (${(
+                      (elementSizes[currentElementId] ||
+                        currentElement?.size ||
+                        80) / 80
+                    ).toFixed(2)})`}
+                  </Text>
+                  <View style={styles.modalSliderContainer}>
+                    <Slider
+                      minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
+                      maximumTrackTintColor={
+                        COLORS[selectedTheme].AREA_HIGHLIGHT
+                      }
+                      thumbTintColor={COLORS.LIGHT.PRIMARY}
+                      minimumValue={32}
+                      maximumValue={128}
+                      value={
+                        elementSizes[currentElementId] ||
+                        currentElement?.size ||
+                        80
+                      }
+                      onValueChange={(s) => {
+                        updateElementSize({
+                          [currentElementId]: s,
+                        });
+                      }}
+                      step={8}
+                    />
+                  </View>
+                  <Text
+                    containerStyle={styles.modalLabelContainer}
+                    style={styles.modalLabel}
+                    variant="caption">
+                    Command
+                  </Text>
+                  <TextInput
+                    label="On Press"
                     value={
-                      elementSizes[currentElementId] ||
-                      currentElement?.size ||
-                      80
+                      elementsOnPress[currentElementId] === undefined
+                        ? currentElement?.command.onPress || ''
+                        : elementsOnPress[currentElementId]
                     }
-                    onValueChange={(s) => {
-                      updateElementSize({
-                        [currentElementId]: s,
+                    onChangeText={(t) => {
+                      updateElementsOnPress({
+                        [currentElementId]: t,
                       });
                     }}
-                    step={8}
+                    containerStyle={styles.modalTextInput}
+                    theme={selectedTheme}
                   />
-                </View>
-                <Text
-                  containerStyle={styles.modalLabelContainer}
-                  style={styles.modalLabel}
-                  variant="caption">
-                  Command
-                </Text>
-                <TextInput
-                  label="On Press"
-                  value={
-                    elementsOnPress[currentElementId] === undefined
-                      ? currentElement?.command.onPress || ''
-                      : elementsOnPress[currentElementId]
-                  }
-                  onChangeText={(t) => {
-                    updateElementsOnPress({
-                      [currentElementId]: t,
-                    });
-                  }}
-                  containerStyle={styles.modalTextInput}
-                  theme={selectedTheme}
-                />
-                <TextInput
-                  label="On Release"
-                  value={
-                    elementsOnRelease[currentElementId] === undefined
-                      ? currentElement?.command.onRelease || ''
-                      : elementsOnRelease[currentElementId]
-                  }
-                  onChangeText={(t) => {
-                    updateElementsOnRelease({
-                      [currentElementId]: t,
-                    });
-                  }}
-                  containerStyle={styles.modalTextInput}
-                  theme={selectedTheme}
-                />
-                <Button
-                  containerStyle={styles.modalDeleteContainer}
-                  label={'Delete'}
-                  onPress={() => {
-                    removeElement(currentElementId);
-                  }}
-                  outline
-                  theme={selectedTheme}
-                />
+                  <TextInput
+                    label="On Release"
+                    value={
+                      elementsOnRelease[currentElementId] === undefined
+                        ? currentElement?.command.onRelease || ''
+                        : elementsOnRelease[currentElementId]
+                    }
+                    onChangeText={(t) => {
+                      updateElementsOnRelease({
+                        [currentElementId]: t,
+                      });
+                    }}
+                    containerStyle={styles.modalTextInput}
+                    theme={selectedTheme}
+                  />
+                  <Button
+                    containerStyle={styles.modalDeleteContainer}
+                    label={'Delete'}
+                    onPress={() => {
+                      removeElement(currentElementId);
+                    }}
+                    outline
+                    theme={selectedTheme}
+                  />
+                </ScrollView>
               </View>
             </Modal>
             <View style={styles.header}>
@@ -355,7 +386,7 @@ const ControlEditView = (props: ControlEditProps) => {
                 style={styles.headerAction}
                 activeOpacity={0.6}
                 onPress={() => setShowEditLayout(false)}>
-                <Close
+                <Back
                   width={32}
                   height={32}
                   fill={COLORS[selectedTheme].TITLE}

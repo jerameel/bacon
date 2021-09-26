@@ -4,6 +4,15 @@ import { storiesOf } from '@storybook/react-native';
 import Text from '../../../src/components/base/Text';
 import {
   /* PLOP_INJECT_IMPORT */
+  LetterY,
+  LetterX,
+  LetterB,
+  LetterA,
+  RotateLeft,
+  RotateRight,
+  DoubleRightOutline,
+  BoxPlaceholder,
+  RightOutline,
   Signal4,
   Signal2,
   Signal1,
@@ -51,6 +60,33 @@ const SVGWrapper = ({ children, label }) => {
 storiesOf('base/SVGs', module).add('Summary', () => (
   <View style={styles.container}>
     {/* PLOP_INJECT_INSTANCE*/}
+    <SVGWrapper label="LetterY">
+      <LetterY fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="LetterX">
+      <LetterX fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="LetterB">
+      <LetterB fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="LetterA">
+      <LetterA fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="RotateLeft">
+      <RotateLeft fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="RotateRight">
+      <RotateRight fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="DoubleRightOutline">
+      <DoubleRightOutline fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="BoxPlaceholder">
+      <BoxPlaceholder fill="#000" />
+    </SVGWrapper>
+    <SVGWrapper label="RightOutline">
+      <RightOutline fill="#000" />
+    </SVGWrapper>
     <SVGWrapper label="Signal4">
       <Signal4 fill="#000" />
     </SVGWrapper>
