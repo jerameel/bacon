@@ -13,14 +13,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1B15346A0C6902B3AFAD29CE /* libPods-bacon-baconTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EDB6AD0C2359237F23DA6E /* libPods-bacon-baconTests.a */; };
-		1D96FE73644611541725C5C5 /* libPods-bacon-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1AA2A5CDA2D28A26E2119E3 /* libPods-bacon-tvOS.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* baconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* baconTests.m */; };
 		3AD7E7D4DC7C4B2F9BC1CF57 /* Heebo-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D5BAC7ADB584529A5B447C5 /* Heebo-Light.ttf */; };
 		4BFF6FF590774F58AF9A0B85 /* Heebo-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAFFB375BADE4BF8AB730EF3 /* Heebo-SemiBold.ttf */; };
-		4CDC66D03D04A587FA8C3EBE /* libPods-bacon-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB0A6BBC4511591C02ABE08 /* libPods-bacon-tvOSTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9BCFA5FA77FA2371FE471FBE /* libPods-bacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D206657F4BB2E7CC0FEFF918 /* libPods-bacon.a */; };
 		A13F09F96EF34EC687364FEA /* Heebo-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BD691621FC24298B89EEDD6 /* Heebo-Medium.ttf */; };
@@ -49,7 +47,6 @@
 		00E356EE1AD99517003FC87E /* baconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = baconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* baconTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = baconTests.m; sourceTree = "<group>"; };
-		0661A023B4D853B10B07984C /* Pods-bacon-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-bacon-tvOSTests/Pods-bacon-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* bacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bacon/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = bacon/AppDelegate.m; sourceTree = "<group>"; };
@@ -66,17 +63,12 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = bacon/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BD691621FC24298B89EEDD6 /* Heebo-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Heebo-Medium.ttf"; path = "../src/assets/fonts/Heebo-Medium.ttf"; sourceTree = "<group>"; };
 		AF7D7D0885162255CA3853C2 /* Pods-bacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon.release.xcconfig"; path = "Target Support Files/Pods-bacon/Pods-bacon.release.xcconfig"; sourceTree = "<group>"; };
-		B5E74764819D23DAAE07CD8C /* Pods-bacon-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon-tvOS.release.xcconfig"; path = "Target Support Files/Pods-bacon-tvOS/Pods-bacon-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		D1AA2A5CDA2D28A26E2119E3 /* libPods-bacon-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bacon-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D206657F4BB2E7CC0FEFF918 /* libPods-bacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D99252EAEBA6124C86DFC997 /* Pods-bacon-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-bacon-tvOS/Pods-bacon-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		DD58125464232AF439AE9662 /* Pods-bacon-baconTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon-baconTests.debug.xcconfig"; path = "Target Support Files/Pods-bacon-baconTests/Pods-bacon-baconTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DDB0A6BBC4511591C02ABE08 /* libPods-bacon-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bacon-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAFFB375BADE4BF8AB730EF3 /* Heebo-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Heebo-SemiBold.ttf"; path = "../src/assets/fonts/Heebo-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF93B2435BFA68D8F0877B0F /* Pods-bacon-baconTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon-baconTests.release.xcconfig"; path = "Target Support Files/Pods-bacon-baconTests/Pods-bacon-baconTests.release.xcconfig"; sourceTree = "<group>"; };
-		F3871C6D175C184B4D00F8ED /* Pods-bacon-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bacon-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-bacon-tvOSTests/Pods-bacon-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D96FE73644611541725C5C5 /* libPods-bacon-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +99,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CDC66D03D04A587FA8C3EBE /* libPods-bacon-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,8 +156,6 @@
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				D206657F4BB2E7CC0FEFF918 /* libPods-bacon.a */,
 				25EDB6AD0C2359237F23DA6E /* libPods-bacon-baconTests.a */,
-				D1AA2A5CDA2D28A26E2119E3 /* libPods-bacon-tvOS.a */,
-				DDB0A6BBC4511591C02ABE08 /* libPods-bacon-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -179,10 +167,6 @@
 				AF7D7D0885162255CA3853C2 /* Pods-bacon.release.xcconfig */,
 				DD58125464232AF439AE9662 /* Pods-bacon-baconTests.debug.xcconfig */,
 				EF93B2435BFA68D8F0877B0F /* Pods-bacon-baconTests.release.xcconfig */,
-				D99252EAEBA6124C86DFC997 /* Pods-bacon-tvOS.debug.xcconfig */,
-				B5E74764819D23DAAE07CD8C /* Pods-bacon-tvOS.release.xcconfig */,
-				F3871C6D175C184B4D00F8ED /* Pods-bacon-tvOSTests.debug.xcconfig */,
-				0661A023B4D853B10B07984C /* Pods-bacon-tvOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -272,7 +256,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "bacon-tvOS" */;
 			buildPhases = (
-				9A39009677FFBB6AB6CFE74B /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -292,7 +275,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "bacon-tvOSTests" */;
 			buildPhases = (
-				88E8B8804C3A824FABF457AF /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -520,50 +502,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bacon/Pods-bacon-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		88E8B8804C3A824FABF457AF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-bacon-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9A39009677FFBB6AB6CFE74B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-bacon-tvOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E7D84BB47AFD55ED5557A47C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -762,7 +700,6 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D99252EAEBA6124C86DFC997 /* Pods-bacon-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -790,7 +727,6 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5E74764819D23DAAE07CD8C /* Pods-bacon-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -818,7 +754,6 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3871C6D175C184B4D00F8ED /* Pods-bacon-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -845,7 +780,6 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0661A023B4D853B10B07984C /* Pods-bacon-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -902,6 +836,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -962,6 +897,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
