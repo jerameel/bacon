@@ -531,6 +531,7 @@ const ControlEditView = (props: ControlEditProps) => {
                     });
                     navigation.goBack();
                   }}
+                  theme={selectedTheme}
                 />
               </View>
             )}
@@ -551,6 +552,7 @@ const ControlEditView = (props: ControlEditProps) => {
                   });
                   navigation.goBack();
                 }}
+                theme={selectedTheme}
               />
             </View>
           </>

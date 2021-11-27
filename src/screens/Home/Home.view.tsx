@@ -79,6 +79,7 @@ const HomeView = (props: HomeProps) => {
             loading={scanning}
             label={scanning ? 'Stop Scan' : 'Scan for Devices'}
             onPress={() => toggleScan()}
+            theme={selectedTheme}
           />
         </View>
       </View>

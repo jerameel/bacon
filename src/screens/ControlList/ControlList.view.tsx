@@ -66,6 +66,7 @@ const ControlListView = (props: ControlListProps) => {
             onPress={() => {
               navigation.navigate('CONTROL_EDIT', {});
             }}
+            theme={selectedTheme}
           />
         </View>
       </View>
