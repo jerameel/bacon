@@ -16,9 +16,12 @@ type BLEState = {
   devices: Device[];
   connection: {
     UUID?: string;
-    serviceUUID?: string;
-    characteristicUUID?: string;
+    characteristics?: any[];
     RSSI?: number;
+    targetWrite?: {
+      characteristicUUID?: string;
+      serviceUUID?: string;
+    };
   };
 };
 
@@ -93,14 +96,16 @@ const bleSlice = createSlice({
       state,
       action: PayloadAction<{
         UUID: string;
-        serviceUUID: string;
-        characteristicUUID: string;
+        characteristics: any[];
       }>,
     ) {
       return {
         ...state,
         status: 'CONNECTED',
-        connection: action.payload,
+        connection: {
+          ...state.connection,
+          ...action.payload,
+        },
       };
     },
     updateRSSI(state, action: PayloadAction<number>) {
@@ -123,6 +128,31 @@ const bleSlice = createSlice({
       };
     },
     sendMessage(state, action: PayloadAction<string>) {
+      return state;
+    },
+    updateTargetWriteCharacteristic(state, action: PayloadAction<string>) {
+      const writeCharacteristics = (
+        state.connection.characteristics || []
+      ).filter(
+        (c: any) => c.properties.WriteWithoutResponse || c.properties.Write,
+      );
+      const { characteristic, service } =
+        writeCharacteristics.find((c) => c.characteristic === action.payload) ||
+        {};
+
+      if (characteristic) {
+        return {
+          ...state,
+          connection: {
+            ...state.connection,
+            targetWrite: {
+              characteristicUUID: characteristic,
+              serviceUUID: service,
+            },
+          },
+        };
+      }
+
       return state;
     },
   },

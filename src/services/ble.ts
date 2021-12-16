@@ -54,34 +54,51 @@ const connect = async (
   id: string,
 ): Promise<
   | {
-      serviceUUID: string;
-      characteristicUUID: string;
+      characteristics: any[];
+      targetWrite?: {
+        characteristicUUID?: string;
+        serviceUUID?: string;
+      };
     }
   | boolean
 > => {
   try {
     await BleManager.connect(id);
     const peripheralInfo = await BleManager.retrieveServices(id);
-    const characteristicData = pathOr<any>(
+    const characteristics = pathOr<any>(
       [],
       ['characteristics'],
       peripheralInfo,
-    ).find((characteristic: any) => {
-      const { Notify, Read, Write } = characteristic.properties;
-      return Notify && Read && Write;
-    });
-    const serviceUUID = characteristicData?.service || '';
-    const characteristicUUID = characteristicData?.characteristic || '';
-    if (!serviceUUID || !characteristicUUID) {
-      return false;
-    }
+    );
+    const writeCharacteristics = characteristics.filter(
+      (c: any) => c.properties.WriteWithoutResponse || c.properties.Write,
+    );
+    const writeServiceUUID = writeCharacteristics[0]?.service || '';
+    const writeCharacteristicUUID =
+      writeCharacteristics[0]?.characteristic || '';
 
-    await BleManager.startNotification(id, serviceUUID, characteristicUUID);
+    // TODO: start notification on all characteristics
+    // const notifyCharacteristic = characteristics.find((characteristic: any) => {
+    //   const { Notify, Read } = characteristic.properties;
+    //   return Notify;
+    // });
+
+    // const notifyServiceUUID = notifyCharacteristic?.service || '';
+    // const notifyCharacteristicUUID = notifyCharacteristic?.characteristic || '';
+
+    // await BleManager.startNotification(
+    //   id,
+    //   notifyServiceUUID,
+    //   notifyCharacteristicUUID,
+    // );
     await BleManager.requestConnectionPriority(id, 1);
 
     return {
-      serviceUUID,
-      characteristicUUID,
+      characteristics,
+      targetWrite: {
+        serviceUUID: writeServiceUUID,
+        characteristicUUID: writeCharacteristicUUID,
+      },
     };
   } catch (e) {
     console.log('services/ble(connect): ', e);

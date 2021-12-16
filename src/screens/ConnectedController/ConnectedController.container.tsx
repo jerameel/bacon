@@ -14,9 +14,18 @@ const ConnectedControllerScreen = (props: ConnectedControllerPublicProps) => {
 
   const dispatch = useDispatch();
   const bleState = useSelector((state: RootState) => state.ble);
+  const characteristics = bleState.connection.characteristics || [];
+  const selectedCharacteristic =
+    bleState.connection.targetWrite?.characteristicUUID || '';
   const controllers = useSelector((state: RootState) => state.controls);
 
   const currentController = controllers.find((a) => a.id === id);
+
+  const selectCharacteristic = (characteristicUUID: string) => {
+    if (characteristicUUID) {
+      dispatch(bleActions.updateTargetWriteCharacteristic(characteristicUUID));
+    }
+  };
 
   const sendMessage = (message: string) => {
     if (message) {
@@ -27,6 +36,9 @@ const ConnectedControllerScreen = (props: ConnectedControllerPublicProps) => {
   const generatedProps: ConnectedControllerGeneratedProps = {
     currentController,
     sendMessage,
+    characteristics,
+    selectCharacteristic,
+    selectedCharacteristic,
   };
 
   return <ConnectedControllerView {...props} {...generatedProps} />;

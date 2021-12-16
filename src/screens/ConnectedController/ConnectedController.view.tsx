@@ -6,14 +6,29 @@ import uniq from 'ramda/src/uniq';
 import Text from 'components/base/Text';
 import useStyles from './ConnectedController.style';
 import { ConnectedControllerProps } from './ConnectedController.props';
-import { Back } from 'components/base/SVG';
+import { AccountTree, Back } from 'components/base/SVG';
 import { COLORS } from 'theme';
 import ControlElementIcon from 'components/module/ControlElementIcon';
+import SelectModal from 'components/module/SelectModal';
 
 const ConnectedControllerView = (props: ConnectedControllerProps) => {
-  const { navigation, route, currentController, sendMessage } = props;
+  const {
+    navigation,
+    route,
+    currentController,
+    sendMessage,
+    characteristics,
+    selectCharacteristic,
+    selectedCharacteristic,
+  } = props;
 
   const { styles, selectedTheme } = useStyles();
+
+  const [showCharacteristicsModal, setShowCharacteristicsModal] =
+    useState(false);
+  const writeCharacteristics = characteristics.filter(
+    (c) => c.properties.WriteWithoutResponse || c.properties.Write,
+  );
 
   const elements = currentController?.elements || [];
 
@@ -71,6 +86,18 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
             }}>
             <Back width={32} height={32} fill={COLORS[selectedTheme].TITLE} />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.headerAction}
+            activeOpacity={0.6}
+            onPress={() => {
+              setShowCharacteristicsModal(true);
+            }}>
+            <AccountTree
+              width={32}
+              height={32}
+              fill={COLORS[selectedTheme].TITLE}
+            />
+          </TouchableOpacity>
         </View>
         <View
           style={styles.content}
@@ -98,6 +125,20 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
           ))}
         </View>
       </View>
+      <SelectModal
+        title="Select Target Characteristic"
+        visible={showCharacteristicsModal}
+        onSelect={(v) => {
+          selectCharacteristic(v);
+          setShowCharacteristicsModal(false);
+        }}
+        selectedValue={selectedCharacteristic}
+        options={writeCharacteristics.map((a) => ({
+          label: a.characteristic,
+          value: a.characteristic,
+        }))}
+        theme={selectedTheme}
+      />
     </SafeAreaView>
   );
 };

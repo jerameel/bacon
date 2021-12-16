@@ -69,19 +69,21 @@ function* sendMessageRunner(action: PayloadAction<string>) {
   try {
     const connection: {
       UUID?: string;
-      serviceUUID?: string;
-      characteristicUUID?: string;
+      targetWrite?: {
+        serviceUUID?: string;
+        characteristicUUID?: string;
+      };
     } = yield select((state: RootState) => state.ble.connection);
     if (
       connection.UUID &&
-      connection.serviceUUID &&
-      connection.characteristicUUID &&
+      connection.targetWrite?.serviceUUID &&
+      connection.targetWrite?.characteristicUUID &&
       action.payload
     ) {
       yield call(bleService.sendMessage, {
         UUID: connection.UUID || '',
-        serviceUUID: connection.serviceUUID || '',
-        characteristicUUID: connection.characteristicUUID || '',
+        serviceUUID: connection.targetWrite?.serviceUUID || '',
+        characteristicUUID: connection.targetWrite?.characteristicUUID || '',
         message: action.payload || '',
       });
     }

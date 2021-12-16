@@ -12,7 +12,7 @@ const ConnectScreen = (props: ConnectPublicProps) => {
   const bleState = useSelector((state: RootState) => state.ble);
   const connecting = bleState.status === 'CONNECTING';
   const connected = bleState.status === 'CONNECTED';
-  const rssi = bleState.connection.RSSI || -120;
+  const rssi = bleState.connection.RSSI || -120;
   const [initialized, setInitialized] = useState(false);
 
   const controllers = useSelector((state: RootState) => state.controls);

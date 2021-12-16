@@ -94,7 +94,7 @@ function* stopWatcher(): any {
   }
 }
 
-const signalWatcherEventChannel = (id: string) => {
+const signalEventChannel = (id: string) => {
   return eventChannel((emitter) => {
     const interval = setInterval(async () => {
       const rssi = await bleService.readRSSI(id);
@@ -113,7 +113,7 @@ function* signalWatcher(): any {
     (yield select((state: RootState) => state.ble.connection.UUID)) || '';
 
   if (id) {
-    const signalWatcherChannel: any = yield call(signalWatcherEventChannel, id);
+    const signalWatcherChannel: any = yield call(signalEventChannel, id);
 
     try {
       while (true) {
@@ -138,6 +138,59 @@ function* initSignalWatcher(): any {
   yield takeLatest(['ble/connected'], signalWatcher);
 }
 
-const bleEventsWatcher = [discoveryWatcher, stopWatcher, initSignalWatcher];
+function notificationEventChannel(): any {
+  return eventChannel((emitter) => {
+    const subscription = bleManagerEmitter.addListener(
+      'BleManagerDidUpdateValueForCharacteristic',
+      ({ value, peripheral, characteristic, service }) => {
+        emitter(value);
+      },
+    );
+    // The subscriber must return an unsubscribe function
+    return () => {
+      subscription.remove();
+    };
+  });
+}
+
+function* notificationWatcher(): any {
+  const id: string =
+    (yield select((state: RootState) => state.ble.connection.UUID)) || '';
+
+  if (id) {
+    const notificationWatcherChannel: any = yield call(
+      notificationEventChannel,
+    );
+
+    try {
+      while (true) {
+        const { disconnect, data } = yield race({
+          disconnect: take('ble/disconnect'),
+          data: take(notificationWatcherChannel),
+        });
+
+        if (disconnect) {
+          notificationWatcherChannel.close();
+        } else if (data) {
+          console.log('READ', data);
+          // yield put(bleActions.updateRSSI(rssi));
+        }
+      }
+    } finally {
+      console.log('signalWatcher terminated');
+    }
+  }
+}
+
+function* initNotificationWatcher(): any {
+  yield takeLatest(['ble/connected'], notificationWatcher);
+}
+
+const bleEventsWatcher = [
+  discoveryWatcher,
+  stopWatcher,
+  initSignalWatcher,
+  initNotificationWatcher,
+];
 
 export default bleEventsWatcher;
