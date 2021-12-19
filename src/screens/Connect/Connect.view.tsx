@@ -22,6 +22,7 @@ import {
   Signal2,
   Signal3,
   Signal4,
+  Terminal,
 } from 'components/base/SVG';
 import Button from 'components/base/Button';
 import { Control as ControlIcon } from 'components/base/SVG';
@@ -41,7 +42,7 @@ const ConnectView = (props: ConnectProps) => {
     rssi,
   } = props;
 
-  const { styles, selectedTheme } = useStyles();
+  const { styles, selectedTheme, colors } = useStyles();
 
   const id = route.params.id || '';
   const name = route.params.name || '';
@@ -172,6 +173,16 @@ const ConnectView = (props: ConnectProps) => {
                 <Text style={styles.detailsId} variant="body">
                   {id}
                 </Text>
+                <TouchableOpacity
+                  style={styles.monitorAction}
+                  onPress={() => {
+                    navigation.navigate('CONNECTED_MONITOR', {});
+                  }}>
+                  <Terminal width={24} height={24} fill={colors.PRIMARY} />
+                  <Text style={styles.monitorActionLabel} variant="caption">
+                    Open Terminal
+                  </Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.detailsSignalContainer}>
                 {SignalIcon}

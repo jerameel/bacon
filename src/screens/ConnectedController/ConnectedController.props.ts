@@ -25,6 +25,9 @@ export interface ConnectedControllerPublicProps {
 export interface ConnectedControllerGeneratedProps {
   currentController?: Control;
   sendMessage: (message: string) => void;
+  characteristics: any[];
+  selectCharacteristic: (characteristicUUID: string) => void;
+  selectedCharacteristic: string;
 }
 
 export interface ConnectedControllerProps

@@ -18,12 +18,13 @@ import createSagaMiddleware from 'redux-saga';
 
 import controlsReducer from './controls';
 import bleReducer from './ble';
-
+import monitorReducer from './monitor';
 import settingsReducer from './settings';
 
 const rootReducer = combineReducers({
   controls: controlsReducer,
   ble: bleReducer,
+  monitor: monitorReducer,
   settings: settingsReducer,
 });
 
