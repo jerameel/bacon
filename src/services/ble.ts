@@ -77,20 +77,6 @@ const connect = async (
     const writeCharacteristicUUID =
       writeCharacteristics[0]?.characteristic || '';
 
-    // TODO: start notification on all characteristics
-    // const notifyCharacteristic = characteristics.find((characteristic: any) => {
-    //   const { Notify, Read } = characteristic.properties;
-    //   return Notify;
-    // });
-
-    // const notifyServiceUUID = notifyCharacteristic?.service || '';
-    // const notifyCharacteristicUUID = notifyCharacteristic?.characteristic || '';
-
-    // await BleManager.startNotification(
-    //   id,
-    //   notifyServiceUUID,
-    //   notifyCharacteristicUUID,
-    // );
     await BleManager.requestConnectionPriority(id, 1);
 
     return {
@@ -102,6 +88,24 @@ const connect = async (
     };
   } catch (e) {
     console.log('services/ble(connect): ', e);
+    return false;
+  }
+};
+
+const startNotification = async (
+  peripheralID: string,
+  readServiceUUID: string,
+  readCharacteristicUUID: string,
+) => {
+  try {
+    await BleManager.startNotification(
+      peripheralID,
+      readServiceUUID,
+      readCharacteristicUUID,
+    );
+    return true;
+  } catch (e) {
+    console.log('services/ble(startNotification): ', e);
     return false;
   }
 };
@@ -154,4 +158,5 @@ export default {
   disconnect,
   sendMessage,
   readRSSI,
+  startNotification,
 };

@@ -13,6 +13,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import { bleActions } from 'store/ble';
 import { RootState } from 'store';
 import bleService from 'services/ble';
+import { addLogAction } from 'store/monitor';
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -143,7 +144,11 @@ function notificationEventChannel(): any {
     const subscription = bleManagerEmitter.addListener(
       'BleManagerDidUpdateValueForCharacteristic',
       ({ value, peripheral, characteristic, service }) => {
-        emitter(value);
+        emitter({
+          message: String.fromCharCode(...value),
+          characteristic,
+          service,
+        });
       },
     );
     // The subscriber must return an unsubscribe function
@@ -173,7 +178,14 @@ function* notificationWatcher(): any {
           notificationWatcherChannel.close();
         } else if (data) {
           console.log('READ', data);
-          // yield put(bleActions.updateRSSI(rssi));
+          yield put(
+            addLogAction({
+              message: data.message,
+              characteristicUUID: data.characteristic,
+              serviceUUID: data.service,
+              type: 'INCOMING',
+            }),
+          );
         }
       }
     } finally {

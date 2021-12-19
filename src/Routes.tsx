@@ -12,24 +12,23 @@ import { SVGProps } from 'components/base/SVG/SVG.props';
 import { COLORS } from 'theme';
 import ConnectScreen from 'screens/Connect';
 import ConnectedControllerScreen from 'screens/ConnectedController';
-import { View } from 'react-native';
+import ConnectedMonitorScreen from 'screens/ConnectedMonitor';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
 
-const createTabIcon = (
-  Component: (props: SVGProps) => JSX.Element,
-  sizeOverride?: number,
-) => ({ color }: { focused: boolean; color: string; size: number }) => {
-  return (
-    <Component
-      fill={color}
-      width={sizeOverride || 32}
-      height={sizeOverride || 32}
-    />
-  );
-};
+const createTabIcon =
+  (Component: (props: SVGProps) => JSX.Element, sizeOverride?: number) =>
+  ({ color }: { focused: boolean; color: string; size: number }) => {
+    return (
+      <Component
+        fill={color}
+        width={sizeOverride || 32}
+        height={sizeOverride || 32}
+      />
+    );
+  };
 
 const MainTabNavigator = () => {
   const settings = useSelector((state: RootState) => state.settings);
@@ -98,6 +97,11 @@ const Routes = () => {
         options={{ headerShown: false }}
         name="CONNECTED_CONTROLLER"
         component={ConnectedControllerScreen}
+      />
+      <MainStack.Screen
+        options={{ headerShown: false }}
+        name="CONNECTED_MONITOR"
+        component={ConnectedMonitorScreen}
       />
     </MainStack.Navigator>
   );

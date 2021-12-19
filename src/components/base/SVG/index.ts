@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Terminal } from './Terminal';
 export { default as AccountTree } from './AccountTree';
 export { default as LetterY } from './LetterY';
 export { default as LetterX } from './LetterX';

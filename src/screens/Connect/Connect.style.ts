@@ -7,6 +7,7 @@ const useStyles = () => {
   const settings = useSelector((state: RootState) => state.settings);
   const { selectedTheme } = settings;
   const STYLES = getGlobalStyles(selectedTheme);
+  const colors = COLORS[selectedTheme];
   const styles = StyleSheet.create({
     container: STYLES.CONTAINER,
     header: STYLES.HEADER,
@@ -79,6 +80,15 @@ const useStyles = () => {
       marginTop: 16,
       marginHorizontal: 16,
     },
+    monitorAction: {
+      marginTop: 8,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    monitorActionLabel: {
+      color: COLORS[selectedTheme].PRIMARY_TEXT,
+      marginLeft: 4,
+    },
     spacer: {
       height: 8,
     },
@@ -94,7 +104,7 @@ const useStyles = () => {
     },
   });
 
-  return { styles, selectedTheme };
+  return { styles, selectedTheme, colors };
 };
 
 export default useStyles;
