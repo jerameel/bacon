@@ -1,0 +1,2 @@
+- Add monitor for logging and reading BLE notifications
+- Allow selecting target WRITE characteristic for controls

@@ -1,0 +1,16 @@
+Modern Controller Design
+- Change button icons and sizes
+- Edit press and release event commands
+- Create multiple layout
+- Multi touch enabled controls
+
+GATT Support
+- Automatically subscribe to READ and NOTIFY characteristics
+- Select different target WRITE characteristics
+
+
+This is an Open Source Project, feel free to contribute to this project: https://github.com/jerameel/bacon
+
+Supported Hardware
+- Should work on majority of Bluetooth (BLE) modules and devices
+- Tested on working on Arduino BLE modules Ex. AT-09, MLT-BT05, HM-10
