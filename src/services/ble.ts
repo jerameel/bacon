@@ -32,7 +32,7 @@ const start = async () => {
 
 const scan = async () => {
   try {
-    await BleManager.scan([], 5, true);
+    await BleManager.scan([], 30, true);
     return true;
   } catch (e) {
     console.log('services/ble(scan): ', e);

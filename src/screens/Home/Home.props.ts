@@ -1,6 +1,7 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Device } from 'store/ble';
 import { MainStackParamList, MainTabParamList } from 'types/Route';
 
 export interface HomeRouterProps {}
@@ -20,10 +21,7 @@ export interface HomePublicProps {
 export interface HomeGeneratedProps {
   toggleScan: () => void;
   scanning: boolean;
-  devices: {
-    id: string;
-    name: string;
-  }[];
+  devices: Device[];
   onSelectItem: (item: { id: string, name: string }) => void;
   currentConnectionId: string;
 }

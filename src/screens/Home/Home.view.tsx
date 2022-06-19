@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
+import sortBy from 'ramda/es/sortBy';
 import SafeAreaView from 'react-native-safe-area-view';
 import Button from 'components/base/Button';
 import Text from 'components/base/Text';
@@ -10,6 +11,8 @@ import DeviceItem from 'components/module/DeviceItem';
 import { Device } from 'store/ble';
 import { FlatList } from 'react-native-gesture-handler';
 import { COLORS } from 'theme';
+
+const sortByRSSI = sortBy((device: Device) => -device.rssi);
 
 const HomeView = (props: HomeProps) => {
   const {
@@ -37,6 +40,8 @@ const HomeView = (props: HomeProps) => {
     );
   };
 
+  const sortedDevices = sortByRSSI(devices);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -49,13 +54,13 @@ const HomeView = (props: HomeProps) => {
             Get Connected
           </Text>
         </View>
-        {devices.length > 0 ? (
+        {sortedDevices.length > 0 ? (
           <View style={styles.content}>
             <Text style={styles.textDeviceCount} variant="caption">
-              {`${devices.length} Available Devices`}
+              {`${sortedDevices.length} Available Devices`}
             </Text>
             <FlatList
-              data={devices}
+              data={sortedDevices}
               renderItem={renderDeviceItem}
               keyExtractor={(item) => item.id}
               ListFooterComponent={<View style={styles.spacer} />}
