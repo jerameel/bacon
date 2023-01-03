@@ -5,7 +5,40 @@ import { Buffer } from 'buffer';
 
 const start = async () => {
   try {
-    await BleManager.start({ showAlert: false });
+    if (Platform.OS === 'android' && Platform.Version >= 31) {
+      const scanPermissionAllowed = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+      );
+
+      if (!scanPermissionAllowed) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+        );
+
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          throw new Error(
+            'android.permission.BLUETOOTH_SCAN permission not allowed',
+          );
+        }
+      }
+
+      const connectPermissionAllowed = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+      );
+
+      if (!connectPermissionAllowed) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+        );
+
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          throw new Error(
+            'android.permission.BLUETOOTH_CONNECT permission not allowed',
+          );
+        }
+      }
+    }
+
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       const permissionAllowed = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -17,13 +50,15 @@ const start = async () => {
         );
 
         if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('PERMISSION DENIED: ACCESS_COARSE_LOCATION');
-          return false;
+          throw new Error(
+            'android.permission.ACCESS_FINE_LOCATION permission not allowed',
+          );
         }
       }
-      return true;
     }
-    return false;
+
+    await BleManager.start({ showAlert: false });
+    return true;
   } catch (e) {
     console.log('services/ble(start): ', e);
     return false;
