@@ -137,8 +137,8 @@ android {
         applicationId "com.jerameeldelosreyes.bacon"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
-        versionName "1.5.1"
+        versionCode 13
+        versionName "1.6.1"
     }
     splits {
         abi {
