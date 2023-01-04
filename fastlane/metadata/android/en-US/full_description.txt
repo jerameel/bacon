@@ -13,4 +13,5 @@ This is an Open Source Project, feel free to contribute to this project: https:/
 
 Supported Hardware
 - Should work on majority of Bluetooth (BLE) modules and devices
-- Tested on working on Arduino BLE modules Ex. AT-09, MLT-BT05, HM-10
+- Tested working on Arduino BLE modules Ex. AT-09, MLT-BT05, HM-10
+- Tested working on ESP32 modules with BLE support
