@@ -18,6 +18,7 @@ const ConnectedControllerScreen = (props: ConnectedControllerPublicProps) => {
   const selectedCharacteristic =
     bleState.connection.targetWrite?.characteristicUUID || '';
   const controllers = useSelector((state: RootState) => state.controls);
+  const monitorLogs = useSelector((state: RootState) => state.monitor);
 
   const currentController = controllers.find((a) => a.id === id);
 
@@ -39,6 +40,7 @@ const ConnectedControllerScreen = (props: ConnectedControllerPublicProps) => {
     characteristics,
     selectCharacteristic,
     selectedCharacteristic,
+    monitorLogs,
   };
 
   return <ConnectedControllerView {...props} {...generatedProps} />;

@@ -69,7 +69,22 @@ const DraggableControl = memo(
           props.onUpdate(props.id, bounds.left, bounds.top);
         }}
         children={
-          <ControlElementIcon id={props.label || ''} size={props.size || 80} />
+          props.type !== 'TERMINAL' ? (
+            <ControlElementIcon
+              id={props.label || ''}
+              size={props.size || 80}
+            />
+          ) : (
+            <View
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                width: props.width,
+                height: props.height,
+                borderColor: 'black',
+                borderWidth: 1,
+              }}
+            />
+          )
         }
       />
     );
@@ -146,6 +161,42 @@ const ControlEditView = (props: ControlEditProps) => {
     {},
   );
 
+  type ElementHeight = Record<string, number>;
+
+  const [elementHeights, updateElementHeight] = useReducer(
+    (state: ElementHeight, newState: ElementHeight) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
+  type ElementWidth = Record<string, number>;
+
+  const [elementWidths, updateElementWidth] = useReducer(
+    (state: ElementWidth, newState: ElementWidth) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
+  type ElementType = Record<string, 'BUTTON' | 'TERMINAL'>;
+
+  const [elementTypes, updateElementType] = useReducer(
+    (state: ElementType, newState: ElementType) => {
+      return {
+        ...state,
+        ...newState,
+      };
+    },
+    {},
+  );
+
   const [elementsOnPress, updateElementsOnPress] = useReducer(
     (state: ElementLabel, newState: ElementLabel) => {
       return {
@@ -172,11 +223,14 @@ const ControlEditView = (props: ControlEditProps) => {
       label: 'default',
       x: windowWidth / 2 - 40,
       y: viewHeight / 2 - 40,
+      width: 80,
+      height: 80,
       size: 80,
       command: {
         onPress: '',
         onRelease: '',
       },
+      type: 'BUTTON',
     };
     setElements((a) => {
       return [...a, newElement];
@@ -186,6 +240,22 @@ const ControlEditView = (props: ControlEditProps) => {
   const removeElement = (elementId: string) => {
     setElements((a) => {
       return a.filter((b) => b.id !== elementId);
+    });
+  };
+
+  const convertElementToConsole = (elementId: string) => {
+    setElements((a) => {
+      var elementToConvert = a.find((x) => x.id === elementId);
+      elementToConvert!.type = 'TERMINAL';
+      return a;
+    });
+  };
+
+  const convertElementToButton = (elementId: string) => {
+    setElements((a) => {
+      var elementToConvert = a.find((x) => x.id === elementId);
+      elementToConvert!.type = 'BUTTON';
+      return a;
     });
   };
 
@@ -272,104 +342,208 @@ const ControlEditView = (props: ControlEditProps) => {
               </View>
               <View style={styles.modalContentLayer}>
                 <ScrollView>
-                  <Text
-                    containerStyle={styles.modalLabelContainer}
-                    style={styles.modalLabel}
-                    variant="caption">
-                    Icon
-                  </Text>
-                  <View style={styles.modalIconsContainer}>
-                    {Object.keys(IconMapping).map((key) => (
-                      <TouchableOpacity
-                        key={key}
-                        activeOpacity={0.6}
-                        style={styles.modalIconButton}
-                        onPress={() => {
-                          updateElementLabel({
-                            [currentElementId]: key,
-                          });
-                        }}>
-                        <ControlElementIcon
-                          id={key}
-                          size={32}
-                          isHighlighted={
-                            key ===
-                            (elementLabels[currentElementId] === undefined
-                              ? currentElement?.label || ''
-                              : elementLabels[currentElementId])
+                  {currentElement?.type !== 'TERMINAL' && (
+                    <View style={styles.modalContentLayer}>
+                      <Text
+                        containerStyle={styles.modalLabelContainer}
+                        style={styles.modalLabel}
+                        variant="caption">
+                        Icon
+                      </Text>
+                      <View style={styles.modalIconsContainer}>
+                        {Object.keys(IconMapping).map((key) => (
+                          <TouchableOpacity
+                            key={key}
+                            activeOpacity={0.6}
+                            style={styles.modalIconButton}
+                            onPress={() => {
+                              updateElementLabel({
+                                [currentElementId]: key,
+                              });
+                            }}>
+                            <ControlElementIcon
+                              id={key}
+                              size={32}
+                              isHighlighted={
+                                key ===
+                                (elementLabels[currentElementId] === undefined
+                                  ? currentElement?.label || ''
+                                  : elementLabels[currentElementId])
+                              }
+                            />
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  )}
+                  {currentElement?.type !== 'TERMINAL' ? (
+                    <View style={styles.modalContentLayer}>
+                      <Text
+                        containerStyle={styles.modalLabelContainer}
+                        style={styles.modalLabel}
+                        variant="caption">
+                        {`Size (${(
+                          (elementSizes[currentElementId] ||
+                            currentElement?.size ||
+                            80) / 80
+                        ).toFixed(2)})`}
+                      </Text>
+
+                      <View style={styles.modalSliderContainer}>
+                        <Slider
+                          minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
+                          maximumTrackTintColor={
+                            COLORS[selectedTheme].AREA_HIGHLIGHT
                           }
+                          thumbTintColor={COLORS.LIGHT.PRIMARY}
+                          minimumValue={32}
+                          maximumValue={128}
+                          value={
+                            elementSizes[currentElementId] ||
+                            currentElement?.size ||
+                            80
+                          }
+                          onValueChange={(s) => {
+                            updateElementSize({
+                              [currentElementId]: s,
+                            });
+                          }}
+                          step={8}
                         />
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                  <Text
-                    containerStyle={styles.modalLabelContainer}
-                    style={styles.modalLabel}
-                    variant="caption">
-                    {`Size (${(
-                      (elementSizes[currentElementId] ||
-                        currentElement?.size ||
-                        80) / 80
-                    ).toFixed(2)})`}
-                  </Text>
-                  <View style={styles.modalSliderContainer}>
-                    <Slider
-                      minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
-                      maximumTrackTintColor={
-                        COLORS[selectedTheme].AREA_HIGHLIGHT
-                      }
-                      thumbTintColor={COLORS.LIGHT.PRIMARY}
-                      minimumValue={32}
-                      maximumValue={128}
-                      value={
-                        elementSizes[currentElementId] ||
-                        currentElement?.size ||
-                        80
-                      }
-                      onValueChange={(s) => {
-                        updateElementSize({
-                          [currentElementId]: s,
-                        });
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={styles.modalContentLayer}>
+                      <Text
+                        containerStyle={styles.modalLabelContainer}
+                        style={styles.modalLabel}
+                        variant="caption">
+                        {`Height (${(
+                          (elementHeights[currentElementId] ||
+                            currentElement?.height ||
+                            80) / 80
+                        ).toFixed(2)})`}
+                      </Text>
+                      <View style={styles.modalSliderContainer}>
+                        <Slider
+                          minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
+                          maximumTrackTintColor={
+                            COLORS[selectedTheme].AREA_HIGHLIGHT
+                          }
+                          thumbTintColor={COLORS.LIGHT.PRIMARY}
+                          minimumValue={32}
+                          maximumValue={viewHeight}
+                          value={
+                            elementHeights[currentElementId] ||
+                            currentElement?.height ||
+                            80
+                          }
+                          onValueChange={(s) => {
+                            updateElementHeight({
+                              [currentElementId]: s,
+                            });
+                          }}
+                          step={8}
+                        />
+                      </View>
+                      <Text
+                        containerStyle={styles.modalLabelContainer}
+                        style={styles.modalLabel}
+                        variant="caption">
+                        {`Width (${(
+                          (elementWidths[currentElementId] ||
+                            currentElement?.width ||
+                            80) / 80
+                        ).toFixed(2)})`}
+                      </Text>
+                      <View style={styles.modalSliderContainer}>
+                        <Slider
+                          minimumTrackTintColor={COLORS[selectedTheme].PRIMARY}
+                          maximumTrackTintColor={
+                            COLORS[selectedTheme].AREA_HIGHLIGHT
+                          }
+                          thumbTintColor={COLORS.LIGHT.PRIMARY}
+                          minimumValue={32}
+                          maximumValue={windowWidth}
+                          value={
+                            elementWidths[currentElementId] ||
+                            currentElement?.width ||
+                            80
+                          }
+                          onValueChange={(s) => {
+                            updateElementWidth({
+                              [currentElementId]: s,
+                            });
+                          }}
+                          step={8}
+                        />
+                      </View>
+                    </View>
+                  )}
+                  {currentElement?.type !== 'TERMINAL' && (
+                    <View style={styles.modalContentLayer}>
+                      <Text
+                        containerStyle={styles.modalLabelContainer}
+                        style={styles.modalLabel}
+                        variant="caption">
+                        Command
+                      </Text>
+                      <TextInput
+                        label="On Press"
+                        value={
+                          elementsOnPress[currentElementId] === undefined
+                            ? currentElement?.command.onPress || ''
+                            : elementsOnPress[currentElementId]
+                        }
+                        onChangeText={(t) => {
+                          updateElementsOnPress({
+                            [currentElementId]: t,
+                          });
+                        }}
+                        containerStyle={styles.modalTextInput}
+                        theme={selectedTheme}
+                      />
+                      <TextInput
+                        label="On Release"
+                        value={
+                          elementsOnRelease[currentElementId] === undefined
+                            ? currentElement?.command.onRelease || ''
+                            : elementsOnRelease[currentElementId]
+                        }
+                        onChangeText={(t) => {
+                          updateElementsOnRelease({
+                            [currentElementId]: t,
+                          });
+                        }}
+                        containerStyle={styles.modalTextInput}
+                        theme={selectedTheme}
+                      />
+                    </View>
+                  )}
+                  {currentElement?.type !== 'TERMINAL' && (
+                    <Button
+                      containerStyle={styles.modalDeleteContainer}
+                      label={'Convert to terminal'}
+                      onPress={() => {
+                        convertElementToConsole(currentElementId);
+                        setCurrentElementId('');
                       }}
-                      step={8}
+                      outline
+                      theme={selectedTheme}
                     />
-                  </View>
-                  <Text
-                    containerStyle={styles.modalLabelContainer}
-                    style={styles.modalLabel}
-                    variant="caption">
-                    Command
-                  </Text>
-                  <TextInput
-                    label="On Press"
-                    value={
-                      elementsOnPress[currentElementId] === undefined
-                        ? currentElement?.command.onPress || ''
-                        : elementsOnPress[currentElementId]
-                    }
-                    onChangeText={(t) => {
-                      updateElementsOnPress({
-                        [currentElementId]: t,
-                      });
-                    }}
-                    containerStyle={styles.modalTextInput}
-                    theme={selectedTheme}
-                  />
-                  <TextInput
-                    label="On Release"
-                    value={
-                      elementsOnRelease[currentElementId] === undefined
-                        ? currentElement?.command.onRelease || ''
-                        : elementsOnRelease[currentElementId]
-                    }
-                    onChangeText={(t) => {
-                      updateElementsOnRelease({
-                        [currentElementId]: t,
-                      });
-                    }}
-                    containerStyle={styles.modalTextInput}
-                    theme={selectedTheme}
-                  />
+                  )}
+                  {currentElement?.type === 'TERMINAL' && (
+                    <Button
+                      containerStyle={styles.modalDeleteContainer}
+                      label={'Convert to button'}
+                      onPress={() => {
+                        convertElementToButton(currentElementId);
+                        setCurrentElementId('');
+                      }}
+                      outline
+                      theme={selectedTheme}
+                    />
+                  )}
                   <Button
                     containerStyle={styles.modalDeleteContainer}
                     label={'Delete'}
@@ -419,6 +593,9 @@ const ControlEditView = (props: ControlEditProps) => {
                       : elementLabels[element.id]
                   }
                   size={elementSizes[element.id] || element.size || 80}
+                  height={elementHeights[element.id] || element.height || 80}
+                  width={elementWidths[element.id] || element.width || 80}
+                  type={element.type}
                 />
               ))}
             </View>
@@ -525,6 +702,9 @@ const ControlEditView = (props: ControlEditProps) => {
                         elements,
                         elementLabels,
                         elementSizes,
+                        elementHeights,
+                        elementWidths,
+                        elementTypes,
                         elementsOnPress,
                         elementsOnRelease,
                       ),
@@ -546,6 +726,9 @@ const ControlEditView = (props: ControlEditProps) => {
                       elements,
                       elementLabels,
                       elementSizes,
+                      elementHeights,
+                      elementWidths,
+                      elementTypes,
                       elementsOnPress,
                       elementsOnRelease,
                     ),
