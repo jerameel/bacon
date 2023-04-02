@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { getGlobalStyles } from 'theme';
+import { COLORS, getGlobalStyles } from 'theme';
 
 const useStyles = () => {
   const settings = useSelector((state: RootState) => state.settings);
   const { selectedTheme } = settings;
+  const colors = COLORS[selectedTheme];
   const STYLES = getGlobalStyles(selectedTheme);
   const styles = StyleSheet.create({
     container: STYLES.CONTAINER,
@@ -23,6 +24,14 @@ const useStyles = () => {
     },
     content: {
       flex: 1,
+    },
+    logTextContainer: {
+      paddingHorizontal: 4,
+    },
+    logText: {
+      color: colors.SECONDARY_TEXT,
+      fontSize: 14,
+      marginTop: 1,
     },
   });
 

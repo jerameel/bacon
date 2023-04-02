@@ -6,11 +6,14 @@ export type ControlElement = {
   x: number;
   y: number;
   label: string;
+  width: number;
+  height: number;
   size: number;
   command: {
     onPress: string;
     onRelease: string;
   };
+  type: 'BUTTON' | 'TERMINAL';
 };
 
 export type Control = {

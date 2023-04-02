@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { StatusBar, TouchableOpacity, View, ScrollView } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import remove from 'ramda/src/remove';
 import uniq from 'ramda/src/uniq';
@@ -20,6 +20,7 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
     characteristics,
     selectCharacteristic,
     selectedCharacteristic,
+    monitorLogs,
   } = props;
 
   const { styles, selectedTheme } = useStyles();
@@ -34,24 +35,17 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
 
   const [activeElements, setActiveElements] = useState<string[]>([]);
 
-  const createTouchHandler = (config: { isEnd?: boolean }) => (event: any) => {
-    const { pageX, pageY } = event.nativeEvent;
-    const actualX = pageX;
-    const actualY = pageY - 80; // header height
+  const scrollViewRef: React.MutableRefObject<ScrollView | null> = useRef(null);
 
-    const target = elements.find(({ x, y, size }) => {
-      if (
-        actualX > x &&
-        actualX < x + size &&
-        actualY > y &&
-        actualY < y + size
-      ) {
-        return true;
-      }
-      return false;
-    });
-    if (target) {
-      if (config.isEnd) {
+  function scrollViewSizeChanged(width: number, height: number) {
+    scrollViewRef.current?.scrollTo({ y: height, animated: true });
+  }
+
+  function buttonPressHandler(id: string, isEnd?: boolean) {
+    const target = elements.find((x) => x.id === id);
+
+    if (target && target.type !== 'TERMINAL') {
+      if (isEnd) {
         sendMessage(target.command.onRelease);
         const targetIndex = activeElements.findIndex(
           (activeElement) => activeElement === target.id,
@@ -66,10 +60,8 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
         );
       }
     }
-  };
+  }
 
-  const startTouchHandler = createTouchHandler({});
-  const endTouchHandler = createTouchHandler({ isEnd: true });
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -99,30 +91,60 @@ const ConnectedControllerView = (props: ConnectedControllerProps) => {
             />
           </TouchableOpacity>
         </View>
-        <View
-          style={styles.content}
-          onTouchStart={startTouchHandler}
-          onTouchEnd={endTouchHandler}>
-          {elements.map((a) => (
-            <View
-              key={a.id}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                width: a.size,
-                height: a.size,
-                position: 'absolute',
-                top: a.y,
-                left: a.x,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <ControlElementIcon
-                id={a.label}
-                size={a.size}
-                isHighlighted={activeElements.includes(a.id)}
-              />
-            </View>
-          ))}
+        <View style={styles.content}>
+          {elements.map((a) =>
+            a.type !== 'TERMINAL' ? (
+              <View
+                key={a.id}
+                onTouchStart={() => buttonPressHandler(a.id)}
+                onTouchEnd={() => buttonPressHandler(a.id, true)}
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{
+                  width: a.size,
+                  height: a.size,
+                  position: 'absolute',
+                  top: a.y,
+                  left: a.x,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <ControlElementIcon
+                  id={a.label}
+                  size={a.size}
+                  isHighlighted={activeElements.includes(a.id)}
+                />
+              </View>
+            ) : (
+              <View
+                key={a.id}
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{
+                  width: a.width,
+                  height: a.height,
+                  position: 'absolute',
+                  top: a.y,
+                  left: a.x,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderColor: 'black',
+                  borderWidth: 1,
+                }}>
+                <ScrollView
+                  ref={scrollViewRef}
+                  onContentSizeChange={scrollViewSizeChanged}>
+                  {monitorLogs.map((log) => (
+                    <View key={log.createdAt} style={styles.logTextContainer}>
+                      <Text style={styles.logText} variant="body">
+                        {log.type === 'OUTGOING'
+                          ? `> ${log.message}`
+                          : `< ${log.message}`}
+                      </Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            ),
+          )}
         </View>
       </View>
       <SelectModal
